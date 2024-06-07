@@ -1,0 +1,1399 @@
+024-05-29 16:54:58.813167: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-05-29 16:54:58.815407: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-05-29 16:54:58.842810: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-05-29 16:54:59.653714: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+[I 2024-05-29 16:55:00,391] A new study created in memory with name: no-name-7a676373-ea27-4a61-8cf2-819f112c80fc
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 17:18:12,099] Trial 0 finished with value: 4.475115495891031 and parameters: {'lr': 0.004259990290711209, 'hs': 4, 'en': 179, 'dropout': 0.005079489847872037}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step 
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 17:51:36,579] Trial 1 finished with value: 23.013946627812928 and parameters: {'lr': 0.08419154665007368, 'hs': 5, 'en': 252, 'dropout': 0.007763060913926847}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 18:30:20,813] Trial 2 finished with value: 22.92644683020905 and parameters: {'lr': 0.023343547184990012, 'hs': 3, 'en': 290, 'dropout': 0.007234787182286203}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 19:10:38,591] Trial 3 finished with value: 181.90042072587755 and parameters: {'lr': 0.08884734681712786, 'hs': 7, 'en': 298, 'dropout': 0.007897196145892795}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 19:24:23,188] Trial 4 finished with value: 23.06975187746147 and parameters: {'lr': 0.08516007281166486, 'hs': 2, 'en': 100, 'dropout': 0.009341268254782655}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 19:27:22,120] Trial 5 finished with value: 22.988669047768948 and parameters: {'lr': 0.008670080706926469, 'hs': 3, 'en': 20, 'dropout': 0.004648211116729207}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 19:50:07,554] Trial 6 finished with value: 5.629716260833557 and parameters: {'lr': 0.005559688830671235, 'hs': 2, 'en': 171, 'dropout': 0.0034360455449829385}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 20:15:50,218] Trial 7 finished with value: 7.530913053227869 and parameters: {'lr': 0.012079878436833077, 'hs': 5, 'en': 189, 'dropout': 0.009847441961395559}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 20:33:50,963] Trial 8 finished with value: 22.93686026008997 and parameters: {'lr': 0.056800929287862706, 'hs': 4, 'en': 133, 'dropout': 0.004603439969847425}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 21:31:22,044] Trial 9 finished with value: 9.309308719732531 and parameters: {'lr': 0.04728976134159935, 'hs': 5, 'en': 430, 'dropout': 0.0014210213829289873}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 22:26:12,502] Trial 10 finished with value: 168.23906273343147 and parameters: {'lr': 0.036961551252803815, 'hs': 8, 'en': 414, 'dropout': 0.0005317345890063852}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+[I 2024-05-29 22:51:01,009] Trial 11 finished with value: 11.807888396856148 and parameters: {'lr': 0.002698465478393811, 'hs': 2, 'en': 182, 'dropout': 0.0027643078829587783}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 22:56:58,389] Trial 12 finished with value: 23.002900960608397 and parameters: {'lr': 0.027931298650503405, 'hs': 3, 'en': 43, 'dropout': 0.003150335686417069}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-29 23:27:34,175] Trial 13 finished with value: 181.69065951579162 and parameters: {'lr': 0.060020580584367884, 'hs': 6, 'en': 227, 'dropout': 0.005968106830353508}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 00:14:15,906] Trial 14 finished with value: 168.6145122708668 and parameters: {'lr': 0.020613216742720146, 'hs': 4, 'en': 347, 'dropout': 0.0030774317419670757}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 00:28:50,716] Trial 15 finished with value: 22.655854770490276 and parameters: {'lr': 0.0013363956415155041, 'hs': 2, 'en': 109, 'dropout': 0.005858517777065649}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 00:51:17,213] Trial 16 finished with value: 22.911266597838008 and parameters: {'lr': 0.036715612519823984, 'hs': 4, 'en': 169, 'dropout': 0.004030308429880938}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 16ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 01:37:07,481] Trial 17 finished with value: 16.282609112518358 and parameters: {'lr': 0.014428299304130997, 'hs': 3, 'en': 348, 'dropout': 0.006185544071590119}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 02:42:12,360] Trial 18 finished with value: 175.42223554752618 and parameters: {'lr': 0.07471321752325853, 'hs': 6, 'en': 483, 'dropout': 0.002020730878081108}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 02:51:05,777] Trial 19 finished with value: 22.944724767338652 and parameters: {'lr': 0.03447897492274889, 'hs': 2, 'en': 64, 'dropout': 0.0038955476678333195}. Best is trial 0 with value: 4.475115495891031.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+31/31 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step
+[I 2024-05-30 03:03:11,275] A new study created in memory with name: no-name-81778a68-f802-4bf3-a737-e31d980f3481
+TKAN UK y_1 3.567990949437315 1.3025362267006129 0.2 26.0
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+WARNING:tensorflow:5 out of the last 40 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x7f3c11b704c0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+WARNING:tensorflow:5 out of the last 17 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x7f3c1225fbe0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 03:16:28,311] Trial 0 finished with value: 1.5370867565923494 and parameters: {'lr': 0.024176711896468566, 'hs': 6, 'en': 295, 'dropout': 0.0024053455467317915}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 2s 262ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 03:32:14,146] Trial 1 finished with value: 174.27430043743308 and parameters: {'lr': 0.07469057936679645, 'hs': 7, 'en': 347, 'dropout': 0.0018763451300150564}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 03:46:45,168] Trial 2 finished with value: 181.42478222183885 and parameters: {'lr': 0.09210576938177997, 'hs': 5, 'en': 316, 'dropout': 0.0029414752556618587}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 04:07:14,465] Trial 3 finished with value: 7.9563368204394225 and parameters: {'lr': 0.021872660599103335, 'hs': 6, 'en': 455, 'dropout': 0.009538893610047915}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 04:24:16,888] Trial 4 finished with value: 500.0 and parameters: {'lr': 0.09400621127805094, 'hs': 3, 'en': 380, 'dropout': 0.007619215375066985}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 04:39:59,609] Trial 5 finished with value: 21.281342385693293 and parameters: {'lr': 0.061705512758691884, 'hs': 2, 'en': 347, 'dropout': 0.001502211024584334}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 04:41:34,653] Trial 6 finished with value: 339.72211952573855 and parameters: {'lr': 0.09611131232418148, 'hs': 2, 'en': 31, 'dropout': 0.0036230121282365886}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 04:52:29,997] Trial 7 finished with value: 5.307386444520733 and parameters: {'lr': 0.0017076472512679271, 'hs': 8, 'en': 239, 'dropout': 0.009966826765154774}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 04:57:43,068] Trial 8 finished with value: 172.75899721263374 and parameters: {'lr': 0.09615046044281243, 'hs': 7, 'en': 114, 'dropout': 0.0007397610827204635}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 05:05:55,129] Trial 9 finished with value: 339.6869549871376 and parameters: {'lr': 0.09356838419289802, 'hs': 6, 'en': 178, 'dropout': 0.00212630839773631}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 05:28:23,763] Trial 10 finished with value: 14.600898601338912 and parameters: {'lr': 0.03441071665267674, 'hs': 4, 'en': 499, 'dropout': 0.005192260433662636}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 05:38:39,204] Trial 11 finished with value: 14.135053191516391 and parameters: {'lr': 0.004736272147615558, 'hs': 8, 'en': 223, 'dropout': 0.006081077083604159}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 05:50:19,837] Trial 12 finished with value: 17.222904780845496 and parameters: {'lr': 0.0010578137051251782, 'hs': 8, 'en': 252, 'dropout': 0.008815284241690962}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 05:58:40,253] Trial 13 finished with value: 17.042784047627617 and parameters: {'lr': 0.022978461006781158, 'hs': 6, 'en': 182, 'dropout': 0.006777378089887468}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 06:10:55,068] Trial 14 finished with value: 14.333406641529008 and parameters: {'lr': 0.03984759479289298, 'hs': 7, 'en': 270, 'dropout': 0.004152452997391648}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 06:16:01,250] Trial 15 finished with value: 21.604470690347128 and parameters: {'lr': 0.01399604220465263, 'hs': 5, 'en': 111, 'dropout': 0.008102478887268583}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 06:35:07,630] Trial 16 finished with value: 166.90622745492786 and parameters: {'lr': 0.04773183161397433, 'hs': 8, 'en': 424, 'dropout': 5.658999729222158e-05}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 06:48:09,386] Trial 17 finished with value: 15.09716346556182 and parameters: {'lr': 0.01563555886552081, 'hs': 7, 'en': 288, 'dropout': 0.004927562888819362}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 3s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 06:56:56,198] Trial 18 finished with value: 15.391639149711784 and parameters: {'lr': 0.031723489190088855, 'hs': 5, 'en': 189, 'dropout': 0.009903672649167293}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 07:02:54,051] Trial 19 finished with value: 174.72953018363216 and parameters: {'lr': 0.009955528504452162, 'hs': 4, 'en': 127, 'dropout': 0.006208909968536893}. Best is trial 0 with value: 1.5370867565923494.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+10/10 ━━━━━━━━━━━━━━━━━━━━ 1s 33ms/step
+[I 2024-05-30 07:09:31,843] A new study created in memory with name: no-name-581cce34-6239-44e4-b5e9-1be7e81e0d3b
+TKAN UK y_6 21.534879344682494 3.9458987423380685 0.6 25.5
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 07:24:11,485] Trial 0 finished with value: 177.301377482514 and parameters: {'lr': 0.08690639262856382, 'hs': 4, 'en': 325, 'dropout': 0.009948042910374755}. Best is trial 0 with value: 177.301377482514.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 07:35:20,851] Trial 1 finished with value: 16.00623223253817 and parameters: {'lr': 0.06270628449525502, 'hs': 2, 'en': 248, 'dropout': 0.009757429031720891}. Best is trial 1 with value: 16.00623223253817.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 07:54:46,628] Trial 2 finished with value: 6.008036461120953 and parameters: {'lr': 0.010614218239750315, 'hs': 2, 'en': 430, 'dropout': 0.0008839120973378276}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 08:02:16,025] Trial 3 finished with value: 16.409596347739438 and parameters: {'lr': 0.07448878242130588, 'hs': 7, 'en': 165, 'dropout': 0.0018917376010216327}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 08:05:13,354] Trial 4 finished with value: 16.1046462125919 and parameters: {'lr': 0.03204621365590787, 'hs': 6, 'en': 61, 'dropout': 0.003653786568806329}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 08:09:53,720] Trial 5 finished with value: 15.989495369414433 and parameters: {'lr': 0.09322315164935109, 'hs': 4, 'en': 99, 'dropout': 0.0049326772935426935}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 08:22:19,430] Trial 6 finished with value: 16.06410637212274 and parameters: {'lr': 0.062258655807817226, 'hs': 4, 'en': 269, 'dropout': 0.008909997667090195}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 08:43:03,386] Trial 7 finished with value: 11.83106095261842 and parameters: {'lr': 0.013862105791877898, 'hs': 5, 'en': 458, 'dropout': 0.007287800145803631}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 08:54:26,304] Trial 8 finished with value: 177.86007467734171 and parameters: {'lr': 0.09112409325986975, 'hs': 7, 'en': 251, 'dropout': 0.004478960416479699}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 09:02:06,822] Trial 9 finished with value: 338.8116063851282 and parameters: {'lr': 0.0954913729747992, 'hs': 5, 'en': 167, 'dropout': 0.003524875751765799}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 09:24:24,139] Trial 10 finished with value: 16.022401348590197 and parameters: {'lr': 0.0038119563530002523, 'hs': 2, 'en': 493, 'dropout': 6.849135448445368e-05}. Best is trial 2 with value: 6.008036461120953.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 09:46:37,281] Trial 11 finished with value: 2.253398093531509 and parameters: {'lr': 0.0029284857597208294, 'hs': 3, 'en': 492, 'dropout': 0.006991348798021985}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 10:04:28,137] Trial 12 finished with value: 15.95946679747047 and parameters: {'lr': 0.03260329619830894, 'hs': 3, 'en': 394, 'dropout': 0.006912671076406992}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 10:22:37,716] Trial 13 finished with value: 15.963729522643865 and parameters: {'lr': 0.022187910101220672, 'hs': 2, 'en': 404, 'dropout': 0.006988314382380335}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 5s 624ms/step
+[I 2024-05-30 10:42:09,684] Trial 14 finished with value: 16.08600801794194 and parameters: {'lr': 0.0003166954656867657, 'hs': 3, 'en': 417, 'dropout': 0.0002420254729232664}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 48ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-30 10:59:33,130] Trial 15 finished with value: 171.98174893860335 and parameters: {'lr': 0.04090525459459054, 'hs': 3, 'en': 343, 'dropout': 0.0023619211365377957}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 11:21:41,523] Trial 16 finished with value: 7.5890021979985685 and parameters: {'lr': 0.02081080101786005, 'hs': 8, 'en': 467, 'dropout': 0.006372868015032396}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 11:44:39,296] Trial 17 finished with value: 7.468562981569036 and parameters: {'lr': 0.012059902017079557, 'hs': 3, 'en': 498, 'dropout': 0.005799474904040199}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 40ms/step
+[I 2024-05-30 12:00:07,604] Trial 18 finished with value: 15.9741157866101 and parameters: {'lr': 0.049583372268149954, 'hs': 2, 'en': 341, 'dropout': 0.007996462371665796}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 40ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 40ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 40ms/step
+[I 2024-05-30 12:17:21,682] Trial 19 finished with value: 6.433855942070607 and parameters: {'lr': 0.010389981611336653, 'hs': 4, 'en': 421, 'dropout': 0.001385462391146295}. Best is trial 11 with value: 2.253398093531509.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+10/10 ━━━━━━━━━━━━━━━━━━━━ 1s 31ms/step
+[I 2024-05-30 12:27:19,518] A new study created in memory with name: no-name-59bf8cc8-d70c-41f3-b35f-21177c70e49f
+TKAN UK y_10 1.138528160306101 0.8388577435106446 1.2 21.6
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 12:59:23,088] Trial 0 finished with value: 23.327895929644807 and parameters: {'lr': 0.029872919147430996, 'hs': 2, 'en': 266, 'dropout': 0.008014010721939068}. Best is trial 0 with value: 23.327895929644807.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 13:25:29,080] Trial 1 finished with value: 23.325584940374668 and parameters: {'lr': 0.029673692613312416, 'hs': 3, 'en': 191, 'dropout': 0.002701944279341071}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 14:23:08,179] Trial 2 finished with value: 23.496188669220732 and parameters: {'lr': 0.06695273596161351, 'hs': 7, 'en': 409, 'dropout': 0.00403514653228774}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 14:40:08,753] Trial 3 finished with value: 23.331015458064538 and parameters: {'lr': 0.05027651478799364, 'hs': 5, 'en': 123, 'dropout': 0.006027506956891605}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 15:14:56,232] Trial 4 finished with value: 23.37683990819632 and parameters: {'lr': 0.05127143119791619, 'hs': 2, 'en': 256, 'dropout': 0.005181160217206675}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+[I 2024-05-30 15:27:22,488] Trial 5 finished with value: 23.373824359261658 and parameters: {'lr': 0.02526432323607029, 'hs': 4, 'en': 86, 'dropout': 0.003463182872449706}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 16ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+[I 2024-05-30 16:18:36,076] Trial 6 finished with value: 341.40112819022835 and parameters: {'lr': 0.09732453386575303, 'hs': 7, 'en': 355, 'dropout': 0.009701390966814149}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+[I 2024-05-30 17:17:30,327] Trial 7 finished with value: 23.36921252685367 and parameters: {'lr': 0.041399120107006616, 'hs': 3, 'en': 415, 'dropout': 0.002944143979029694}. Best is trial 1 with value: 23.325584940374668.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 16ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 17:42:56,385] Trial 8 finished with value: 16.45403332052652 and parameters: {'lr': 0.0630357172740052, 'hs': 2, 'en': 170, 'dropout': 0.0005609058738487632}. Best is trial 8 with value: 16.45403332052652.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 18:05:33,463] Trial 9 finished with value: 16.393958651327406 and parameters: {'lr': 0.005588661253501407, 'hs': 3, 'en': 155, 'dropout': 0.0009500962081814056}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 18:10:37,582] Trial 10 finished with value: 16.50989510128055 and parameters: {'lr': 0.015717053549116827, 'hs': 5, 'en': 35, 'dropout': 7.763985904571565e-05}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 18:34:11,674] Trial 11 finished with value: 16.703306187273082 and parameters: {'lr': 0.001246706993612695, 'hs': 3, 'en': 173, 'dropout': 0.00029923495906846874}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+[I 2024-05-30 18:58:56,435] Trial 12 finished with value: 23.32985901037692 and parameters: {'lr': 0.0754810343308029, 'hs': 2, 'en': 181, 'dropout': 0.0015865581217733766}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 19:39:43,582] Trial 13 finished with value: 23.387973971096567 and parameters: {'lr': 0.06980370922323614, 'hs': 4, 'en': 297, 'dropout': 0.0012426010560462916}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 19:42:46,054] Trial 14 finished with value: 341.11588257732666 and parameters: {'lr': 0.0894965894841782, 'hs': 8, 'en': 22, 'dropout': 0.0017092101207794017}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 19:58:14,323] Trial 15 finished with value: 18.92943761565833 and parameters: {'lr': 0.00837697348215978, 'hs': 4, 'en': 113, 'dropout': 0.006310214717318556}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 16ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 20:26:23,957] Trial 16 finished with value: 23.440286277611218 and parameters: {'lr': 0.061931696828282395, 'hs': 3, 'en': 206, 'dropout': 0.0020936935617952403}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 21:07:36,229] Trial 17 finished with value: 23.529086808816814 and parameters: {'lr': 0.08175522586030076, 'hs': 2, 'en': 304, 'dropout': 0.004300289730071763}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 14ms/step
+[I 2024-05-30 21:18:00,634] Trial 18 finished with value: 23.45506695635954 and parameters: {'lr': 0.041379323562283285, 'hs': 6, 'en': 75, 'dropout': 0.0008570931218205612}. Best is trial 9 with value: 16.393958651327406.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 15ms/step
+[I 2024-05-30 21:38:07,287] Trial 19 finished with value: 0.7380832683912789 and parameters: {'lr': 0.05766511746413657, 'hs': 4, 'en': 143, 'dropout': 8.033190521408902e-05}. Best is trial 19 with value: 0.7380832683912789.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+31/31 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+[I 2024-05-30 21:48:30,055] A new study created in memory with name: no-name-d7f197d0-4896-47e0-97f8-8f6ef52b08e7
+TKAN UK y_2 0.483289451172448 0.45775279122353996 -1.1 25.8
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-30 22:11:17,143] Trial 0 finished with value: 8.64471509756702 and parameters: {'lr': 0.08341175159016452, 'hs': 8, 'en': 481, 'dropout': 0.002057681721249077}. Best is trial 0 with value: 8.64471509756702.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 22:32:23,622] Trial 1 finished with value: 3.8118520534770304 and parameters: {'lr': 0.008301491926798264, 'hs': 3, 'en': 450, 'dropout': 0.009241897552986229}. Best is trial 1 with value: 3.8118520534770304.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-30 22:54:35,301] Trial 2 finished with value: 3.5626970435849885 and parameters: {'lr': 0.008919164450117402, 'hs': 6, 'en': 474, 'dropout': 0.004920867091526442}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 23:01:43,578] Trial 3 finished with value: 25.245648020861108 and parameters: {'lr': 0.043984123512581755, 'hs': 7, 'en': 152, 'dropout': 0.006986498629737883}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-30 23:08:12,812] Trial 4 finished with value: 25.658418552063576 and parameters: {'lr': 0.06016287904298735, 'hs': 4, 'en': 137, 'dropout': 0.002603604811546837}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 23:20:00,127] Trial 5 finished with value: 176.15302011257128 and parameters: {'lr': 0.06841236904323206, 'hs': 3, 'en': 255, 'dropout': 0.0032471888844867423}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 23:34:24,554] Trial 6 finished with value: 18.00390863384732 and parameters: {'lr': 0.06827287036461499, 'hs': 5, 'en': 307, 'dropout': 0.008136752287428262}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 50ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+[I 2024-05-30 23:39:13,913] Trial 7 finished with value: 25.056752482985967 and parameters: {'lr': 0.07360868035967925, 'hs': 7, 'en': 94, 'dropout': 0.003945232611868044}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-30 23:50:59,469] Trial 8 finished with value: 25.084793131489125 and parameters: {'lr': 0.09301304509758071, 'hs': 7, 'en': 255, 'dropout': 0.00700628815059485}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 00:10:20,813] Trial 9 finished with value: 340.88580465119156 and parameters: {'lr': 0.08733899813708011, 'hs': 7, 'en': 422, 'dropout': 0.006861781366115959}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 00:26:23,981] Trial 10 finished with value: 4.339858812237338 and parameters: {'lr': 0.0013674284588497182, 'hs': 5, 'en': 348, 'dropout': 0.00042471468997941613}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-31 00:48:45,060] Trial 11 finished with value: 3.804371014171803 and parameters: {'lr': 0.005355086442611207, 'hs': 2, 'en': 490, 'dropout': 0.009127342367670294}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 01:06:41,728] Trial 12 finished with value: 18.17116853396067 and parameters: {'lr': 0.024613809848205152, 'hs': 2, 'en': 388, 'dropout': 0.005353499135408907}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 01:28:53,668] Trial 13 finished with value: 11.73118524213447 and parameters: {'lr': 0.020350494838669374, 'hs': 6, 'en': 487, 'dropout': 0.0098836366787029}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 8s 1s/step  
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-31 01:30:33,049] Trial 14 finished with value: 25.133448609764034 and parameters: {'lr': 0.038021678496804885, 'hs': 2, 'en': 30, 'dropout': 0.005716521632473481}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-31 01:48:59,399] Trial 15 finished with value: 10.212238448396997 and parameters: {'lr': 0.019742400703577932, 'hs': 4, 'en': 388, 'dropout': 0.004475540749852709}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 48ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-31 02:04:26,841] Trial 16 finished with value: 17.380563997040564 and parameters: {'lr': 0.032998223974519736, 'hs': 6, 'en': 328, 'dropout': 0.008450447588828715}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-31 02:27:49,780] Trial 17 finished with value: 25.06395568598011 and parameters: {'lr': 0.010548627904459273, 'hs': 4, 'en': 498, 'dropout': 0.001036718889089584}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-31 02:47:43,358] Trial 18 finished with value: 9.775547959025241 and parameters: {'lr': 0.0005858781542088104, 'hs': 6, 'en': 426, 'dropout': 0.005393970015980994}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+[I 2024-05-31 02:56:50,585] Trial 19 finished with value: 24.979782359543208 and parameters: {'lr': 0.0526885037062829, 'hs': 3, 'en': 198, 'dropout': 0.006184817663955547}. Best is trial 2 with value: 3.5626970435849885.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+10/10 ━━━━━━━━━━━━━━━━━━━━ 1s 34ms/step
+[I 2024-05-31 03:08:16,066] A new study created in memory with name: no-name-36b479fc-69d6-4e55-83fe-3324d323e250
+TKAN UK y_4 2.7482088868144787 1.0983302517890008 -4.2 26.2
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 03:18:57,326] Trial 0 finished with value: 341.13936418286846 and parameters: {'lr': 0.08558192010295054, 'hs': 7, 'en': 230, 'dropout': 0.00808268336108164}. Best is trial 0 with value: 341.13936418286846.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 03:37:10,370] Trial 1 finished with value: 21.485310040870683 and parameters: {'lr': 0.04733336963704754, 'hs': 2, 'en': 399, 'dropout': 0.008019557756030155}. Best is trial 1 with value: 21.485310040870683.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 03:51:52,166] Trial 2 finished with value: 21.577455115371247 and parameters: {'lr': 0.07698898772688655, 'hs': 2, 'en': 324, 'dropout': 0.009736656846937605}. Best is trial 1 with value: 21.485310040870683.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 04:02:37,525] Trial 3 finished with value: 500.0 and parameters: {'lr': 0.07439675969057831, 'hs': 5, 'en': 233, 'dropout': 0.0007778764758526298}. Best is trial 1 with value: 21.485310040870683.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-31 04:15:21,323] Trial 4 finished with value: 21.49173858739398 and parameters: {'lr': 0.05510992919748041, 'hs': 6, 'en': 276, 'dropout': 0.008629617695460104}. Best is trial 1 with value: 21.485310040870683.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 04:18:43,000] Trial 5 finished with value: 14.930169560377061 and parameters: {'lr': 0.09371465607818638, 'hs': 4, 'en': 71, 'dropout': 0.003363240160684109}. Best is trial 5 with value: 14.930169560377061.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 04:22:34,452] Trial 6 finished with value: 182.1761039557432 and parameters: {'lr': 0.0705960189126492, 'hs': 4, 'en': 80, 'dropout': 0.004004965493189816}. Best is trial 5 with value: 14.930169560377061.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 04:40:01,093] Trial 7 finished with value: 8.681094803613012 and parameters: {'lr': 0.05505819017530968, 'hs': 4, 'en': 380, 'dropout': 0.0008769117789056262}. Best is trial 7 with value: 8.681094803613012.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 04:54:21,701] Trial 8 finished with value: 169.64090281901886 and parameters: {'lr': 0.08136380318975552, 'hs': 8, 'en': 313, 'dropout': 0.0012694930354114897}. Best is trial 7 with value: 8.681094803613012.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 05:12:56,805] Trial 9 finished with value: 15.059369119225735 and parameters: {'lr': 0.04323477870217979, 'hs': 7, 'en': 401, 'dropout': 0.0034211124648958623}. Best is trial 7 with value: 8.681094803613012.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 51ms/step
+[I 2024-05-31 05:35:04,341] Trial 10 finished with value: 2.8717615795718268 and parameters: {'lr': 0.011212530064937977, 'hs': 4, 'en': 481, 'dropout': 0.005944751969601602}. Best is trial 10 with value: 2.8717615795718268.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 05:56:57,883] Trial 11 finished with value: 2.579970074907813 and parameters: {'lr': 0.005172392707625292, 'hs': 4, 'en': 482, 'dropout': 0.006272853346134689}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 47ms/step
+[I 2024-05-31 06:20:19,224] Trial 12 finished with value: 4.377913631637254 and parameters: {'lr': 0.0010945914957195034, 'hs': 5, 'en': 500, 'dropout': 0.006142134276148745}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 06:43:06,822] Trial 13 finished with value: 3.5849806511002904 and parameters: {'lr': 0.0010361338940721582, 'hs': 3, 'en': 476, 'dropout': 0.00586696222303062}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 07:04:15,695] Trial 14 finished with value: 15.813422940663841 and parameters: {'lr': 0.019743826854471267, 'hs': 3, 'en': 445, 'dropout': 0.006666994672787308}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 07:13:15,664] Trial 15 finished with value: 14.69862152010846 and parameters: {'lr': 0.01894147937788896, 'hs': 3, 'en': 189, 'dropout': 0.004748152536260472}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 07:20:58,308] Trial 16 finished with value: 10.555730613252594 and parameters: {'lr': 0.023826948781602977, 'hs': 6, 'en': 162, 'dropout': 0.007243313373821336}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 48ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 07:41:10,530] Trial 17 finished with value: 15.653389316810381 and parameters: {'lr': 0.03302298622077596, 'hs': 4, 'en': 434, 'dropout': 0.005517585263979031}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 07:57:22,762] Trial 18 finished with value: 181.01261877818195 and parameters: {'lr': 0.012904210823356334, 'hs': 5, 'en': 348, 'dropout': 0.002359518576183505}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 08:18:19,714] Trial 19 finished with value: 168.4402023648007 and parameters: {'lr': 0.03402881554674962, 'hs': 6, 'en': 454, 'dropout': 0.004842422581912982}. Best is trial 11 with value: 2.579970074907813.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+10/10 ━━━━━━━━━━━━━━━━━━━━ 1s 33ms/step
+[I 2024-05-31 08:29:33,512] A new study created in memory with name: no-name-d4089eca-5069-4498-a1db-910a970b7943
+TKAN UK y_5 2.0883690739115295 0.9287941325828222 0.6 25.7
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 08:32:27,266] Trial 0 finished with value: 177.55830981911868 and parameters: {'lr': 0.05595328545383983, 'hs': 7, 'en': 61, 'dropout': 0.0015977499008521404}. Best is trial 0 with value: 177.55830981911868.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-31 08:47:34,289] Trial 1 finished with value: 16.308347404191476 and parameters: {'lr': 0.032954936299426744, 'hs': 5, 'en': 330, 'dropout': 0.009653815485005678}. Best is trial 1 with value: 16.308347404191476.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 08:59:53,604] Trial 2 finished with value: 16.406698832319023 and parameters: {'lr': 0.007818775147044259, 'hs': 3, 'en': 266, 'dropout': 0.0009305681448242822}. Best is trial 1 with value: 16.308347404191476.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 09:05:02,374] Trial 3 finished with value: 16.376958144579387 and parameters: {'lr': 0.05331230891179574, 'hs': 3, 'en': 110, 'dropout': 0.005356697480421103}. Best is trial 1 with value: 16.308347404191476.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 48ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 47ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-31 09:23:31,429] Trial 4 finished with value: 16.297607677568777 and parameters: {'lr': 0.049504796436207525, 'hs': 2, 'en': 405, 'dropout': 0.008540512548787942}. Best is trial 4 with value: 16.297607677568777.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 55ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 62ms/step
+[I 2024-05-31 09:37:36,912] Trial 5 finished with value: 12.759963381505463 and parameters: {'lr': 0.06964147522610806, 'hs': 5, 'en': 296, 'dropout': 0.006681901279515496}. Best is trial 5 with value: 12.759963381505463.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-31 14:08:41,879] Trial 10 finished with value: 4.1492515374550605 and parameters: {'lr': 0.0008829757431717811, 'hs': 8, 'en': 473, 'dropout': 0.00925645711393313}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 46ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 14:33:48,831] Trial 11 finished with value: 1.909023465197236 and parameters: {'lr': 0.0020587583169559436, 'hs': 8, 'en': 497, 'dropout': 0.009930905039592545}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 14:52:17,398] Trial 12 finished with value: 16.23733979162582 and parameters: {'lr': 0.025947891894311324, 'hs': 8, 'en': 400, 'dropout': 0.009927824724736523}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 15:14:47,720] Trial 13 finished with value: 7.482321750319438 and parameters: {'lr': 0.027920778814698614, 'hs': 5, 'en': 486, 'dropout': 0.004536923462520938}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+[I 2024-05-31 15:33:06,480] Trial 14 finished with value: 2.4389002657605516 and parameters: {'lr': 0.00790365370244906, 'hs': 8, 'en': 375, 'dropout': 0.008110517789849121}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 15:56:58,239] Trial 15 finished with value: 177.2164633079683 and parameters: {'lr': 0.035303132627951817, 'hs': 2, 'en': 498, 'dropout': 0.004480604234691177}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 16:13:31,605] Trial 16 finished with value: 7.559547868375829 and parameters: {'lr': 0.014250598040141315, 'hs': 6, 'en': 355, 'dropout': 0.006996603905999144}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+[I 2024-05-31 16:32:48,434] Trial 17 finished with value: 2.3585877724267923 and parameters: {'lr': 0.0012161857982646669, 'hs': 4, 'en': 418, 'dropout': 0.005533203253632787}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 44ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step
+[I 2024-05-31 16:53:59,852] Trial 18 finished with value: 11.53036646893491 and parameters: {'lr': 0.03783449197347013, 'hs': 8, 'en': 447, 'dropout': 0.007634435861893241}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 45ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 41ms/step
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 42ms/step
+[I 2024-05-31 17:09:05,005] Trial 19 finished with value: 11.678521153542833 and parameters: {'lr': 0.01991849743061518, 'hs': 6, 'en': 320, 'dropout': 0.009975992878681018}. Best is trial 6 with value: 1.5482431502455238.
+/home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
+  warnings.warn(
+10/10 ━━━━━━━━━━━━━━━━━━━━ 1s 35ms/step
+TKAN UK y_9 1.9528203477180548 0.9929126975165555 0.4 21.5

@@ -1,4 +1,4 @@
-from sklearn.neural_network import MLPRegressor
+from _multilayer_perceptron import MLPRegressor
 
 class MLPRB(MLPRegressor):
     def __init__(

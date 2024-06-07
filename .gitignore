@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 data/
+Deep-Forest/
+deep-forest/
 *.py[cod]
 *$py.class
 
