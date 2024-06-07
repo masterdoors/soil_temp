@@ -15,6 +15,18 @@ from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples
 
 from joblib import Parallel, delayed
 
+import cProfile
+
+def profile(func):
+    """Decorator for run function profile"""
+    def wrapper(*args, **kwargs):
+        profile_filename = func.__name__ + '.prof'
+        profiler = cProfile.Profile()
+        result = profiler.runcall(func, *args, **kwargs)
+        profiler.dump_stats(profile_filename)
+        return result
+    return wrapper
+
 def kfoldtrain(k,X,y,train_idx, dummy_estimator_,sample_weight):
     estimator = copy.deepcopy(dummy_estimator_)
 
@@ -63,49 +75,51 @@ class KFoldWrapper(object):
         """Return the list of internal estimators."""
         return self.estimators_
 
-    # def fit(self, X, y, y_, raw_predictions,rp_old,k,sample_weight=None):
-    #     splitter = KFold(
-    #         n_splits=self.n_splits,
-    #         shuffle=True,
-    #         random_state=self.random_state,
-    #     )
-    #     self.lr = []
-    #     for i, (train_idx, val_idx) in enumerate(splitter.split(X, y)):
-    #         estimator = copy.deepcopy(self.dummy_estimator_)
-
-    #         # Fit on training samples
-    #         if sample_weight is None:
-    #             # Notice that a bunch of base estimators do not take
-    #             # `sample_weight` as a valid input.
-    #             estimator.fit(X[train_idx], y[train_idx])
-    #         else:
-    #             estimator.fit(
-    #                 X[train_idx], y[train_idx], sample_weight[train_idx]
-    #             )
-                
-    #         self.update_terminal_regions(estimator, X, y_, raw_predictions, rp_old,sample_weight,i, k, train_idx, val_idx) 
-            
-    #         self.estimators_.append(estimator) 
-            
-            
+    @profile
     def fit(self, X, y, y_, raw_predictions,rp_old,k,sample_weight=None):
-        estimator = copy.deepcopy(self.dummy_estimator_)
+        splitter = KFold(
+            n_splits=self.n_splits,
+            shuffle=True,
+            random_state=self.random_state,
+        )
         self.lr = []
+        for i, (train_idx, val_idx) in enumerate(splitter.split(X, y)):
+            #print(i)
+            estimator = copy.deepcopy(self.dummy_estimator_)
 
-        print ("Fit forest")
-        # Fit on training samples
-        if sample_weight is None:
+            # Fit on training samples
+            if sample_weight is None:
+                # Notice that a bunch of base estimators do not take
+                # `sample_weight` as a valid input.
+                estimator.fit(X[train_idx], y[train_idx])
+            else:
+                estimator.fit(
+                    X[train_idx], y[train_idx], sample_weight[train_idx]
+                )
+                
+            self.update_terminal_regions(estimator, X, y_, raw_predictions, rp_old,sample_weight,i, k, train_idx, val_idx) 
+            
+            self.estimators_.append(estimator) 
+            
+            
+    #def fit(self, X, y, y_, raw_predictions,rp_old,k,sample_weight=None):
+    #    estimator = copy.deepcopy(self.dummy_estimator_)
+    #    self.lr = []
+
+    #    print ("Fit forest")
+    #    # Fit on training samples
+    #    if sample_weight is None:
             # Notice that a bunch of base estimators do not take
             # `sample_weight` as a valid input.
-            estimator.fit(X, y)
-        else:
-            estimator.fit(
-                X, y, sample_weight
-            )
-        print("Fit reg")    
-        self.update_terminal_regions(estimator, X, y_, raw_predictions, rp_old,sample_weight,0, k) 
+    #        estimator.fit(X, y)
+    #    else:
+    #        estimator.fit(
+    #            X, y, sample_weight
+    #        )
+    #    print("Fit reg")    
+    #    self.update_terminal_regions(estimator, X, y_, raw_predictions, rp_old,sample_weight,0, k) 
         
-        self.estimators_.append(estimator)  
+    #    self.estimators_.append(estimator)  
             
     def getIndicators(self, estimator, X, sampled = True, do_sample = True):
         Is = []
@@ -139,15 +153,15 @@ class KFoldWrapper(object):
         return np.hstack(Is)            
                     
 
-    def update_terminal_regions(self,e, X, y,raw_predictions, rp_old, sample_weight, i, k):
+    def update_terminal_regions(self,e, X, y,raw_predictions, rp_old, sample_weight, i, k,train_idx,val_idx):
         bias = rp_old[:,k]
         self.lr.append(copy.deepcopy(self.dummy_lin))            
         
-        I = self.getIndicators(e, X, False)
+        I = self.getIndicators(e, X[train_idx], do_sample = False)
   
-        self.lr[i].fit(I, y, bias = bias, sample_weight = sample_weight)
-        I = self.getIndicators(e, X,do_sample = False)
-        raw_predictions[:,k] += self.factor*self.lr[i].decision_function(I) 
+        self.lr[i].fit(I, y[train_idx], bias = bias[train_idx], sample_weight = sample_weight[train_idx])
+        I = self.getIndicators(e, X[val_idx],do_sample = False)
+        raw_predictions[val_idx,k] += self.factor*self.lr[i].decision_function(I) 
     
     def predict(self, X):
         n_samples, _ = X.shape
@@ -155,4 +169,4 @@ class KFoldWrapper(object):
         for i, estimator in enumerate(self.estimators_):
             I = self.getIndicators(estimator, X, do_sample = False)
             out += self.lr[i].decision_function(I)  # classification
-        return self.factor * out #/ self.n_splits  # return the average prediction
+        return self.factor * out / self.n_splits  # return the average prediction

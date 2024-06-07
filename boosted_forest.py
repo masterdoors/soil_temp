@@ -216,8 +216,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         due to early stopping.
         """
 
-        print("Init: ", raw_predictions[:5])
-        
         binner_ = Binner(
             n_bins=self.n_bins,
             bin_subsample=self.bin_subsample,
@@ -323,11 +321,11 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 # for X_val after the addition of the current stage
                 next_ = next(y_val_pred_iter)
                 validation_loss = loss_(y_val, next_, sample_weight_val)
-                if self.loss in {"squared_error", "absolute_error", "huber", "quantile"}:
-                    print("val loss: ", validation_loss)
-                else:    
-                    encoded_classes = np.argmax(next_, axis=1)
-                    print("val loss: ", validation_loss, "val_acc: ", accuracy_score(encoded_classes,y_val))
+                #if self.loss in {"squared_error", "absolute_error", "huber", "quantile"}:
+                #    print("val loss: ", validation_loss)
+                #else:    
+                #    encoded_classes = np.argmax(next_, axis=1)
+                #    print("val loss: ", validation_loss, "val_acc: ", accuracy_score(encoded_classes,y_val))
 
                 # Require validation_score to be better (less) than at least
                 # one of the last n_iter_no_change evaluations
@@ -375,7 +373,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=10
+            n_estimators=100
         )  
         
         restimator = ExtraTreesRegressor(
@@ -390,7 +388,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=10
+            n_estimators=100
         )        
 
         residual = - loss.gradient(
@@ -436,7 +434,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                         self.lin_estimator,
                         self.n_splits,
                         self.C,
-                        1. / self.n_estimators,
+                        pow(self.learning_rate,i) / self.n_estimators,
                         self.random_state,
                         self.verbose
                     )
@@ -446,7 +444,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                         self.lin_estimator,
                         self.n_splits,
                         self.C,
-                        1. / self.n_estimators,
+                        pow(self.learning_rate,i) / self.n_estimators,
                         self.random_state,
                         self.verbose
                     )                       
@@ -776,12 +774,13 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         #                                tol = 0.00000000000001,
         #                               verbose = 0)
 
-        self.lin_estimator = MLPRB(hidden_layer_sizes=(100,),
-                                   max_iter=2000,
+        self.lin_estimator = MLPRB(hidden_layer_sizes=(10,),
+                                   max_iter=200,
                                    tol = 0.0000001,
                                    n_iter_no_change=20,
-                                   batch_size=8,
-                                   learning_rate_init=0.01,
+                                   batch_size=64,
+                                   learning_rate_init=0.0001,
+                                   solver="adam",
                                    verbose = False)
 
     def _encode_y(self, y=None, sample_weight=None):
