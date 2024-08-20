@@ -734,6 +734,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         n_iter_no_change=None,
         tol=1e-4,
         ccp_alpha=0.0,
+        hidden_size = 10,
     ):
         super().__init__(
             loss=loss,
@@ -760,21 +761,8 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
             tol=tol,
             ccp_alpha=ccp_alpha,
         )
-        #self.lin_estimator = Ridge(alpha=1. / self.C,
-        #                        fit_intercept=False,
-        #                        positive=False,
-        #                        solver='lsqr',
-        #                        max_iter=100000)
-    
-        #self.lin_estimator = LinearSVRB(C = self.C,
-        #                        fit_intercept=False,
-        #                        max_iter=100000000,
-        #                        dual = True,
-        #                                loss = "squared_epsilon_insensitive",
-        #                                tol = 0.00000000000001,
-        #                               verbose = 0)
-
-        self.lin_estimator = MLPRB(hidden_layer_sizes=(10,),
+        self.hidden_size = hidden_size
+        self.lin_estimator = MLPRB(hidden_layer_sizes=(hidden_size,),
                                    max_iter=200,
                                    tol = 0.0000001,
                                    n_iter_no_change=20,
