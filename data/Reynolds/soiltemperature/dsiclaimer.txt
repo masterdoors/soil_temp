@@ -1,0 +1,8 @@
+We have made every attempt to present data free from errors of either omission or 
+commission but, as in any human endeavor, there will be errors.  This does not diminish 
+the value of these data to the scientific community. Ultimately, the users of these data are 
+responsible for ensuring that the quality of the data is sufficient for their intended uses. If 
+you plan to use these data in such a way that any errors in the data would have severe 
+consequences you should contact the authors of the relevant Water Resources Research 
+papers to access the original raw data and do any additional data reduction to meet your 
+own specific needs. 
