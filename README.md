@@ -2,8 +2,11 @@
 
 ## Main files and folders:
 --data - dataset folder
+
 --test_outputs - experiment log folder
+
 --test_outputs/build_table.ipynb - a notebook to build the experiment result table.
+
 --boosted_forest.py - Scikit-learn-based (slow) implementation of Boosted Forest
 
 ## Setup
