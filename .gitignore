@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-data/
+data/UK/catalogue.ceh.ac.uk
 Deep-Forest/
 deep-forest/
 *.py[cod]
