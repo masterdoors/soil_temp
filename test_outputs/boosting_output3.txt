@@ -1,0 +1,67 @@
+[I 2024-06-07 10:41:19,496] A new study created in memory with name: no-name-2e54c22d-2a0c-4581-a6a9-f709245e50d8
+[I 2024-06-07 10:51:37,805] Trial 0 finished with value: 0.05437191536329946 and parameters: {'layers': 13, 'max_depth': 2, 'C': 1432}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 11:05:38,580] Trial 1 finished with value: 0.05810020045154552 and parameters: {'layers': 11, 'max_depth': 1, 'C': 905}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 11:21:47,045] Trial 2 finished with value: 0.05668192144342643 and parameters: {'layers': 9, 'max_depth': 2, 'C': 595}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 11:27:44,936] Trial 3 finished with value: 0.24269400993766102 and parameters: {'layers': 5, 'max_depth': 1, 'C': 919}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 11:33:36,674] Trial 4 finished with value: 0.238953319244557 and parameters: {'layers': 5, 'max_depth': 1, 'C': 1258}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 11:47:46,068] Trial 5 finished with value: 0.06587354192345057 and parameters: {'layers': 6, 'max_depth': 3, 'C': 600}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 11:53:28,676] Trial 6 finished with value: 0.25319114341203536 and parameters: {'layers': 5, 'max_depth': 1, 'C': 1764}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 12:07:31,241] Trial 7 finished with value: 0.06046741265899166 and parameters: {'layers': 10, 'max_depth': 3, 'C': 1407}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 12:24:20,997] Trial 8 finished with value: 0.06468812232399854 and parameters: {'layers': 15, 'max_depth': 3, 'C': 1751}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 12:40:24,369] Trial 9 finished with value: 0.05767880166167876 and parameters: {'layers': 12, 'max_depth': 2, 'C': 1025}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 13:01:26,966] Trial 10 finished with value: 0.06312131122863192 and parameters: {'layers': 15, 'max_depth': 2, 'C': 9}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 13:14:29,576] Trial 11 finished with value: 0.06043930357647257 and parameters: {'layers': 8, 'max_depth': 2, 'C': 450}. Best is trial 0 with value: 0.05437191536329946.
+[I 2024-06-07 13:28:50,203] Trial 12 finished with value: 0.05434392942347449 and parameters: {'layers': 13, 'max_depth': 2, 'C': 420}. Best is trial 12 with value: 0.05434392942347449.
+[I 2024-06-07 13:43:58,420] Trial 13 finished with value: 0.05894705315721033 and parameters: {'layers': 13, 'max_depth': 2, 'C': 25}. Best is trial 12 with value: 0.05434392942347449.
+[I 2024-06-07 13:57:06,112] Trial 14 finished with value: 0.056076007436231 and parameters: {'layers': 13, 'max_depth': 2, 'C': 1990}. Best is trial 12 with value: 0.05434392942347449.
+[I 2024-06-07 14:11:19,915] Trial 15 finished with value: 0.06266468181167675 and parameters: {'layers': 13, 'max_depth': 3, 'C': 323}. Best is trial 12 with value: 0.05434392942347449.
+[I 2024-06-07 14:23:18,696] Trial 16 finished with value: 0.05222851410819499 and parameters: {'layers': 14, 'max_depth': 2, 'C': 1328}. Best is trial 16 with value: 0.05222851410819499.
+[I 2024-06-07 14:40:27,840] Trial 17 finished with value: 0.05809032635626795 and parameters: {'layers': 15, 'max_depth': 1, 'C': 1175}. Best is trial 16 with value: 0.05222851410819499.
+[I 2024-06-07 14:53:36,493] Trial 18 finished with value: 0.055810689395592916 and parameters: {'layers': 14, 'max_depth': 2, 'C': 732}. Best is trial 16 with value: 0.05222851410819499.
+[I 2024-06-07 15:07:48,202] Trial 19 finished with value: 0.06251999787019151 and parameters: {'layers': 11, 'max_depth': 3, 'C': 269}. Best is trial 16 with value: 0.05222851410819499.
+[I 2024-06-07 15:13:50,381] A new study created in memory with name: no-name-a5aac984-000e-4abb-9651-8d790fd07013
+Boosted Forest Reynolds y_7 0.07439915809524969 0.17089065589181748 -4.6 25.6
+[I 2024-06-07 15:26:23,151] Trial 0 finished with value: 0.10217841457391101 and parameters: {'layers': 11, 'max_depth': 3, 'C': 181}. Best is trial 0 with value: 0.10217841457391101.
+[I 2024-06-07 15:39:58,023] Trial 1 finished with value: 0.1085960062271365 and parameters: {'layers': 14, 'max_depth': 2, 'C': 819}. Best is trial 0 with value: 0.10217841457391101.
+[I 2024-06-07 15:51:54,898] Trial 2 finished with value: 0.10519515547681606 and parameters: {'layers': 6, 'max_depth': 3, 'C': 808}. Best is trial 0 with value: 0.10217841457391101.
+[I 2024-06-07 16:02:34,630] Trial 3 finished with value: 0.1000460108925244 and parameters: {'layers': 5, 'max_depth': 2, 'C': 1693}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 16:10:59,673] Trial 4 finished with value: 0.12697781556935242 and parameters: {'layers': 7, 'max_depth': 1, 'C': 497}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 16:20:42,720] Trial 5 finished with value: 0.11369151114791642 and parameters: {'layers': 8, 'max_depth': 1, 'C': 1141}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 16:31:13,496] Trial 6 finished with value: 0.10088026603125781 and parameters: {'layers': 5, 'max_depth': 2, 'C': 598}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 16:43:32,052] Trial 7 finished with value: 0.10361485123053997 and parameters: {'layers': 15, 'max_depth': 3, 'C': 587}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 16:55:21,894] Trial 8 finished with value: 0.10524683528925154 and parameters: {'layers': 14, 'max_depth': 3, 'C': 1435}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 17:08:27,612] Trial 9 finished with value: 0.1011138758930019 and parameters: {'layers': 8, 'max_depth': 2, 'C': 237}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 17:22:07,793] Trial 10 finished with value: 0.10848428558404655 and parameters: {'layers': 11, 'max_depth': 1, 'C': 1958}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 17:33:29,444] Trial 11 finished with value: 0.10279280210700022 and parameters: {'layers': 5, 'max_depth': 2, 'C': 1977}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 17:43:32,946] Trial 12 finished with value: 0.10053805679731155 and parameters: {'layers': 5, 'max_depth': 2, 'C': 1519}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 17:57:25,685] Trial 13 finished with value: 0.10416616424689064 and parameters: {'layers': 9, 'max_depth': 2, 'C': 1516}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 18:08:36,020] Trial 14 finished with value: 0.10327048095782777 and parameters: {'layers': 6, 'max_depth': 2, 'C': 1619}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 18:20:39,189] Trial 15 finished with value: 0.10991070466349993 and parameters: {'layers': 10, 'max_depth': 1, 'C': 1291}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 18:30:31,219] Trial 16 finished with value: 0.10404632203592723 and parameters: {'layers': 5, 'max_depth': 2, 'C': 1714}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 18:39:11,882] Trial 17 finished with value: 0.1304310826294218 and parameters: {'layers': 7, 'max_depth': 1, 'C': 1729}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 18:54:18,713] Trial 18 finished with value: 0.1029186885557863 and parameters: {'layers': 12, 'max_depth': 2, 'C': 1214}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 19:05:14,538] Trial 19 finished with value: 0.1051987549589745 and parameters: {'layers': 7, 'max_depth': 3, 'C': 1821}. Best is trial 3 with value: 0.1000460108925244.
+[I 2024-06-07 19:10:01,219] A new study created in memory with name: no-name-bf4a0ecf-4e04-4e2e-9094-ec26bde6deaf
+Boosted Forest Reynolds y_6 0.09537832769763327 0.2173580983090758 -4.5 26.4
+[I 2024-06-07 19:23:44,640] Trial 0 finished with value: 0.28501960816296273 and parameters: {'layers': 12, 'max_depth': 3, 'C': 1191}. Best is trial 0 with value: 0.28501960816296273.
+[I 2024-06-07 19:36:45,528] Trial 1 finished with value: 0.2810012469420604 and parameters: {'layers': 12, 'max_depth': 1, 'C': 1101}. Best is trial 1 with value: 0.2810012469420604.
+[I 2024-06-07 19:47:18,401] Trial 2 finished with value: 0.2768641688503018 and parameters: {'layers': 10, 'max_depth': 2, 'C': 852}. Best is trial 2 with value: 0.2768641688503018.
+[I 2024-06-07 20:00:56,920] Trial 3 finished with value: 0.2758316760777331 and parameters: {'layers': 11, 'max_depth': 1, 'C': 657}. Best is trial 3 with value: 0.2758316760777331.
+[I 2024-06-07 20:13:00,316] Trial 4 finished with value: 0.27114868736444325 and parameters: {'layers': 15, 'max_depth': 2, 'C': 1268}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 20:31:16,399] Trial 5 finished with value: 0.2714729998981482 and parameters: {'layers': 15, 'max_depth': 1, 'C': 1538}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 20:39:41,160] Trial 6 finished with value: 0.27349612536303086 and parameters: {'layers': 10, 'max_depth': 2, 'C': 281}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 20:55:54,387] Trial 7 finished with value: 0.2726493871903261 and parameters: {'layers': 15, 'max_depth': 1, 'C': 699}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 21:07:57,302] Trial 8 finished with value: 0.27853520344450744 and parameters: {'layers': 10, 'max_depth': 1, 'C': 1170}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 21:15:22,394] Trial 9 finished with value: 0.27379762407870906 and parameters: {'layers': 15, 'max_depth': 2, 'C': 1260}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 21:22:36,109] Trial 10 finished with value: 0.28189772241708366 and parameters: {'layers': 5, 'max_depth': 3, 'C': 1960}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 21:29:53,502] Trial 11 finished with value: 0.2741110990884254 and parameters: {'layers': 14, 'max_depth': 2, 'C': 1741}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 21:38:31,511] Trial 12 finished with value: 0.28438626526264504 and parameters: {'layers': 7, 'max_depth': 3, 'C': 1565}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 21:53:54,778] Trial 13 finished with value: 0.27971253907726795 and parameters: {'layers': 13, 'max_depth': 1, 'C': 1511}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 22:02:48,203] Trial 14 finished with value: 0.27414710230682826 and parameters: {'layers': 8, 'max_depth': 2, 'C': 1477}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 22:18:43,294] Trial 15 finished with value: 0.27512416417234253 and parameters: {'layers': 14, 'max_depth': 1, 'C': 1959}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 22:26:39,421] Trial 16 finished with value: 0.2809708024047561 and parameters: {'layers': 15, 'max_depth': 3, 'C': 406}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 22:34:35,573] Trial 17 finished with value: 0.2732758955593723 and parameters: {'layers': 13, 'max_depth': 2, 'C': 1743}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 22:50:19,146] Trial 18 finished with value: 0.2724705642244403 and parameters: {'layers': 13, 'max_depth': 1, 'C': 34}. Best is trial 4 with value: 0.27114868736444325.
+[I 2024-06-07 22:58:13,957] Trial 19 finished with value: 0.2759008436143704 and parameters: {'layers': 8, 'max_depth': 2, 'C': 1346}. Best is trial 4 with value: 0.27114868736444325.
+Boosted Forest Reynolds y_5 0.23814206321982911 0.3454182807478124 -6.4 28.3
+Boosted Forest UK y_5 0.2044636559507683 0.33502045535183433 0.6 23.7

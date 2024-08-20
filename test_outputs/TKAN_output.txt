@@ -42,7 +42,7 @@ TKAN Reynolds y_8 0.07420086946620286 0.16770841693044058 1.3 24.2
 [I 2024-05-27 19:51:29,565] Trial 18 finished with value: 57.940909788403566 and parameters: {'lr': 0.09919394167122245, 'hs': 7, 'en': 46, 'dropout': 0.0026529833870255295}. Best is trial 9 with value: 21.63760983896253.
 [I 2024-05-27 19:55:22,369] Trial 19 finished with value: 58.58964539820327 and parameters: {'lr': 0.02900093793665767, 'hs': 4, 'en': 221, 'dropout': 0.008697651993537977}. Best is trial 9 with value: 21.63760983896253.
 [I 2024-05-27 19:57:39,930] A new study created in memory with name: no-name-c6200572-c902-479e-a08a-428399f98c56
-TKAN Reynolds y_7 53.565438783419786 6.419851389142121 -5.8 25.3
+TKAN Reynolds y_7 0.07136703022126561 0.19009613985715268 -5.8 25.3
 [I 2024-05-27 20:04:49,516] Trial 0 finished with value: 74.15888193505884 and parameters: {'lr': 0.009585413561292324, 'hs': 3, 'en': 425, 'dropout': 0.0018790758024850615}. Best is trial 0 with value: 74.15888193505884.
 [I 2024-05-27 20:12:51,346] Trial 1 finished with value: 74.33550559585728 and parameters: {'lr': 0.0007188262040098962, 'hs': 5, 'en': 478, 'dropout': 0.005862821600175321}. Best is trial 0 with value: 74.15888193505884.
 [I 2024-05-27 20:17:50,252] Trial 2 finished with value: 53.91548035330911 and parameters: {'lr': 0.008524184153109318, 'hs': 3, 'en': 289, 'dropout': 0.009223499553774106}. Best is trial 2 with value: 53.91548035330911.
@@ -151,7 +151,7 @@ TKAN Reynolds y_1 4.66800137924107 1.4391857426742025 -5.5 40.3
 [I 2024-05-28 03:49:09,480] Trial 18 finished with value: 4.133672890485985 and parameters: {'lr': 0.04251130663627128, 'hs': 5, 'en': 315, 'dropout': 0.0042529768901913645}. Best is trial 18 with value: 4.133672890485985.
 [I 2024-05-28 03:54:40,765] Trial 19 finished with value: 62.64806100478565 and parameters: {'lr': 0.04010788565846459, 'hs': 3, 'en': 322, 'dropout': 0.003877834415754449}. Best is trial 18 with value: 4.133672890485985.
 [I 2024-05-28 03:57:20,967] A new study created in memory with name: no-name-92feea88-3b12-4707-abbd-c980b084ea73
-TKAN Reynolds y_6 57.18140382739468 6.679413725729702 -6.5 26.1
+TKAN Reynolds y_6 0.1653981386186812 0.2959259006644593 -2.7 26.8
 [I 2024-05-28 04:06:17,241] Trial 0 finished with value: 93.13509505314362 and parameters: {'lr': 0.07432044644226674, 'hs': 8, 'en': 418, 'dropout': 0.009801435915810315}. Best is trial 0 with value: 93.13509505314362.
 [I 2024-05-28 04:11:04,865] Trial 1 finished with value: 127.35681890344222 and parameters: {'lr': 0.0834526087543204, 'hs': 4, 'en': 219, 'dropout': 0.005469494093595233}. Best is trial 0 with value: 93.13509505314362.
 [I 2024-05-28 04:16:23,254] Trial 2 finished with value: 85.90632972369087 and parameters: {'lr': 0.00869650769695973, 'hs': 7, 'en': 244, 'dropout': 0.009991151173984737}. Best is trial 2 with value: 85.90632972369087.
@@ -281,8 +281,10 @@ TKAN UK y_7 20.1650906057103 3.787631224745501 1.3 23.7
 [I 2024-05-29 13:09:40,302] Trial 18 finished with value: 23.896777621487644 and parameters: {'lr': 0.04350574306858042, 'hs': 7, 'en': 198, 'dropout': 0.008243782265085722}. Best is trial 5 with value: 2.42967255940454.
 [I 2024-05-29 13:16:30,818] Trial 19 finished with value: 17.781063704901822 and parameters: {'lr': 0.015573165116764409, 'hs': 8, 'en': 111, 'dropout': 0.0029657616420809057}. Best is trial 5 with value: 2.42967255940454.
 [I 2024-05-29 13:22:47,617] A new study created in memory with name: no-name-759cadb7-43b5-42d4-bcfd-1fc1a0bf1c38
-TKAN UK y_3 24.64667726653964 4.162749994309802 -0.2 26.4
+TKAN UK y_3 2.4966794040798663 1.1099006017749518 0.3 26.8
 [I 2024-05-29 14:21:13,507] Trial 0 finished with value: 181.79807103082308 and parameters: {'lr': 0.07927755786126911, 'hs': 3, 'en': 347, 'dropout': 0.0004875422806380205}. Best is trial 0 with value: 181.79807103082308.
 [I 2024-05-29 15:29:21,235] Trial 1 finished with value: 22.54595448854499 and parameters: {'lr': 0.0002870771000804608, 'hs': 8, 'en': 402, 'dropout': 0.00847661597647734}. Best is trial 1 with value: 22.54595448854499.
 [I 2024-05-29 15:59:28,894] Trial 2 finished with value: 181.81376881062576 and parameters: {'lr': 0.08022578609415049, 'hs': 4, 'en': 175, 'dropout': 0.0010222259062208985}. Best is trial 1 with value: 22.54595448854499.
 [I 2024-05-29 16:22:01,467] Trial 3 finished with value: 22.948582301947994 and parameters: {'lr': 0.09511870215234339, 'hs': 7, 'en': 131, 'dropout': 0.00911275876501277}. Best is trial 1 with value: 22.54595448854499.
+TKAN Reynolds y_4 8.419588704770634 2.0384203948418023 -7.3 24.9
+

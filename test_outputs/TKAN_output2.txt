@@ -417,7 +417,7 @@ WARNING:tensorflow:5 out of the last 17 calls to <function TensorFlowTrainer.mak
   warnings.warn(
 10/10 ━━━━━━━━━━━━━━━━━━━━ 1s 33ms/step
 [I 2024-05-30 07:09:31,843] A new study created in memory with name: no-name-581cce34-6239-44e4-b5e9-1be7e81e0d3b
-TKAN UK y_6 21.534879344682494 3.9458987423380685 0.6 25.5
+TKAN UK y_6 0.3104318644632302 0.4156965033795706 0.9 24.9
 /home/keen/.pyenv/versions/3.10.13/lib/python3.10/site-packages/keras/src/layers/core/input_layer.py:25: UserWarning: Argument `input_shape` is deprecated. Use `shape` instead.
   warnings.warn(
 8/8 ━━━━━━━━━━━━━━━━━━━━ 1s 43ms/step

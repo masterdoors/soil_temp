@@ -1,0 +1,588 @@
+2024-06-14 11:21:53.291544: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-14 11:21:53.293736: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-14 11:21:53.321826: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-06-14 11:21:54.068169: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+[I 2024-06-14 11:21:54,717] A new study created in memory with name: no-name-586aa393-5117-4a85-9349-1e197b9b98eb
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 11:46:09,881] Trial 0 finished with value: 1.8657732355666088 and parameters: {'lr': 0.00714620501330995, 'hs': 2, 'en': 432, 'dropout': 0.07461908404047646}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 12:03:17,961] Trial 1 finished with value: 3.7184533518921916 and parameters: {'lr': 0.09025212526244031, 'hs': 8, 'en': 295, 'dropout': 0.17960881639797127}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 12:15:44,988] Trial 2 finished with value: 2.015734033368856 and parameters: {'lr': 0.034648995941477204, 'hs': 5, 'en': 222, 'dropout': 0.09984834610241468}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 12:36:41,869] Trial 3 finished with value: 2.451190953774689 and parameters: {'lr': 0.08137550131406807, 'hs': 7, 'en': 368, 'dropout': 0.14686701437597272}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 12:55:38,671] Trial 4 finished with value: 3.7066107866183287 and parameters: {'lr': 0.073613632084633, 'hs': 4, 'en': 333, 'dropout': 0.156786802195572}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 13:09:46,499] Trial 5 finished with value: 2.3028123864601198 and parameters: {'lr': 0.013580974031405482, 'hs': 2, 'en': 247, 'dropout': 0.1396118375240586}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 13:30:09,782] Trial 6 finished with value: 3.322771580226618 and parameters: {'lr': 0.03607090246062046, 'hs': 2, 'en': 357, 'dropout': 0.15460201109820443}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 13:49:05,586] Trial 7 finished with value: 2.571499848496726 and parameters: {'lr': 0.028516205640296194, 'hs': 8, 'en': 326, 'dropout': 0.13026892878961452}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+[I 2024-06-14 14:11:13,760] Trial 8 finished with value: 1.8718723403854591 and parameters: {'lr': 0.02519389800067788, 'hs': 6, 'en': 320, 'dropout': 0.0929561082110435}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+[I 2024-06-14 14:31:43,734] Trial 9 finished with value: 3.330314048265729 and parameters: {'lr': 0.08244837972153021, 'hs': 3, 'en': 256, 'dropout': 0.18572071249043898}. Best is trial 0 with value: 1.8657732355666088.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 15:06:15,544] Trial 10 finished with value: 0.8547443778924791 and parameters: {'lr': 0.0017085255130611238, 'hs': 4, 'en': 487, 'dropout': 0.05406175633048757}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step
+[I 2024-06-14 15:37:39,229] Trial 11 finished with value: 0.8893546146307373 and parameters: {'lr': 0.0035863523536950395, 'hs': 4, 'en': 487, 'dropout': 0.05314316855429418}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 16:08:56,839] Trial 12 finished with value: 0.9085720819207882 and parameters: {'lr': 0.0026078889902986227, 'hs': 4, 'en': 496, 'dropout': 0.05723558327706769}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 16:14:28,361] Trial 13 finished with value: 2.10122986661113 and parameters: {'lr': 0.055832564735142635, 'hs': 4, 'en': 90, 'dropout': 0.05104379120917772}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 16:47:10,161] Trial 14 finished with value: 1.92823597754776 and parameters: {'lr': 0.052053298750438404, 'hs': 5, 'en': 492, 'dropout': 0.10895648800153496}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 17:14:17,708] Trial 15 finished with value: 1.4210837467866095 and parameters: {'lr': 0.016457993446586723, 'hs': 6, 'en': 421, 'dropout': 0.07675292842263753}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 17:23:08,524] Trial 16 finished with value: 5.584553030405672 and parameters: {'lr': 0.00021966241889793568, 'hs': 3, 'en': 141, 'dropout': 0.07232745808281955}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 17:49:09,128] Trial 17 finished with value: 2.9164044747281657 and parameters: {'lr': 0.019042414187589278, 'hs': 3, 'en': 422, 'dropout': 0.11470894876161773}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 17:51:19,341] Trial 18 finished with value: 1.9057804598216084 and parameters: {'lr': 0.04291923769028339, 'hs': 5, 'en': 35, 'dropout': 0.08478049201634114}. Best is trial 10 with value: 0.8547443778924791.
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+24/24 ━━━━━━━━━━━━━━━━━━━━ 0s 11ms/step
+[I 2024-06-14 18:16:49,845] Trial 19 finished with value: 1.0768502086770055 and parameters: {'lr': 0.012062501693381366, 'hs': 6, 'en': 454, 'dropout': 0.05694854397610335}. Best is trial 10 with value: 0.8547443778924791.
+31/31 ━━━━━━━━━━━━━━━━━━━━ 0s 8ms/step
+[I 2024-06-14 18:31:39,471] A new study created in memory with name: no-name-74f17e41-1491-492e-955f-8b8935c5a009
+GRU UK y_1 1.0386454250234276 0.8535403790582788 0.1 25.8
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+WARNING:tensorflow:5 out of the last 40 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x7f422ecde440> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+WARNING:tensorflow:5 out of the last 17 calls to <function TensorFlowTrainer.make_predict_function.<locals>.one_step_on_data_distributed at 0x7f422e954790> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:39:05,927] Trial 0 finished with value: 1.6379724432950322 and parameters: {'lr': 0.008429508256133167, 'hs': 6, 'en': 367, 'dropout': 0.16121075598243834}. Best is trial 0 with value: 1.6379724432950322.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:40:16,128] Trial 1 finished with value: 1.4448296766680035 and parameters: {'lr': 0.007786588504389089, 'hs': 4, 'en': 54, 'dropout': 0.07253150362632216}. Best is trial 1 with value: 1.4448296766680035.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:48:06,979] Trial 2 finished with value: 1.2799345535544229 and parameters: {'lr': 0.05249004986884785, 'hs': 4, 'en': 384, 'dropout': 0.06679126700868897}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:48:51,644] Trial 3 finished with value: 2.364135932130483 and parameters: {'lr': 0.01588533990615263, 'hs': 8, 'en': 32, 'dropout': 0.13016633058876542}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:49:29,803] Trial 4 finished with value: 3.4785251961767263 and parameters: {'lr': 0.09004692188591958, 'hs': 5, 'en': 26, 'dropout': 0.08867800381199609}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:51:17,149] Trial 5 finished with value: 1.574731897741523 and parameters: {'lr': 0.060720886771763634, 'hs': 3, 'en': 85, 'dropout': 0.1355185140632375}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 18:54:16,858] Trial 6 finished with value: 1.8806917174948092 and parameters: {'lr': 0.02221145402585767, 'hs': 6, 'en': 142, 'dropout': 0.15840064976003124}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:56:31,808] Trial 7 finished with value: 1.955612829719582 and parameters: {'lr': 0.07561779936796176, 'hs': 7, 'en': 105, 'dropout': 0.1346802217232737}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 18:58:42,196] Trial 8 finished with value: 1.7943252519926627 and parameters: {'lr': 0.062241757490445845, 'hs': 3, 'en': 103, 'dropout': 0.1662155017443785}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 19:05:18,268] Trial 9 finished with value: 1.2951456056558566 and parameters: {'lr': 0.04950731698991976, 'hs': 8, 'en': 321, 'dropout': 0.06134736112717483}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+[I 2024-06-14 19:15:06,670] Trial 10 finished with value: 2.198454582825147 and parameters: {'lr': 0.03493366647177981, 'hs': 2, 'en': 484, 'dropout': 0.1975799818050619}. Best is trial 2 with value: 1.2799345535544229.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 19:21:19,970] Trial 11 finished with value: 1.1933353237129778 and parameters: {'lr': 0.041997198942390734, 'hs': 8, 'en': 304, 'dropout': 0.05095949253698408}. Best is trial 11 with value: 1.1933353237129778.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 19:26:31,407] Trial 12 finished with value: 1.421177942357417 and parameters: {'lr': 0.03850815989453748, 'hs': 5, 'en': 248, 'dropout': 0.09571385653262374}. Best is trial 11 with value: 1.1933353237129778.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 19:35:16,369] Trial 13 finished with value: 1.1409140538042843 and parameters: {'lr': 0.03910684478697748, 'hs': 4, 'en': 428, 'dropout': 0.05105533011582014}. Best is trial 13 with value: 1.1409140538042843.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+[I 2024-06-14 19:45:16,225] Trial 14 finished with value: 1.3823855270296288 and parameters: {'lr': 0.03156004102495451, 'hs': 6, 'en': 493, 'dropout': 0.051523997228154345}. Best is trial 13 with value: 1.1409140538042843.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 19:50:07,258] Trial 15 finished with value: 1.6647139060279665 and parameters: {'lr': 0.04679078084077228, 'hs': 7, 'en': 235, 'dropout': 0.09788550945209828}. Best is trial 13 with value: 1.1409140538042843.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 19:58:44,294] Trial 16 finished with value: 1.601992055990556 and parameters: {'lr': 0.025492476999049433, 'hs': 4, 'en': 428, 'dropout': 0.08062096327415884}. Best is trial 13 with value: 1.1409140538042843.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:05:49,934] Trial 17 finished with value: 2.255276056198566 and parameters: {'lr': 0.07305820334293933, 'hs': 2, 'en': 353, 'dropout': 0.11081980586863241}. Best is trial 13 with value: 1.1409140538042843.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 2s 33ms/step
+[I 2024-06-14 20:09:35,340] Trial 18 finished with value: 1.3526380876595105 and parameters: {'lr': 0.04092408765812827, 'hs': 5, 'en': 180, 'dropout': 0.05136601607465197}. Best is trial 13 with value: 1.1409140538042843.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:15:59,396] Trial 19 finished with value: 1.5478776090899278 and parameters: {'lr': 0.09553718631791036, 'hs': 7, 'en': 303, 'dropout': 0.07693048935954608}. Best is trial 13 with value: 1.1409140538042843.
+10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 28ms/step
+[I 2024-06-14 20:20:19,659] A new study created in memory with name: no-name-0a6f5ede-e0cb-41fe-8c66-9344e124b55b
+GRU UK y_4 2.034987308696374 0.8460892783909871 -4.2 26.8
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:23:09,428] Trial 0 finished with value: 0.9300967793904914 and parameters: {'lr': 0.045307357710752755, 'hs': 6, 'en': 134, 'dropout': 0.14915295967117453}. Best is trial 0 with value: 0.9300967793904914.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:32:10,796] Trial 1 finished with value: 1.042937447011786 and parameters: {'lr': 0.018291820446391743, 'hs': 8, 'en': 442, 'dropout': 0.18652186280939448}. Best is trial 0 with value: 0.9300967793904914.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:32:33,532] Trial 2 finished with value: 2.312594734289973 and parameters: {'lr': 0.07090253102495367, 'hs': 3, 'en': 14, 'dropout': 0.11520779057430908}. Best is trial 0 with value: 0.9300967793904914.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:37:55,581] Trial 3 finished with value: 0.9125034335759491 and parameters: {'lr': 0.019435747364234944, 'hs': 5, 'en': 262, 'dropout': 0.11552366520024109}. Best is trial 3 with value: 0.9125034335759491.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:47:50,724] Trial 4 finished with value: 1.1941156414266372 and parameters: {'lr': 0.051952394334757866, 'hs': 5, 'en': 489, 'dropout': 0.1578269843560775}. Best is trial 3 with value: 0.9125034335759491.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:51:33,807] Trial 5 finished with value: 0.6699083873994978 and parameters: {'lr': 0.02538959284222554, 'hs': 7, 'en': 179, 'dropout': 0.07663513682545356}. Best is trial 5 with value: 0.6699083873994978.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 20:55:12,498] Trial 6 finished with value: 1.117929038109084 and parameters: {'lr': 0.044597958247059075, 'hs': 4, 'en': 174, 'dropout': 0.1630463212401398}. Best is trial 5 with value: 0.6699083873994978.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 20:59:05,947] Trial 7 finished with value: 0.9837640664460586 and parameters: {'lr': 0.007628436405039528, 'hs': 8, 'en': 186, 'dropout': 0.16032325440814088}. Best is trial 5 with value: 0.6699083873994978.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:05:17,047] Trial 8 finished with value: 2.085390264805145 and parameters: {'lr': 0.0816300332301759, 'hs': 3, 'en': 301, 'dropout': 0.14996673317051676}. Best is trial 5 with value: 0.6699083873994978.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:07:24,802] Trial 9 finished with value: 0.6489102999356651 and parameters: {'lr': 0.028851862348229007, 'hs': 3, 'en': 101, 'dropout': 0.05759610740864082}. Best is trial 9 with value: 0.6489102999356651.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:07:50,910] Trial 10 finished with value: 18.32902221542987 and parameters: {'lr': 0.0016235130446842078, 'hs': 2, 'en': 17, 'dropout': 0.05596419094765101}. Best is trial 9 with value: 0.6489102999356651.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:09:49,327] Trial 11 finished with value: 0.6470147092855537 and parameters: {'lr': 0.030019717737902882, 'hs': 7, 'en': 93, 'dropout': 0.06347860803547693}. Best is trial 11 with value: 0.6470147092855537.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:11:47,385] Trial 12 finished with value: 0.8150036660550098 and parameters: {'lr': 0.033749104934863806, 'hs': 6, 'en': 93, 'dropout': 0.0822501562909925}. Best is trial 11 with value: 0.6470147092855537.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:13:25,161] Trial 13 finished with value: 0.6514651920425177 and parameters: {'lr': 0.0601786526393448, 'hs': 2, 'en': 77, 'dropout': 0.05214046523687294}. Best is trial 11 with value: 0.6470147092855537.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+[I 2024-06-14 21:20:18,986] Trial 14 finished with value: 0.6857610357654361 and parameters: {'lr': 0.03289435851684555, 'hs': 4, 'en': 341, 'dropout': 0.0921718867865491}. Best is trial 11 with value: 0.6470147092855537.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 21:22:19,722] Trial 15 finished with value: 0.7502024943264499 and parameters: {'lr': 0.03497876001078715, 'hs': 7, 'en': 90, 'dropout': 0.06800583370472706}. Best is trial 11 with value: 0.6470147092855537.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 21:27:02,342] Trial 16 finished with value: 1.2250665045744216 and parameters: {'lr': 0.0951975365810585, 'hs': 6, 'en': 223, 'dropout': 0.09787338284623885}. Best is trial 11 with value: 0.6470147092855537.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:34:40,137] Trial 17 finished with value: 0.5971080082264518 and parameters: {'lr': 0.009808224634273787, 'hs': 4, 'en': 370, 'dropout': 0.06618183175489578}. Best is trial 17 with value: 0.5971080082264518.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:42:20,437] Trial 18 finished with value: 0.7322155119351198 and parameters: {'lr': 0.006152977927530924, 'hs': 4, 'en': 377, 'dropout': 0.09883563060901705}. Best is trial 17 with value: 0.5971080082264518.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 21:50:12,074] Trial 19 finished with value: 0.8949860279620482 and parameters: {'lr': 0.018830301809552807, 'hs': 7, 'en': 383, 'dropout': 0.13035859327047578}. Best is trial 17 with value: 0.5971080082264518.
+10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 25ms/step
+[I 2024-06-14 21:53:52,593] A new study created in memory with name: no-name-bd91790d-60e7-4e12-837e-bc73458c18e1
+GRU UK y_10 1.0571546466599635 0.6493408931374328 1.6 22.0
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:01:12,633] Trial 0 finished with value: 1.2291594059136763 and parameters: {'lr': 0.05333908527338887, 'hs': 5, 'en': 361, 'dropout': 0.1866355818109024}. Best is trial 0 with value: 1.2291594059136763.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:09:52,884] Trial 1 finished with value: 1.4869435144032785 and parameters: {'lr': 0.08916456441767671, 'hs': 7, 'en': 423, 'dropout': 0.05522295949073882}. Best is trial 0 with value: 1.2291594059136763.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:16:50,799] Trial 2 finished with value: 1.9313176718759728 and parameters: {'lr': 0.09576687949351599, 'hs': 4, 'en': 345, 'dropout': 0.17707116424938857}. Best is trial 0 with value: 1.2291594059136763.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:23:11,341] Trial 3 finished with value: 0.9547001487599674 and parameters: {'lr': 0.029965196036684766, 'hs': 7, 'en': 310, 'dropout': 0.14405813029879472}. Best is trial 3 with value: 0.9547001487599674.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:30:51,931] Trial 4 finished with value: 1.3561362384750408 and parameters: {'lr': 0.04332010605005915, 'hs': 3, 'en': 378, 'dropout': 0.18231613592016166}. Best is trial 3 with value: 0.9547001487599674.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 22:38:06,698] Trial 5 finished with value: 1.0889650135216817 and parameters: {'lr': 0.0661543433482193, 'hs': 2, 'en': 352, 'dropout': 0.16534196162847553}. Best is trial 3 with value: 0.9547001487599674.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 22:39:31,419] Trial 6 finished with value: 1.4327934501930846 and parameters: {'lr': 0.010662212140887348, 'hs': 8, 'en': 62, 'dropout': 0.18082053385673214}. Best is trial 3 with value: 0.9547001487599674.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 22:46:29,896] Trial 7 finished with value: 1.5526596604040341 and parameters: {'lr': 0.0813676531353762, 'hs': 3, 'en': 332, 'dropout': 0.18850016565828626}. Best is trial 3 with value: 0.9547001487599674.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:46:48,252] Trial 8 finished with value: 15.59800105176734 and parameters: {'lr': 0.029930821673530485, 'hs': 4, 'en': 10, 'dropout': 0.0726500617939969}. Best is trial 3 with value: 0.9547001487599674.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:48:32,421] Trial 9 finished with value: 0.8293016228629901 and parameters: {'lr': 0.028543944662581387, 'hs': 8, 'en': 80, 'dropout': 0.11871487828846762}. Best is trial 9 with value: 0.8293016228629901.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:51:55,234] Trial 10 finished with value: 5.873854549611333 and parameters: {'lr': 0.0003409950250319871, 'hs': 8, 'en': 162, 'dropout': 0.10375125929588547}. Best is trial 9 with value: 0.8293016228629901.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 22:56:29,191] Trial 11 finished with value: 1.0901872932558383 and parameters: {'lr': 0.026006857718171156, 'hs': 6, 'en': 221, 'dropout': 0.13645915876099152}. Best is trial 9 with value: 0.8293016228629901.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 23:06:31,641] Trial 12 finished with value: 1.171080744090923 and parameters: {'lr': 0.026038105962258314, 'hs': 7, 'en': 491, 'dropout': 0.13190516406670777}. Best is trial 9 with value: 0.8293016228629901.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 23:09:43,353] Trial 13 finished with value: 0.7874779910919724 and parameters: {'lr': 0.03980589381557361, 'hs': 7, 'en': 153, 'dropout': 0.1057577075077253}. Best is trial 13 with value: 0.7874779910919724.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 23:12:53,393] Trial 14 finished with value: 1.0487727796269795 and parameters: {'lr': 0.048331438171131516, 'hs': 6, 'en': 152, 'dropout': 0.09783487294741897}. Best is trial 13 with value: 0.7874779910919724.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 23:15:12,479] Trial 15 finished with value: 1.4880437136344487 and parameters: {'lr': 0.06650866185071314, 'hs': 8, 'en': 109, 'dropout': 0.1061734895936672}. Best is trial 13 with value: 0.7874779910919724.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 23:20:06,333] Trial 16 finished with value: 0.6383868778210071 and parameters: {'lr': 0.013350976737119678, 'hs': 6, 'en': 238, 'dropout': 0.07931125314755628}. Best is trial 16 with value: 0.6383868778210071.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+[I 2024-06-14 23:25:24,197] Trial 17 finished with value: 0.6779316001897367 and parameters: {'lr': 0.011634945121678598, 'hs': 6, 'en': 257, 'dropout': 0.08168953319954245}. Best is trial 16 with value: 0.6383868778210071.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 23:30:49,012] Trial 18 finished with value: 0.9114996967746004 and parameters: {'lr': 0.009213626085916258, 'hs': 5, 'en': 255, 'dropout': 0.08092828133576173}. Best is trial 16 with value: 0.6383868778210071.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 23:35:32,866] Trial 19 finished with value: 0.5342531366233514 and parameters: {'lr': 0.014484040524699792, 'hs': 6, 'en': 225, 'dropout': 0.050254975920463366}. Best is trial 19 with value: 0.5342531366233514.
+10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 26ms/step
+[I 2024-06-14 23:37:51,128] A new study created in memory with name: no-name-d9c8609b-98a1-4efb-91a0-3201714a18ad
+GRU UK y_7 0.5512850287000697 0.4930566145449269 1.9 23.9
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-14 23:46:25,144] Trial 0 finished with value: 1.304236035973245 and parameters: {'lr': 0.034504079625803936, 'hs': 8, 'en': 412, 'dropout': 0.18384530067426835}. Best is trial 0 with value: 1.304236035973245.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-14 23:52:25,028] Trial 1 finished with value: 0.4720770671167063 and parameters: {'lr': 0.016879573880916557, 'hs': 4, 'en': 295, 'dropout': 0.07533345933394223}. Best is trial 1 with value: 0.4720770671167063.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:00:27,243] Trial 2 finished with value: 1.062299119466422 and parameters: {'lr': 0.035683071549915554, 'hs': 6, 'en': 391, 'dropout': 0.1466616335708556}. Best is trial 1 with value: 0.4720770671167063.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:05:03,335] Trial 3 finished with value: 0.37809600278164207 and parameters: {'lr': 0.03172850844442263, 'hs': 4, 'en': 224, 'dropout': 0.05244499323799909}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:09:39,031] Trial 4 finished with value: 0.8835290656945926 and parameters: {'lr': 0.08690282668327487, 'hs': 4, 'en': 224, 'dropout': 0.09840030739295894}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:11:39,751] Trial 5 finished with value: 0.6592564688384656 and parameters: {'lr': 0.007151057665002165, 'hs': 8, 'en': 94, 'dropout': 0.08798538269924222}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:14:56,159] Trial 6 finished with value: 0.7044430641503237 and parameters: {'lr': 0.0071116033832721755, 'hs': 3, 'en': 159, 'dropout': 0.13777290513501894}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:17:43,551] Trial 7 finished with value: 1.4585197658159383 and parameters: {'lr': 0.07592106455183079, 'hs': 5, 'en': 134, 'dropout': 0.16015199575706657}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:25:13,654] Trial 8 finished with value: 0.5198754157810587 and parameters: {'lr': 0.02765440752822439, 'hs': 4, 'en': 371, 'dropout': 0.085127196781674}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+[I 2024-06-15 00:31:25,532] Trial 9 finished with value: 0.4370627295387221 and parameters: {'lr': 0.009626302597461573, 'hs': 8, 'en': 303, 'dropout': 0.07181928184412181}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+[I 2024-06-15 00:41:21,216] Trial 10 finished with value: 0.41346883050052646 and parameters: {'lr': 0.057415363885825486, 'hs': 2, 'en': 493, 'dropout': 0.05241186055781584}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 00:51:21,116] Trial 11 finished with value: 0.4442843876200315 and parameters: {'lr': 0.06088300312941422, 'hs': 2, 'en': 499, 'dropout': 0.05361153065410228}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 4s 565ms/step
+[I 2024-06-15 00:52:01,839] Trial 12 finished with value: 1.0964312681179484 and parameters: {'lr': 0.05509484092169038, 'hs': 2, 'en': 26, 'dropout': 0.11035755748684373}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 00:56:39,242] Trial 13 finished with value: 0.7646410705051115 and parameters: {'lr': 0.0672763188722301, 'hs': 6, 'en': 219, 'dropout': 0.056710342205082205}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 01:06:55,946] Trial 14 finished with value: 0.6287423022181383 and parameters: {'lr': 0.04802317261196185, 'hs': 3, 'en': 497, 'dropout': 0.11646684637571722}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+[I 2024-06-15 01:13:26,440] Trial 15 finished with value: 0.4660290242988567 and parameters: {'lr': 0.045755768831382514, 'hs': 3, 'en': 314, 'dropout': 0.05294004332204726}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 01:17:27,268] Trial 16 finished with value: 2.412940768488669 and parameters: {'lr': 0.08828149307439775, 'hs': 2, 'en': 196, 'dropout': 0.19565796630463578}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 01:26:30,494] Trial 17 finished with value: 0.4098495250369372 and parameters: {'lr': 0.02550516342091969, 'hs': 5, 'en': 441, 'dropout': 0.06909091695903616}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 01:32:12,650] Trial 18 finished with value: 0.543311532041001 and parameters: {'lr': 0.02142809353335384, 'hs': 6, 'en': 277, 'dropout': 0.07249533549407894}. Best is trial 3 with value: 0.37809600278164207.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 01:41:03,252] Trial 19 finished with value: 0.7425809654691912 and parameters: {'lr': 0.03943607152803874, 'hs': 5, 'en': 433, 'dropout': 0.10195949127389231}. Best is trial 3 with value: 0.37809600278164207.
+10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 25ms/step
+[I 2024-06-15 01:43:17,560] A new study created in memory with name: no-name-e2682575-e4bd-4201-b957-c61edb3ca44e
+GRU UK y_8 0.45917845779197886 0.48831743385110576 1.8 24.0
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 01:51:12,071] Trial 0 finished with value: 1.076162461111103 and parameters: {'lr': 0.03853574308897922, 'hs': 6, 'en': 384, 'dropout': 0.1759944700565274}. Best is trial 0 with value: 1.076162461111103.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 01:56:48,175] Trial 1 finished with value: 0.6896695873830737 and parameters: {'lr': 0.05213740773287728, 'hs': 8, 'en': 271, 'dropout': 0.0679389612490794}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:03:14,911] Trial 2 finished with value: 1.0553801951796313 and parameters: {'lr': 0.06095481881915331, 'hs': 7, 'en': 314, 'dropout': 0.09739999995940546}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:08:37,873] Trial 3 finished with value: 1.324235910093526 and parameters: {'lr': 0.03636804905290046, 'hs': 8, 'en': 254, 'dropout': 0.16778651152646185}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:17:29,453] Trial 4 finished with value: 0.8440142541271597 and parameters: {'lr': 0.022390296191179816, 'hs': 3, 'en': 436, 'dropout': 0.11062698905380268}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:26:06,888] Trial 5 finished with value: 2.04695291158507 and parameters: {'lr': 0.08213828524187627, 'hs': 3, 'en': 426, 'dropout': 0.18245877405463334}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:32:04,618] Trial 6 finished with value: 1.823356993434568 and parameters: {'lr': 0.05498577791982541, 'hs': 8, 'en': 290, 'dropout': 0.15659465556780144}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:37:30,644] Trial 7 finished with value: 1.2746959457229539 and parameters: {'lr': 0.05428195180635214, 'hs': 2, 'en': 268, 'dropout': 0.1623221543654947}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:46:14,425] Trial 8 finished with value: 0.6989037336901949 and parameters: {'lr': 0.01227840750091662, 'hs': 8, 'en': 424, 'dropout': 0.06631028536464226}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 02:51:14,054] Trial 9 finished with value: 0.9171784743617861 and parameters: {'lr': 0.021387251019082374, 'hs': 3, 'en': 243, 'dropout': 0.08621532882816996}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 02:53:07,889] Trial 10 finished with value: 1.0289528151090133 and parameters: {'lr': 0.09759196239106177, 'hs': 5, 'en': 84, 'dropout': 0.052315119043165215}. Best is trial 1 with value: 0.6896695873830737.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+[I 2024-06-15 02:55:50,681] Trial 11 finished with value: 0.6545938276868069 and parameters: {'lr': 0.003499242177201564, 'hs': 6, 'en': 128, 'dropout': 0.05875401017222476}. Best is trial 11 with value: 0.6545938276868069.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 02:58:31,900] Trial 12 finished with value: 2.7089523793417043 and parameters: {'lr': 0.0009505083830289298, 'hs': 5, 'en': 127, 'dropout': 0.1324488827798795}. Best is trial 11 with value: 0.6545938276868069.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:01:52,471] Trial 13 finished with value: 1.5971791308122902 and parameters: {'lr': 0.07571910680174515, 'hs': 6, 'en': 160, 'dropout': 0.07409263333859863}. Best is trial 11 with value: 0.6545938276868069.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:05:44,532] Trial 14 finished with value: 0.5845745363575102 and parameters: {'lr': 0.03882265126848436, 'hs': 6, 'en': 186, 'dropout': 0.05217746025819616}. Best is trial 14 with value: 0.5845745363575102.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:06:29,399] Trial 15 finished with value: 1.130674756926357 and parameters: {'lr': 0.035452883338180675, 'hs': 6, 'en': 32, 'dropout': 0.13205945200918534}. Best is trial 14 with value: 0.5845745363575102.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:10:11,590] Trial 16 finished with value: 0.5431875458262962 and parameters: {'lr': 0.007497003379145093, 'hs': 4, 'en': 179, 'dropout': 0.05331092700326591}. Best is trial 16 with value: 0.5431875458262962.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:14:04,196] Trial 17 finished with value: 0.5846857979325301 and parameters: {'lr': 0.01993524547537918, 'hs': 4, 'en': 189, 'dropout': 0.08440848649066915}. Best is trial 16 with value: 0.5431875458262962.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:18:04,924] Trial 18 finished with value: 0.5968045177796102 and parameters: {'lr': 0.03960834154398835, 'hs': 4, 'en': 195, 'dropout': 0.05007495775979242}. Best is trial 16 with value: 0.5431875458262962.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:18:28,885] Trial 19 finished with value: 1.878090754782167 and parameters: {'lr': 0.07012020411949266, 'hs': 4, 'en': 15, 'dropout': 0.10820639034624824}. Best is trial 16 with value: 0.5431875458262962.
+10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 25ms/step
+[I 2024-06-15 03:20:17,397] A new study created in memory with name: no-name-c793f241-a340-4661-9b4b-52a9eabca636
+GRU UK y_9 0.5925167419665073 0.5539991919649333 1.0 22.0
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:26:16,724] Trial 0 finished with value: 0.7696550709188515 and parameters: {'lr': 0.0940906098087185, 'hs': 6, 'en': 292, 'dropout': 0.06675492969748555}. Best is trial 0 with value: 0.7696550709188515.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:27:03,798] Trial 1 finished with value: 0.6059549964319494 and parameters: {'lr': 0.03920293107498686, 'hs': 5, 'en': 34, 'dropout': 0.05301698728835443}. Best is trial 1 with value: 0.6059549964319494.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:33:18,725] Trial 2 finished with value: 1.0868437978163479 and parameters: {'lr': 0.08501165647918388, 'hs': 5, 'en': 305, 'dropout': 0.16119757426403275}. Best is trial 1 with value: 0.6059549964319494.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:34:49,134] Trial 3 finished with value: 1.0431361050935561 and parameters: {'lr': 0.050381196378193, 'hs': 5, 'en': 70, 'dropout': 0.14108385244225966}. Best is trial 1 with value: 0.6059549964319494.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:41:20,553] Trial 4 finished with value: 0.4800011032039535 and parameters: {'lr': 0.00871493367077789, 'hs': 4, 'en': 322, 'dropout': 0.057736766089442025}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:51:09,142] Trial 5 finished with value: 1.2140494526375318 and parameters: {'lr': 0.08231389781119033, 'hs': 7, 'en': 476, 'dropout': 0.17400208188102406}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:52:36,531] Trial 6 finished with value: 0.6797318483741424 and parameters: {'lr': 0.009466325454635003, 'hs': 8, 'en': 67, 'dropout': 0.10123753815357633}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 03:57:50,202] Trial 7 finished with value: 0.7958754532579811 and parameters: {'lr': 0.007826687960227719, 'hs': 5, 'en': 247, 'dropout': 0.15027580752632003}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 04:06:51,214] Trial 8 finished with value: 0.6644096897574068 and parameters: {'lr': 0.04512179833424796, 'hs': 6, 'en': 443, 'dropout': 0.09642765668892012}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 04:15:06,156] Trial 9 finished with value: 0.5320228534780349 and parameters: {'lr': 0.041120175251842105, 'hs': 2, 'en': 408, 'dropout': 0.0517941603820937}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 34ms/step
+[I 2024-06-15 04:18:42,297] Trial 10 finished with value: 1.2239837980359627 and parameters: {'lr': 0.024526962044540815, 'hs': 3, 'en': 167, 'dropout': 0.19819335894764772}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 04:26:40,208] Trial 11 finished with value: 0.7262453706709103 and parameters: {'lr': 0.06030637128088884, 'hs': 2, 'en': 389, 'dropout': 0.08083295320052095}. Best is trial 4 with value: 0.4800011032039535.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 04:34:20,286] Trial 12 finished with value: 0.47136941198977017 and parameters: {'lr': 0.025556214626182582, 'hs': 3, 'en': 370, 'dropout': 0.053868606909376365}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+[I 2024-06-15 04:41:46,832] Trial 13 finished with value: 0.7217169360417426 and parameters: {'lr': 0.0222487432545768, 'hs': 3, 'en': 361, 'dropout': 0.11317399445759102}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 04:46:03,269] Trial 14 finished with value: 0.6898174047392075 and parameters: {'lr': 0.023152144638264885, 'hs': 3, 'en': 205, 'dropout': 0.07920862699357371}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 04:53:18,313] Trial 15 finished with value: 0.7655080635130149 and parameters: {'lr': 0.0015256465906210923, 'hs': 4, 'en': 354, 'dropout': 0.12545533222026853}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 04:59:57,224] Trial 16 finished with value: 0.6969036803379008 and parameters: {'lr': 0.02962877906616503, 'hs': 4, 'en': 323, 'dropout': 0.07406148768445736}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 33ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 05:03:10,546] Trial 17 finished with value: 0.623229826611466 and parameters: {'lr': 0.013773748447387858, 'hs': 4, 'en': 156, 'dropout': 0.09536141185327984}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 31ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 05:13:19,763] Trial 18 finished with value: 0.638721107756698 and parameters: {'lr': 0.05655473684548517, 'hs': 3, 'en': 500, 'dropout': 0.062156632101766404}. Best is trial 12 with value: 0.47136941198977017.
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+8/8 ━━━━━━━━━━━━━━━━━━━━ 0s 32ms/step
+[I 2024-06-15 05:18:27,191] Trial 19 finished with value: 1.4699740803959636 and parameters: {'lr': 0.06957056215091809, 'hs': 2, 'en': 252, 'dropout': 0.12213147678901994}. Best is trial 12 with value: 0.47136941198977017.
+10/10 ━━━━━━━━━━━━━━━━━━━━ 0s 25ms/step
+GRU UK y_6 0.5367783800909818 0.5378295088135024 1.0 25.5
