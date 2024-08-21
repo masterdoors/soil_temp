@@ -1,0 +1,9 @@
+xlrd
+numpy==1.22.4
+pandas
+scikit-learn
+optuna
+cython
+protobuf==4.21.12
+tensorflow
+tkan

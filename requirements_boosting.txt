@@ -1,0 +1,9 @@
+xlrd
+numpy==1.22.4
+pandas
+xgboost
+scikit-learn
+optuna
+cython
+deep-forest
+statsmodels
