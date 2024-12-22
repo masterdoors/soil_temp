@@ -798,8 +798,8 @@ class ForestRegressor(RegressorMixin, BaseForest, metaclass=ABCMeta):
         n_jobs, _, _ = _partition_estimators(self.n_estimators, self.n_jobs)
 
         # avoid storing the output of every estimator by summing them here
-        y_hat = np.zeros((X.shape[0], self.n_outputs_), dtype=np.float64)
-        res = [[y_hat]]
+        #y_hat = np.zeros((X.shape[0], self.n_outputs_), dtype=np.float64)
+        res = [[]]
 
         # Parallel loop
         lock = threading.Lock()
