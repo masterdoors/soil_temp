@@ -1846,8 +1846,8 @@ class CascadeForestRegressor(BaseCascadeForest, RegressorMixin):
                     X_aug_test_ = layer.transform(X_middle_test_)
                     scores = layer.score_full(X_middle_test_)
 
-            if scores is not None:
-                print(scores.mean(),scores.std())
+            if scores is not None or layer_idx == self.n_layers_ - 1:
+               #print(scores.mean(),scores.std())
 
                 if layer_idx == self.n_layers_ - 1:
                     if self.n_layers_ == 1:

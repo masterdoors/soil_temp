@@ -384,7 +384,7 @@ class RegressionCascadeLayer(BaseCascadeLayer, RegressorMixin):
                 # Load the estimator from the buffer
                 estimator = self.buffer.load_estimator(estimator)
 
-            pred[:] += estimator.estimator_.predict_raw(X)[0].std() #self._get_rf_score(estimator.estimator_,X)
+            pred[:] += estimator.estimator_.predict_raw(X)[0].std(axis=1) #self._get_rf_score(estimator.estimator_,X)
 
         return pred / len(self.estimators_)
 
