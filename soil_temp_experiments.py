@@ -239,123 +239,122 @@ all_data = dict_data
 #ECDFR
 
 
-# import xgboost as xgb
-# from boosted_forest import CascadeBoostingRegressor
-# from deepforest import CascadeForestRegressor
-# from sklearn.metrics import mean_squared_error
-# from sklearn.metrics import mean_absolute_error
-# from sklearn.metrics import r2_score
-# import optuna
+import xgboost as xgb
+from boosted_forest import CascadeBoostingRegressor
+from deepforest import CascadeForestRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import r2_score
+import optuna
 
-# from ecdfr.gcForest import gcForest
+from ecdfr.gcForest import gcForest
 
-# from sklearn.model_selection import KFold
-# #xgb.set_config(verbosity=2)
+from sklearn.model_selection import KFold
+#xgb.set_config(verbosity=2)
 
-# def make_modelECDFR(max_depth,layers,resampling_rate, et):
-#     config = {"estimator_configs":[{"n_fold": 5,"type":None,"max_depth":max_depth},{"n_fold": 5,"type":None,"max_depth":max_depth},{"n_fold": 5,"type":None,"max_depth":max_depth},{"n_fold": 5,"type":None,"max_depth":max_depth}],
-#               "error_threshold": et,
-#               "resampling_rate": resampling_rate,
-#               "random_state":None,
-#               "max_layers":layers,
-#               "early_stop_rounds":1,
-#               "train_evaluation":r2_score}
+def make_modelECDFR(max_depth,layers,resampling_rate, et):
+    config = {"estimator_configs":[{"n_fold": 5,"type":None,"max_depth":max_depth},{"n_fold": 5,"type":None,"max_depth":max_depth},{"n_fold": 5,"type":None,"max_depth":max_depth},{"n_fold": 5,"type":None,"max_depth":max_depth}],
+              "error_threshold": et,
+              "resampling_rate": resampling_rate,
+              "random_state":None,
+              "max_layers":layers,
+              "early_stop_rounds":1,
+              "train_evaluation":r2_score}
     
-#     return gcForest(config,2)
+    return gcForest(config,2)
 
-# models = {"ecdfr":make_modelECDFR}
+models = {"ecdfr":make_modelECDFR}
 
-# bo_data = []    
-# work_pair = []
-# best_pair = []
+bo_data = []    
+work_pair = []
+best_pair = []
 
-# max_score = 100
+max_score = 100
 
 
-# for model_name in models:
-#     make_model = models[model_name]
-#     for ds_name in all_data:
-#         for depth in all_data[ds_name]:
-#             dat = all_data[ds_name][depth]
-#             x_train = dat["train"]["X"].reshape(-1,dat["train"]["X"].shape[2])
-#             x_test = dat["test"]["X"].reshape(-1,dat["test"]["X"].shape[2])
-#             Y_train = dat["train"]["y"].flatten()
-#             Y_test = dat["test"]["y"].flatten()            
+for model_name in models:
+    make_model = models[model_name]
+    for ds_name in all_data:
+        for depth in all_data[ds_name]:
+            dat = all_data[ds_name][depth]
+            x_train = dat["train"]["X"].reshape(-1,dat["train"]["X"].shape[2])
+            x_test = dat["test"]["X"].reshape(-1,dat["test"]["X"].shape[2])
+            Y_train = dat["train"]["y"].flatten()
+            Y_test = dat["test"]["y"].flatten()            
 
-#             def objective(trial):
-#                 global max_score
-#                 layers = trial.suggest_int('layers', 3, 15)
-#                 max_depth = trial.suggest_int('max_depth', 1, 2)
+            def objective(trial):
+                global max_score
+                layers = trial.suggest_int('layers', 3, 15)
+                max_depth = trial.suggest_int('max_depth', 1, 2)
 
-#                 C = trial.suggest_float('resampling_rate', 0.1, 4)
-#                 min_et = 0.5 * C - 1
-#                 if min_et <= 0:
-#                     min_et = 0.05
-#                 else:
-#                     if min_et > 0.99:
-#                         min_et = 0.99
+                C = trial.suggest_float('resampling_rate', 0.1, 4)
+                min_et = 0.5 * C - 1
+                if min_et <= 0:
+                    min_et = 0.05
+                else:
+                    if min_et > 0.99:
+                        min_et = 0.99
 
-#                 max_et = C -1.
+                max_et = C -1.
 
-#                 if max_et > 0.99:
-#                     max_et = 0.99
-#                 else:
-#                     if max_et <=0:
-#                         max_et = 0.1
+                if max_et > 0.99:
+                    max_et = 0.99
+                else:
+                    if max_et <=0:
+                        max_et = 0.1
 
-#                 if min_et >= max_et:
-#                     max_et = min_et + 0.001
+                if min_et >= max_et:
+                    max_et = min_et + 0.001
                     
-#                 et = trial.suggest_float('et', 0.05, 0.95)
+                et = trial.suggest_float('et', 0.05, 0.95)
                 
-#                 kf = KFold(n_splits=3)
-#                 scores = []
-#                 try:
-#                     for _, (train_index, test_index) in enumerate(kf.split(x_train)):
-#                         model = make_modelECDFR(max_depth,layers,C,et)
+                kf = KFold(n_splits=3)
+                scores = []
+                try:
+                    for _, (train_index, test_index) in enumerate(kf.split(x_train)):
+                        model = make_modelECDFR(max_depth,layers,C,et)
                     
-#                         model.fit(
-#                              x_train[train_index],
-#                              Y_train[train_index],
-#                         )
-#                         y_pred = model.predict(x_train[test_index]) #, batch_size=batch_size)
-#                         scores.append(mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten()))
-#                         sc = mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten())
-#                         if max_score == 100:
-#                             max_score = sc
-#                         else:
-#                             if sc > max_score:
-#                                 max_score = sc
+                        model.fit(
+                             x_train[train_index],
+                             Y_train[train_index],
+                        )
+                        y_pred = model.predict(x_train[test_index]) #, batch_size=batch_size)
+                        scores.append(mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten()))
+                        sc = mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten())
+                        if max_score == 100:
+                            max_score = sc
+                        else:
+                            if sc > max_score:
+                                max_score = sc
                                 
-#                         work_pair.append([C,et])
-#                 except:
-#                     scores = [max_score]
-#                 return np.asarray(scores).mean() 
+                        work_pair.append([C,et])
+                except:
+                    scores = [max_score]
+                return np.asarray(scores).mean() 
             
-#             study = optuna.create_study(direction='minimize')
-#             study.optimize(objective, n_trials=1000)    
+            study = optuna.create_study(direction='minimize')
+            study.optimize(objective, n_trials=1000)    
             
-#             layers = study.best_trial.params["layers"]  
-#             max_depth = study.best_trial.params["max_depth"]  
+            layers = study.best_trial.params["layers"]  
+            max_depth = study.best_trial.params["max_depth"]  
 
 
-#             C = study.best_trial.params["resampling_rate"]  
-#             et = study.best_trial.params["et"]  
+            C = study.best_trial.params["resampling_rate"]  
+            et = study.best_trial.params["et"]  
 
-#             best_pair.append([C,et])
-#             model = make_model(max_depth,layers,C,et)
-#             model.fit(
-#                  x_train,
-#                  Y_train,
-#             )        
+            best_pair.append([C,et])
+            model = make_model(max_depth,layers,C,et)
+            model.fit(
+                 x_train,
+                 Y_train,
+            )        
             
-#             y_pred = model.predict(x_test) #, batch_size=batch_size)
-#             mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
-#             mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
-#             printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="ecdfr_output.txt")     
-#             bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
+            y_pred = model.predict(x_test) #, batch_size=batch_size)
+            mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
+            mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
+            printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="ecdfr_output.txt")     
+            bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
     
-
 
 # # In[ ]:
 
@@ -372,75 +371,75 @@ all_data = dict_data
 
 # AWDF
 
-from boosted_forest import CascadeBoostingRegressor
-from deepforest import CascadeForestRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-import optuna
+# from boosted_forest import CascadeBoostingRegressor
+# from deepforest import CascadeForestRegressor
+# from sklearn.metrics import mean_squared_error
+# from sklearn.metrics import mean_absolute_error
+# import optuna
 
-from sklearn.model_selection import KFold
-#xgb.set_config(verbosity=2)
+# from sklearn.model_selection import KFold
+# #xgb.set_config(verbosity=2)
 
-def make_modelCascade(max_depth,layers,C,wt):
-    wf = {0:"linear", 1:"1-w^1/2", 2:"1-w2"}
-    return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=4,adaptive=True,weighting_function = wf[wt],verbose=0,trx=1.0)
+# def make_modelCascade(max_depth,layers,C,wt):
+#     wf = {0:"linear", 1:"1-w^1/2", 2:"1-w2"}
+#     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=4,adaptive=True,weighting_function = wf[wt],verbose=0,trx=1.0)
 
 
-models = {"AWDF":make_modelCascade}
+# models = {"AWDF":make_modelCascade}
 
-bo_data = []    
+# bo_data = []    
 
-for model_name in models:
-    make_model = models[model_name]
-    for ds_name in all_data:
-        for depth in all_data[ds_name]:
-            dat = all_data[ds_name][depth]
-            x_train = dat["train"]["X"].reshape(-1,dat["train"]["X"].shape[2])
-            x_test = dat["test"]["X"].reshape(-1,dat["test"]["X"].shape[2])
-            Y_train = dat["train"]["y"].flatten()
-            Y_test = dat["test"]["y"].flatten()            
+# for model_name in models:
+#     make_model = models[model_name]
+#     for ds_name in all_data:
+#         for depth in all_data[ds_name]:
+#             dat = all_data[ds_name][depth]
+#             x_train = dat["train"]["X"].reshape(-1,dat["train"]["X"].shape[2])
+#             x_test = dat["test"]["X"].reshape(-1,dat["test"]["X"].shape[2])
+#             Y_train = dat["train"]["y"].flatten()
+#             Y_test = dat["test"]["y"].flatten()            
 
-            def objective(trial):
-                layers = trial.suggest_int('layers', 5, 15)
-                max_depth = trial.suggest_int('max_depth', 1, 2)
-                wt = trial.suggest_int('weight_function', 0, 2)   
-                if model_name == "Boosted Forest":
-                    C = trial.suggest_int('C', 1, 2000)
-                else:
-                    C = 0
+#             def objective(trial):
+#                 layers = trial.suggest_int('layers', 5, 15)
+#                 max_depth = trial.suggest_int('max_depth', 1, 2)
+#                 wt = trial.suggest_int('weight_function', 0, 2)   
+#                 if model_name == "Boosted Forest":
+#                     C = trial.suggest_int('C', 1, 2000)
+#                 else:
+#                     C = 0
 
-                kf = KFold(n_splits=3)
-                scores = []
-                for _, (train_index, test_index) in enumerate(kf.split(x_train)):
-                    model = make_model(max_depth,layers,C,wt)
+#                 kf = KFold(n_splits=3)
+#                 scores = []
+#                 for _, (train_index, test_index) in enumerate(kf.split(x_train)):
+#                     model = make_model(max_depth,layers,C,wt)
                     
-                    model.fit(
-                         x_train[train_index],
-                         Y_train[train_index],
-                    )
-                    y_pred = model.predict_sampled(x_train[test_index]) #, batch_size=batch_size)
-                    scores.append(mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten()))
-                return np.asarray(scores).mean() 
+#                     model.fit(
+#                          x_train[train_index],
+#                          Y_train[train_index],
+#                     )
+#                     y_pred = model.predict_sampled(x_train[test_index]) #, batch_size=batch_size)
+#                     scores.append(mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten()))
+#                 return np.asarray(scores).mean() 
             
-            study = optuna.create_study(direction='minimize')
-            study.optimize(objective, n_trials=500)    
+#             study = optuna.create_study(direction='minimize')
+#             study.optimize(objective, n_trials=500)    
             
-            layers = study.best_trial.params["layers"]  
-            max_depth = study.best_trial.params["max_depth"]  
-            wt = study.best_trial.params['weight_function']
-            if model_name == "Boosted Forest":
-                C = study.best_trial.params["C"]  
-            else:
-                C = 0
-            model = make_model(max_depth,layers,C,wt)
-            model.fit(
-                 x_train,
-                 Y_train,
-            )        
+#             layers = study.best_trial.params["layers"]  
+#             max_depth = study.best_trial.params["max_depth"]  
+#             wt = study.best_trial.params['weight_function']
+#             if model_name == "Boosted Forest":
+#                 C = study.best_trial.params["C"]  
+#             else:
+#                 C = 0
+#             model = make_model(max_depth,layers,C,wt)
+#             model.fit(
+#                  x_train,
+#                  Y_train,
+#             )        
             
-            y_pred = model.predict_sampled(x_test) #, batch_size=batch_size)
-            mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
-            mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
-            printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="awdf_output.txt")     
-            bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
+#             y_pred = model.predict_sampled(x_test) #, batch_size=batch_size)
+#             mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
+#             mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
+#             printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="awdf_output.txt")     
+#             bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
     
