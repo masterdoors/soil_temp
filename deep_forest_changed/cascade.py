@@ -1877,9 +1877,8 @@ class CascadeForestRegressor(BaseCascadeForest, RegressorMixin):
                 else:
                     if bitmap.sum() > 0:
                         if self.n_layers_ > 1:
-                            _y = layer.predict_full(X_middle_test_)
-                            print(bitmap)
-                            _y[bitmap] = _utils.merge_proba(_y[bitmap], self.n_outputs_)
+                            temp = layer.predict_full(X_middle_test_)[bitmap]
+                            _y[bitmap] = _utils.merge_proba(temp, self.n_outputs_)
                         else:
                             # Directly merge results with one cascade layer only
                             _y[bitmap] = _utils.merge_proba(X_aug_test_[bitmap], self.n_outputs_)

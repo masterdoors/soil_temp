@@ -66,7 +66,11 @@ def adjust_sample(x_train,y_train,y_pred,error_threshold,resampling_rate,n_loop=
     hard_num=int(error_threshold*n_train)
     hard_index=rank_index[-hard_num:]
     x1,y1=x_train[hard_index],y_train[hard_index]
-    x2,y2=resample(x1,y1,int(s_r*x1.shape[0]),n_loop)
+    sl = int(s_r*x1.shape[0])
+    if sl > len(x1):
+        sl = len(x1)
+
+    x2,y2=resample(x1,y1,sl,n_loop)
 
     easy_num=int(a*n_train*(1-error_threshold))
     easy_index=random.sample(rank_index[0:-hard_num].tolist(),easy_num)
