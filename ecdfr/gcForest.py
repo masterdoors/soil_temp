@@ -37,16 +37,19 @@ class gcForest(object):
 
         while True:
             
-            y_proba=np.zeros((x_train.shape[0],len(self.estimator_configs)))
+            y_proba=np.zeros((x_train.shape[0],4*len(self.estimator_configs)))
             current_layer=layer(deepth)
             self.LOGGER.info("-----------------------------------------layer-{}--------------------------------------------".format(current_layer.get_layer_id()))
             self.LOGGER.info("The shape of x_train is {}".format(x_train.shape))
-            for index in range(len(self.estimator_configs)):
-                config=self.estimator_configs[index].copy()
-                k_fold_est=KFoldWapper(deepth,index,config,random_state=self.random_state)
-                y_tmp=k_fold_est.fit(x_train,y_train,y_valid,self.error_threshold,self.resampling_rate)
-                current_layer.add_est(k_fold_est)
-                y_proba[:,index]+=y_tmp
+            cntr = 0
+            for _ in range(4) :
+                for index in range(len(self.estimator_configs)):
+                    config=self.estimator_configs[index].copy()
+                    k_fold_est=KFoldWapper(deepth,index,config,random_state=self.random_state)
+                    y_tmp=k_fold_est.fit(x_train,y_train,y_valid,self.error_threshold,self.resampling_rate)
+                    current_layer.add_est(k_fold_est)
+                    y_proba[:,cntr]+= y_tmp 
+                    cntr += 1
 
             y_valid=np.mean(y_proba,axis=1)
             current_layer.weight=self.calc_weight(y_train,y_valid)
