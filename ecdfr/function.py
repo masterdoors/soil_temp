@@ -47,8 +47,9 @@ def resample(x,y,n_new,n_loop=1):
     #print(sample_index,n_new)    
     for i in range(n_loop):
         
-        if n_new > len(sample_index):
+        if n_new > len(sample_index) or n_new < 1:
             n_new = len(sample_index)
+        #print(len(sample_index),n_new)
         new_index=random.sample(sample_index,n_new)
         new_x=x[new_index] if new_x is None else np.vstack((new_x,x[new_index]))
         new_y=y[new_index] if new_y is None else np.hstack((new_y,y[new_index]))
@@ -67,8 +68,6 @@ def adjust_sample(x_train,y_train,y_pred,error_threshold,resampling_rate,n_loop=
     hard_index=rank_index[-hard_num:]
     x1,y1=x_train[hard_index],y_train[hard_index]
     sl = int(s_r*x1.shape[0])
-    if sl > len(x1):
-        sl = len(x1)
 
     x2,y2=resample(x1,y1,sl,n_loop)
 
