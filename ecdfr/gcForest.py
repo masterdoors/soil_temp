@@ -37,19 +37,16 @@ class gcForest(object):
 
         while True:
             
-            y_proba=np.zeros((x_train.shape[0],4*len(self.estimator_configs)))
+            y_proba=np.zeros((x_train.shape[0],len(self.estimator_configs)))
             current_layer=layer(deepth)
             self.LOGGER.info("-----------------------------------------layer-{}--------------------------------------------".format(current_layer.get_layer_id()))
             self.LOGGER.info("The shape of x_train is {}".format(x_train.shape))
-            cntr = 0
-            for _ in range(4) :
-                for index in range(len(self.estimator_configs)):
-                    config=self.estimator_configs[index].copy()
-                    k_fold_est=KFoldWapper(deepth,index,config,random_state=self.random_state)
-                    y_tmp=k_fold_est.fit(x_train,y_train,y_valid,self.error_threshold,self.resampling_rate)
-                    current_layer.add_est(k_fold_est)
-                    y_proba[:,cntr]+= y_tmp 
-                    cntr += 1
+            for index in range(len(self.estimator_configs)):
+                config=self.estimator_configs[index].copy()
+                k_fold_est=KFoldWapper(deepth,index,config,random_state=self.random_state)
+                y_tmp=k_fold_est.fit(x_train,y_train,y_valid,self.error_threshold,self.resampling_rate)
+                current_layer.add_est(k_fold_est)
+                y_proba[:,index]+= y_tmp 
 
             y_valid=np.mean(y_proba,axis=1)
             current_layer.weight=self.calc_weight(y_train,y_valid)
@@ -117,8 +114,8 @@ class gcForest(object):
         max_error=np.max(errors)
         total_error=0.0
         for i in range(n_sample):
-            # ei=(y_true[i]-y_pred[i])**2/(max_error**2)
-            ei=np.abs(y_true[i]-y_pred[i])/max_error
+            ei=(y_true[i]-y_pred[i])**2/(max_error**2)
+            #ei=np.abs(y_true[i]-y_pred[i])/max_error
             total_error+=ei
         e=total_error/n_sample
         weight_coeff=e/(1-e)

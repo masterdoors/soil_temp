@@ -10,19 +10,8 @@ from lightgbm import LGBMRegressor
 from xgboost import XGBRegressor
 
 from sklearn.ensemble import RandomForestRegressor
-from joblib import Parallel, delayed
 
 
-def kfold_worker(wrapper,cv,x,y,k,y_valid,error_threshold,resampling_rate):
-	est=wrapper._init_estimator()
-	train_id, val_id=cv[k]
-	x_train,y_train=x[train_id],y[train_id]
-	if y_valid is not None:
-		x_train,y_train=adjust_sample(x_train,y_train,y_valid[train_id],error_threshold,resampling_rate)
-	est.fit(x_train,y_train)
-	y_pred=est.predict(x[val_id])
-	return est, y_pred, val_id
-	
 
 
 class KFoldWapper(object):
@@ -34,7 +23,7 @@ class KFoldWapper(object):
         else:
             self.random_state=None
         self.n_fold=self.config["n_fold"]
-        self.estimators=[]
+        self.estimators=[None for i in range(self.config["n_fold"])]
         self.config.pop("n_fold")
         self.estimator_class=RandomForestRegressor#globals()[self.config["type"]]
         self.config.pop("type")
@@ -49,11 +38,16 @@ class KFoldWapper(object):
         kf=RepeatedKFold(n_splits=self.n_fold,n_repeats=1,random_state=self.random_state)
         cv=[(t,v) for (t,v) in kf.split(x)]
         y_train_pred=np.zeros((x.shape[0],))
-        
-        all_ze_staff = Parallel(n_jobs=self.n_fold,backend="loky")(delayed(kfold_worker)(self,cv,x,y,k,y_valid,error_threshold,resampling_rate) for k in range(self.n_fold))
-        for est, y_pred, val_id in all_ze_staff:        
-            self.estimators.append(est)
-            y_train_pred[val_id] = y_pred
+        for k in range(len(self.estimators)):
+            est=self._init_estimator()
+            train_id, val_id=cv[k]
+            x_train,y_train=x[train_id],y[train_id]
+            if y_valid is not None:
+                x_train,y_train=adjust_sample(x_train,y_train,y_valid[train_id],error_threshold,resampling_rate)
+            est.fit(x_train,y_train)
+            y_pred=est.predict(x[val_id])
+            y_train_pred[val_id]+=y_pred
+            self.estimators[k]=est
         return y_train_pred
 
     def predict(self,x):
