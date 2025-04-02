@@ -1,13 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-# %%
-# !pip install deep-forest
-
-# %%
-# !pip install -U pandas==1.5.3
-
-# %%
-
+#
 
 import pandas as pd
 import numpy as np

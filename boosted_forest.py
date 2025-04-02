@@ -173,6 +173,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.binners = []
         self.device = "cpu"
         self.init = "zero"
+        self.n_forests = 100
         
     def _init_state(self):
         """Initialize model state and allocate model state data structures."""
@@ -188,9 +189,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             else:
                 self.init_ = DummyRegressor(strategy="mean")
 
-        self.estimators_ = np.empty(
-            (self.n_layers, self.n_trees_per_iteration_), dtype=object
-        )
+        self.estimators_ = []
         self.train_score_ = np.zeros((self.n_layers,), dtype=np.float64)
         # do oob?
         if self.subsample < 1.0:
@@ -248,6 +247,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             # the addition of each successive stage
             y_val_pred_iter = self._staged_raw_predict(X_val, check_input=False)
 
+        history_sum = np.zeros((X_.shape[0],self.hidden_size))
         # perform boosting iterations
         i = begin_at_stage
 
@@ -423,13 +423,13 @@ class BaseBoostedCascade(BaseGradientBoosting):
             # no inplace multiplication!
             sample_weight = sample_weight * sample_mask.astype(np.float64)
 
-        self.estimators_[i] = []
+        self.estimators_.append([])
         X = X_csr if X_csr is not None else X
         
         if isinstance(X,np.ndarray):
-            X_aug = np.hstack([X,rp_old_bin.reshape(-1,1)])
+            X_aug = np.hstack([X,rp_old_bin])
         else:
-            X_aug = hstack([X, csr_matrix(rp_old_bin.reshape(-1,1))])               
+            X_aug = hstack([X, csr_matrix(rp_old_bin)])               
         trains = []
         tests = []
         for eid  in range(self.n_estimators):
@@ -454,7 +454,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                     self.verbose
                 )                       
                 
-            trains_, tests_ = kfold_estimator.fit(X_aug, residual[:, k],sample_weight)
+            trains_, tests_ = kfold_estimator.fit(X_aug, residual,sample_weight)
             trains.append(trains_)
             tests.append(tests_)
             self.estimators_[i].append(kfold_estimator)
