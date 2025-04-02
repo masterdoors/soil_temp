@@ -18,6 +18,7 @@ from sklearn.utils.validation import _check_sample_weight
 from sklearn.utils import check_array, check_random_state
 from sklearn.exceptions import NotFittedError
 from sklearn.base import ClassifierMixin, RegressorMixin, is_classifier
+from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples_bootstrap, _generate_sample_indices
 
 from kfoldwrapper_bf import KFoldWrapper
 from sklearn.ensemble import RandomForestRegressor
@@ -34,7 +35,7 @@ from sklearn.model_selection import train_test_split
 from _logistic import LogisticRegression
 from _ridge import Ridge
 from svr import LinearSVRB
-from mlp import MLPRB
+from torch_mlp import MLPRB
 
 import copy
 
@@ -170,6 +171,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.bin_subsample = bin_subsample
         self.bin_type = bin_type
         self.binners = []
+        self.device = "cpu"
         
     def _init_state(self):
         """Initialize model state and allocate model state data structures."""
@@ -260,11 +262,12 @@ class BaseBoostedCascade(BaseGradientBoosting):
                     )
 
             # fit next stage of trees
-            raw_predictions = self._fit_stage(
+            raw_predictions, history_sum = self._fit_stage(
                 i,
                 X_,
                 y,
                 raw_predictions,
+                history_sum,
                 sample_weight,
                 sample_mask,
                 random_state,
@@ -343,6 +346,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         X,
         y,
         raw_predictions,
+        history_sum,
         sample_weight,
         sample_mask,
         random_state,
@@ -373,7 +377,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=100
+            n_estimators=self.n_forests
         )  
         
         restimator = ExtraTreesRegressor(
@@ -388,7 +392,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=100
+            n_estimators=self.n_forests
         )        
 
         residual = - loss.gradient(
@@ -410,83 +414,109 @@ class BaseBoostedCascade(BaseGradientBoosting):
         rp_old = raw_predictions.copy()
         rp_old_bin = self._bin_data(binner_, rp_old, is_training_data=True)           
          
-        for k in range(loss.n_classes):
-            if loss.n_classes > 2:
-                y = np.array(original_y == k, dtype=np.float64)
+        #TODO convert y for classifier case
+        #if loss.n_classes > 2:
+        #    y = np.array(original_y == k, dtype=np.float64)
 
-            # induce regression forest on residuals
-            if self.subsample < 1.0:
-                # no inplace multiplication!
-                sample_weight = sample_weight * sample_mask.astype(np.float64)
+        # induce regression forest on residuals
+        if self.subsample < 1.0:
+            # no inplace multiplication!
+            sample_weight = sample_weight * sample_mask.astype(np.float64)
 
-            self.estimators_[i, k] = []
-            X = X_csr if X_csr is not None else X
-            
-            if isinstance(X,np.ndarray):
-                X_aug = np.hstack([X,rp_old_bin[:,k].reshape(-1,1)])
-            else:
-                X_aug = hstack([X, csr_matrix(rp_old_bin[:,k].reshape(-1,1))])               
-            
-            for eid  in range(self.n_estimators):
-                if eid %2 == 0:
-                    kfold_estimator = KFoldWrapper(
-                        estimator,
-                        self.lin_estimator,
-                        self.n_splits,
-                        self.C,
-                        pow(self.learning_rate,i) / self.n_estimators,
-                        self.random_state,
-                        self.verbose
-                    )
-                else:
-                    kfold_estimator = KFoldWrapper(
-                        restimator,
-                        self.lin_estimator,
-                        self.n_splits,
-                        self.C,
-                        pow(self.learning_rate,i) / self.n_estimators,
-                        self.random_state,
-                        self.verbose
-                    )                       
-                 
-                kfold_estimator.fit(X_aug, residual[:, k], y, raw_predictions, rp_old, k, sample_weight)
-                self.estimators_[i, k].append(kfold_estimator)
-                
-
-                # add tree to ensemble
-     
-        return raw_predictions    
-    
-    def _raw_predict_init(self, X):
-        """Check input and compute raw predictions of the init estimator."""
-        X = self._bin_data(self.binners[0], X, False)
-        self._check_initialized()
-        raw = np.zeros(
-             shape=(X.shape[0], 1), dtype=np.float64
-         )
+        self.estimators_[i] = []
+        X = X_csr if X_csr is not None else X
         
         if isinstance(X,np.ndarray):
-            X_aug = np.hstack([X,raw])         
+            X_aug = np.hstack([X,rp_old_bin.reshape(-1,1)])
         else:
-            X_aug = hstack([X,csr_matrix(raw)])  
+            X_aug = hstack([X, csr_matrix(rp_old_bin.reshape(-1,1))])               
+        trains = []
+        tests = []
+        for eid  in range(self.n_estimators):
+            if eid %2 == 0:
+                kfold_estimator = KFoldWrapper(
+                    estimator,
+                    self.lin_estimator,
+                    self.n_splits,
+                    self.C,
+                    1. / self.n_estimators,
+                    self.random_state,
+                    self.verbose
+                )
+            else:
+                kfold_estimator = KFoldWrapper(
+                    restimator,
+                    self.lin_estimator,
+                    self.n_splits,
+                    self.C,
+                    1. / self.n_estimators,
+                    self.random_state,
+                    self.verbose
+                )                       
+                
+            trains_, tests_ = kfold_estimator.fit(X_aug, residual[:, k],sample_weight)
+            trains.append(trains_)
+            tests.append(tests_)
+            self.estimators_[i].append(kfold_estimator)
+        raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight)    
+        # add tree to ensemble
+     
+        return raw_predictions, history_sum  
+    
+    def getIndicators(self, estimator, X, sampled = True, do_sample = True):
+        Is = []
+        n_samples = X.shape[0]
+        n_samples_bootstrap = _get_n_samples_bootstrap(
+            n_samples,
+            estimator.max_samples,
+        )  
+        idx = estimator.apply(X)
+        for i,clf in enumerate(estimator.estimators_):
+            if do_sample:
+                if sampled:
+                    indices = _generate_sample_indices(
+                        clf.random_state,
+                        n_samples,
+                        n_samples_bootstrap,
+                    )        
+                else:    
+                    indices = _generate_unsampled_indices(
+                        clf.random_state,
+                        n_samples,
+                        n_samples_bootstrap,
+                    )
+            else:
+                indices = list(range(X.shape[0]))                    
         
-        X = self.estimators_[0, 0][0].estimator_[0]._validate_X_predict(X_aug)
-        
-        if self.init_ == "zero":
-            raw_predictions = np.zeros(
-                shape=(X.shape[0], self.n_trees_per_iteration_), dtype=np.float64
-            )
-        else:
-            raw_predictions = _init_raw_predictions(
-                X, self.init_, self._loss, is_classifier(self)
-            )
-        return raw_predictions    
+            I = np.zeros((X.shape[0], clf.tree_.node_count))
+            for j in indices:
+                I[j,idx[j,i]] = 1.0    
+            Is.append(I)
+        return np.hstack(Is)       
+
+    def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight):
+        bias = history_sum
+        cur_lr = copy.deepcopy(self.dummy_lin)
+    
+        I = []
+        for e in estimators:        
+            I.append(self.getIndicators(e, X, do_sample = False))
+
+        I = np.hstack(I)    
+    
+        cur_lr.fit(I, y, trains, bias = bias, sample_weight = sample_weight)
+        raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum) 
+        self.lr.append(cur_lr)
+        return raw_predictions, hidden
+    
+    def _raw_predict_init(self, X):
+        return np.zeros(X.shape[0],self.hidden_size)    
     
     def _raw_predict(self, X):
         """Return the sum of the trees raw predictions (+ init estimator)."""
-        raw_predictions = self._raw_predict_init(X)
-        self.predict_stages(X,raw_predictions)
-        return raw_predictions
+        hidden = self._raw_predict_init(X)
+        out = self.predict_stages(X,hidden)
+        return out
 
     def _staged_raw_predict(self, X, check_input=True):
         if check_input:
@@ -494,31 +524,29 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 X, dtype=DTYPE, order="C", accept_sparse="csr", reset=False
             )
         X = self._bin_data(self.binners[0], X, False)
-        raw_predictions = self._raw_predict_init(X)
+        hidden = self._raw_predict_init(X)
         for i in range(self.estimators_.shape[0]):
-            self.predict_stage(i, X, raw_predictions)
-            yield raw_predictions.copy() 
+            out, hidden = self.predict_stage(i, X, hidden)
+            yield out.copy() 
             
-    def predict_stage(self, i, X, raw_predictions):
-        rp = self._bin_data(self.binners[i + 1], raw_predictions, False) #copy.deepcopy(raw_predictions) #
-        new_raw_predictions = np.zeros(raw_predictions.shape)
-        for k in range(self._loss.n_classes):
-            if self.estimators_[i,k] is not None:
-                for estimator in self.estimators_[i,k]:
-                    if estimator is not None:
-                        if isinstance(X,np.ndarray):
-                            X_aug = np.hstack([X,rp[:,k].reshape(-1,1)])         
-                        else:
-                            X_aug = hstack([X,csr_matrix(rp[:, k]).reshape(-1,1)])  
-                            
-                        new_raw_predictions[:,k] += estimator.predict(X_aug)
-        raw_predictions += new_raw_predictions    
-                    
+    def predict_stage(self, i, X, hidden):
+        rp = self._bin_data(self.binners[i + 1], hidden, False) #copy.deepcopy(raw_predictions) #
+        if isinstance(X,np.ndarray):
+            X_aug = np.hstack([X,rp.reshape(-1,1)])         
+        else:
+            X_aug = hstack([X,csr_matrix(rp).reshape(-1,1)])          
+
+        if self.estimators_[i] is not None:
+            I = self.getIndicators(estimator, X_aug, do_sample = False) for estimator in self.estimators_[i]
+            out, hidden = self.lr[i].decision_function(I,None,hidden) 
+
+        return out, hidden    
     
-    def predict_stages(self, X, raw_predictions):
+    def predict_stages(self, X, hidden):
         X = self._bin_data(self.binners[0], X, False)        
         for i in range(self.estimators_.shape[0]):
-            self.predict_stage(i, X, raw_predictions)
+            out, hidden = self.predict_stage(i, X, hidden)
+        return out    
  
 class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
     _parameter_constraints: dict = {
@@ -762,13 +790,13 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
             ccp_alpha=ccp_alpha,
         )
         self.hidden_size = hidden_size
-        self.lin_estimator = MLPRB(alpha = 1. / C, hidden_layer_sizes=(hidden_size,),
+        self.lin_estimator = MLPRB(alpha = 1. / C, 
                                    max_iter=1000,
                                    tol = 0.0000001,
-                                   n_iter_no_change=20,
+                                   device=self.device,
                                    batch_size=64,
                                    learning_rate_init=0.0001,
-                                   solver="adam",
+                                   hidden_size = self.hidden_size,
                                    verbose = False)
 
     def _encode_y(self, y=None, sample_weight=None):
