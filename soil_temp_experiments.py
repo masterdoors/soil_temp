@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
+# %%
+# !pip install deep-forest
+
+# %%
+# !pip install -U pandas==1.5.3
+
+# %%
 
 
 import pandas as pd
@@ -49,7 +56,7 @@ for file in os.listdir(fdir):
 reynolds_soil_temp = pd.concat(soil_temp, axis=0)
 
 
-# In[ ]:
+# %%
 
 
 fdir2 = "data/Reynolds"
@@ -75,7 +82,7 @@ for file in os.listdir(fdir2):
 reynolds_climate = pd.concat(climate, axis=0)
 
 
-# In[ ]:
+# %%
 
 
 reynolds_soil_temp = reynolds_soil_temp.rename(columns={0:'DATE',1:"LOC",5:"y_1",6:"y_2",7:"y_3",8:"y_4",9:"y_5",10:"y_6",11:"y_7",12:"y_8",3: 20, 4: 21}) 
@@ -84,13 +91,16 @@ climate = reynolds_climate.set_index(['DATE','LOC']).rename(columns={3: "C1", 4:
 soil = reynolds_soil_temp.set_index(['DATE','LOC'])
 
 
-# In[ ]:
+# %%
 
 
 all_reynolds_data = pd.merge(soil,climate,left_index=True, right_index=True)
 
 
-# In[ ]:
+# %%
+all_reynolds_data
+
+# %%
 
 
 all_reynolds_data.to_csv("all_reynolds_data.csv",sep=";")
@@ -100,7 +110,7 @@ all_reynolds_data.to_csv("all_reynolds_data.csv",sep=";")
 
 # # UK
 
-# In[ ]:
+# %%
 
 
 uk_data = "data/UK/catalogue.ceh.ac.uk/datastore/eidchub/399ed9b1-bf59-4d85-9832-ee4d29f49bfb/"
@@ -128,20 +138,20 @@ climate_soil['DATE']= pd.to_datetime(climate_soil['DATE'])
 climate_soil.set_index(["DATE","LOC"])
 
 
-# In[ ]:
+# %%
 
 
 climate_soil.rename(columns={"DATE_TIME":"DATE","SITE_ID":"LOC","TDT1_TSOIL":"y_1","TDT2_TSOIL":"y_2","TDT3_TSOIL":"y_3","TDT4_TSOIL":"y_4","TDT5_TSOIL":"y_5","TDT6_TSOIL":"y_6","TDT7_TSOIL":"y_7","TDT8_TSOIL":"y_8","TDT9_TSOIL":"y_9","TDT10_TSOIL":"y_10"}) 
 climate_soil = climate_soil.set_index(["DATE","LOC"])
 
 
-# In[ ]:
+# %%
 
 
 climate_soil.to_csv("uk_soil.csv",sep=";")
 
 
-climate_soil = climate_soil.drop(["SNOW_DEPTH", "TDT1_VWC","TDT2_VWC","TDT3_VWC","TDT4_VWC","TDT5_VWC","TDT6_VWC","TDT7_VWC","TDT8_VWC","TDT9_VWC","TDT10_VWC","PRECIP_TIPPING","PRECIP_RAINE"],axis=1)
+
 
 
 # # Preprocessing of the Datasets
@@ -150,7 +160,10 @@ climate_soil = climate_soil.drop(["SNOW_DEPTH", "TDT1_VWC","TDT2_VWC","TDT3_VWC"
 
 # ### We do not consider temperatures for other soil layers as fatures deliberatly. 
 
-# In[ ]:
+# %%
+climate_soil = climate_soil.drop(["SNOW_DEPTH", "TDT1_VWC","TDT2_VWC","TDT3_VWC","TDT4_VWC","TDT5_VWC","TDT6_VWC","TDT7_VWC","TDT8_VWC","TDT9_VWC","TDT10_VWC","PRECIP_TIPPING","PRECIP_RAINE"],axis=1)
+
+# %%
 
 
 from datetime import date, timedelta
@@ -366,7 +379,7 @@ for model_name in models:
 # plt.show()
 
 
-# In[ ]:
+# %%
 
 
 # AWDF
@@ -442,4 +455,6 @@ for model_name in models:
 #             mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
 #             printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="awdf_output.txt")     
 #             bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
-    
+
+
+# %%
