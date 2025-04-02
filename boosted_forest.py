@@ -763,7 +763,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         )
         self.hidden_size = hidden_size
         self.lin_estimator = MLPRB(alpha = 1. / C, hidden_layer_sizes=(hidden_size,),
-                                   max_iter=200,
+                                   max_iter=1000,
                                    tol = 0.0000001,
                                    n_iter_no_change=20,
                                    batch_size=64,

@@ -5,6 +5,9 @@ Deep-Forest/
 deep-forest/
 *.py[cod]
 *$py.class
+kdd98*
+cup98*
+lifetime-value/
 
 # C extensions
 *.so

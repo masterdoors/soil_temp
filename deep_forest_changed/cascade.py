@@ -1683,6 +1683,7 @@ class CascadeForestRegressor(BaseCascadeForest, RegressorMixin):
         X, y = check_X_y(
             X,
             y,
+            accept_sparse = True,
             multi_output=True
             if type_of_target(y)
             in ("continuous-multioutput", "multiclass-multioutput")
