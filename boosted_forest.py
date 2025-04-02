@@ -172,6 +172,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.bin_type = bin_type
         self.binners = []
         self.device = "cpu"
+        self.init = "zero"
         
     def _init_state(self):
         """Initialize model state and allocate model state data structures."""
@@ -411,8 +412,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         
         self.binners.append(binner_)      
         
-        rp_old = raw_predictions.copy()
-        rp_old_bin = self._bin_data(binner_, rp_old, is_training_data=True)           
+        rp_old_bin = self._bin_data(binner_, history_sum, is_training_data=True)           
          
         #TODO convert y for classifier case
         #if loss.n_classes > 2:
@@ -499,8 +499,9 @@ class BaseBoostedCascade(BaseGradientBoosting):
         cur_lr = copy.deepcopy(self.dummy_lin)
     
         I = []
-        for e in estimators:        
-            I.append(self.getIndicators(e, X, do_sample = False))
+        for ek in estimators:        
+            for e in ek.estimators_:
+                I.append(self.getIndicators(e, X, do_sample = False))
 
         I = np.hstack(I)    
     
@@ -537,7 +538,11 @@ class BaseBoostedCascade(BaseGradientBoosting):
             X_aug = hstack([X,csr_matrix(rp).reshape(-1,1)])          
 
         if self.estimators_[i] is not None:
-            I = self.getIndicators(estimator, X_aug, do_sample = False) for estimator in self.estimators_[i]
+            I = []
+            for estimator in self.estimators_[i]:
+                for e in estimator.estimators_:
+                    I.append(self.getIndicators(estimator, X_aug, do_sample = False)) 
+            I = np.hstack(I)        
             out, hidden = self.lr[i].decision_function(I,None,hidden) 
 
         return out, hidden    
