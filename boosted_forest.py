@@ -217,7 +217,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         Returns the number of stages fit; might differ from ``n_estimators``
         due to early stopping.
         """
-
+        self.lr = []
         binner_ = Binner(
             n_bins=self.n_bins,
             bin_subsample=self.bin_subsample,
@@ -455,8 +455,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 )                       
                 
             trains_, tests_ = kfold_estimator.fit(X_aug, residual,sample_weight)
-            trains.append(trains_)
-            tests.append(tests_)
+            trains += trains_
+            tests += tests_
             self.estimators_[i].append(kfold_estimator)
         raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight)    
         # add tree to ensemble
@@ -496,7 +496,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
     def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight):
         bias = history_sum
-        cur_lr = copy.deepcopy(self.dummy_lin)
+        cur_lr = copy.deepcopy(self.lin_estimator)
     
         I = []
         for ek in estimators:        
@@ -511,7 +511,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         return raw_predictions, hidden
     
     def _raw_predict_init(self, X):
-        return np.zeros(X.shape[0],self.hidden_size)    
+        return np.zeros((X.shape[0],self.hidden_size))    
     
     def _raw_predict(self, X):
         """Return the sum of the trees raw predictions (+ init estimator)."""
@@ -526,22 +526,22 @@ class BaseBoostedCascade(BaseGradientBoosting):
             )
         X = self._bin_data(self.binners[0], X, False)
         hidden = self._raw_predict_init(X)
-        for i in range(self.estimators_.shape[0]):
+        for i in range(self.n_layers):
             out, hidden = self.predict_stage(i, X, hidden)
             yield out.copy() 
             
     def predict_stage(self, i, X, hidden):
         rp = self._bin_data(self.binners[i + 1], hidden, False) #copy.deepcopy(raw_predictions) #
         if isinstance(X,np.ndarray):
-            X_aug = np.hstack([X,rp.reshape(-1,1)])         
+            X_aug = np.hstack([X,rp])         
         else:
-            X_aug = hstack([X,csr_matrix(rp).reshape(-1,1)])          
+            X_aug = hstack([X,csr_matrix(rp)])          
 
         if self.estimators_[i] is not None:
             I = []
             for estimator in self.estimators_[i]:
                 for e in estimator.estimators_:
-                    I.append(self.getIndicators(estimator, X_aug, do_sample = False)) 
+                    I.append(self.getIndicators(e, X_aug, do_sample = False)) 
             I = np.hstack(I)        
             out, hidden = self.lr[i].decision_function(I,None,hidden) 
 
@@ -549,7 +549,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
     
     def predict_stages(self, X, hidden):
         X = self._bin_data(self.binners[0], X, False)        
-        for i in range(self.estimators_.shape[0]):
+        for i in range(len(self.estimators_)):
             out, hidden = self.predict_stage(i, X, hidden)
         return out    
  
@@ -802,7 +802,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
                                    batch_size=64,
                                    learning_rate_init=0.0001,
                                    hidden_size = self.hidden_size,
-                                   verbose = False)
+                                   verbose = True)
 
     def _encode_y(self, y=None, sample_weight=None):
         # Just convert y to the expected dtype

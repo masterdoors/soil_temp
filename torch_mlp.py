@@ -3,20 +3,21 @@ from torch import nn
 
 import numpy as np
 
-class MaskedPerceptron:
+class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):    
       super(MaskedPerceptron, self).__init__()
       self.fc1 = nn.Linear(input_size, hidden_size,dtype=torch.float64)
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64)
+      self.hidden_activation = nn.ReLU()
 
     def forward(self, x, mask = None, bias = None):
-        h = self.fc1(x)
+        h = self.hidden_activation(self.fc1(x))
         if mask is not None:
             h = h * mask
         if bias is not None:
             h += bias    
 
-        out = self.fc2(out)
+        out = self.fc2(h)
         
         return out, h
     
@@ -40,19 +41,20 @@ class MLPRB:
         self.hidden_size = hidden_size
         self.criterion =  nn.MSELoss()
 
-    def fit(self,X,y, indexes = None, bias = None):
+    def fit(self,X,y, indexes = None, bias = None,sample_weight = None):
+        if len(y.shape) == 1:
+            y = y.reshape(-1,1)
         self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
         X = torch.from_numpy(X).to(device=self.device) 
         y = torch.from_numpy(y).to(device=self.device)
         #create mask
         if indexes is not None:
             offset = int(self.hidden_size / len(indexes))
-            mask = np.zeros(X.shape[0],self.hidden_size)
+            mask = np.zeros((X.shape[0],self.hidden_size))
             for i, idxs in enumerate(indexes):
                 mask[idxs, i * offset: (i + 1)* offset] = 1.    
         else:
             mask = None
-
 
         optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate_init,eps=1e-07)
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
@@ -96,7 +98,7 @@ class MLPRB:
             #                          bias = torch.from_numpy(bias).to(device=self.device)) 
             #     lss = self.criterion(output.flatten(), y.double().flatten())
             scheduler.step(eloss)
-            if self.verbose:
+            if self.verbose and epoch % 100 == 0:
                 print(
                     eloss / steps,
                 )          
@@ -107,14 +109,18 @@ class MLPRB:
         #create mask
         if indexes is not None:
             offset = int(self.hidden_size / len(indexes))
-            mask = np.zeros(X.shape[0],self.hidden_size)
+            mask = np.zeros((X.shape[0],self.hidden_size))
             for i, idxs in enumerate(indexes):
                 mask[idxs, i * offset: (i + 1)* offset] = 1.    
         else:
             mask = None   
 
         with torch.no_grad():
-                output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
-                                     bias = torch.from_numpy(bias).to(device=self.device))  
+                if mask is not None:
+                    output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
+                                        bias = torch.from_numpy(bias).to(device=self.device))  
+                else:
+                    output, hidden = self.model(X, mask = None,
+                                        bias = torch.from_numpy(bias).to(device=self.device))  
 
         return output.detach().to(torch.device('cpu')).numpy(), hidden.detach().to(torch.device('cpu')).numpy()                       
