@@ -44,15 +44,14 @@ class MLPRB:
     def fit(self,X,y, indexes = None, bias = None,sample_weight = None):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
-        self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
+        self.model = MaskedPerceptron(X.shape[1],self.hidden_size * len(indexes),y.shape[1])
         X = torch.from_numpy(X).to(device=self.device) 
         y = torch.from_numpy(y).to(device=self.device)
         #create mask
         if indexes is not None:
-            offset = int(self.hidden_size / len(indexes))
-            mask = np.zeros((X.shape[0],self.hidden_size))
+            mask = np.zeros((X.shape[0],self.hidden_size * len(indexes)))
             for i, idxs in enumerate(indexes):
-                mask[idxs, i * offset: (i + 1)* offset] = 1.    
+                mask[idxs, i * self.hidden_size: (i + 1)* self.hidden_size] = 1.    
         else:
             mask = None
 
@@ -108,10 +107,9 @@ class MLPRB:
         X = torch.from_numpy(X).to(device=self.device) 
         #create mask
         if indexes is not None:
-            offset = int(self.hidden_size / len(indexes))
-            mask = np.zeros((X.shape[0],self.hidden_size))
+            mask = np.zeros((X.shape[0],self.hidden_size * len(indexes)))
             for i, idxs in enumerate(indexes):
-                mask[idxs, i * offset: (i + 1)* offset] = 1.    
+                mask[idxs, i * self.hidden_size: (i + 1)* self.hidden_size] = 1.    
         else:
             mask = None   
 
