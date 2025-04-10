@@ -95,7 +95,7 @@ def make_modelCascade(max_depth,layers,C):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=4,backend="sklearn",criterion='squared_error')
 
 def make_modelBoosted(max_depth,layers,C,hs):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 4, max_depth=max_depth, n_iter_no_change = 1, validation_fraction = 0.1, learning_rate = 0.9,hidden_size = hs)
+    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 4, max_depth=max_depth, n_iter_no_change = 1, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1)
 
 
 models = {"Boosted Forest": make_modelBoosted}
@@ -112,49 +112,13 @@ for model_name in models:
             Y_train = dat["train"]["y"].flatten()
             Y_test = dat["test"]["y"].flatten()            
 
-            def objective(trial):
-                layers = trial.suggest_int('layers', 5, 15)
-                max_depth = trial.suggest_int('max_depth', 1, 2)
+            layers = 5
+            max_depth = 1
 
-                if model_name == "Boosted Forest":
-                    C = trial.suggest_int('C', 1, 2000)
-                    hs = trial.suggest_int('hs', 3, 100)
-                else:
-                    C = 0
-                    hs = 0
+            C = 100
+            hs = 10
 
-                kf = KFold(n_splits=3)
-                scores = []
-                for _, (train_index, test_index) in enumerate(kf.split(x_train)):
-                    if hs > 0:
-                        model = make_model(max_depth,layers,C,hs)
-                    else:    
-                        model = make_model(max_depth,layers,C)
-                    
-                    model.fit(
-                         x_train[train_index],
-                         Y_train[train_index],
-                    )
-                    y_pred = model.predict(x_train[test_index]) #, batch_size=batch_size)
-                    scores.append(mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten()))
-                return np.asarray(scores).mean() 
-            
-            study = optuna.create_study(direction='minimize')
-            study.optimize(objective, n_trials=100)    
-            
-            layers = study.best_trial.params["layers"]  
-            max_depth = study.best_trial.params["max_depth"]  
-
-            if model_name == "Boosted Forest":
-                C = study.best_trial.params["C"]
-                hs = study.best_trial.params["C"]
-            else:
-                C = 0
-                hs = 0
-            if hs > 0:    
-                model = make_model(max_depth,layers,C,hs)
-            else:
-                model = make_model(max_depth,layers,C)
+            model = make_model(max_depth,layers,C,hs)
                 
             model.fit(
                  x_train,
@@ -164,7 +128,6 @@ for model_name in models:
             y_pred = model.predict(x_test) #, batch_size=batch_size)
             mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
             mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
-            printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="classic_datasets/boosting_output.txt")     
-            bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
+            print(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max())     
     
 

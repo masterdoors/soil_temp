@@ -61,7 +61,7 @@ class KFoldWrapper(object):
      
         # Parameters were already validated by upstream methods
         self.dummy_estimator_ = estimator_forest
-        self.dummy_lin = estimator_linear
+        #self.dummy_lin = estimator_linear
         self.n_splits = n_splits
         self.random_state = random_state
         self.verbose = verbose
@@ -82,7 +82,9 @@ class KFoldWrapper(object):
             shuffle=True,
             random_state=self.random_state,
         )
-        self.lr = []
+
+        trains = []
+        tests = []
         for i, (train_idx, val_idx) in enumerate(splitter.split(X, y)):
             #print(i)
             estimator = copy.deepcopy(self.dummy_estimator_)
@@ -98,5 +100,8 @@ class KFoldWrapper(object):
                 )
                 
             self.estimators_.append(estimator) 
+            trains.append(train_idx)
+            tests.append(val_idx)
+        return trains, tests    
             
          
