@@ -11,15 +11,22 @@ class MaskedPerceptron(nn.Module):
       self.hidden_activation = nn.ReLU()
 
     def forward(self, x, mask = None, bias = None):
-        h = self.hidden_activation(self.fc1(x))
         if mask is not None:
-            h = h * mask
-        if bias is not None:
-            h += bias    
+            masked = x*mask
+        else: 
+            masked = x
 
-        out = self.fc2(h)
+        h = self.fc1(masked)
+        h2 = self.hidden_activation(h)
+
+        if bias is not None:
+            h3 = h2 + bias    
+        else:
+            h3 = h2    
+
+        out = self.fc2(h3)
         
-        return out, h
+        return out, h3
     
 class MLPRB:
     def __init__(self,
@@ -44,14 +51,19 @@ class MLPRB:
     def fit(self,X,y, indexes = None, bias = None,sample_weight = None):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
-        self.model = MaskedPerceptron(X.shape[1],self.hidden_size * len(indexes),y.shape[1])
-        X = torch.from_numpy(X).to(device=self.device) 
+        lengths = [x.shape[1] for x in X]
+        X = torch.from_numpy(np.hstack(X)).to(device=self.device) 
         y = torch.from_numpy(y).to(device=self.device)
+
+        self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
+
         #create mask
+        offset = 0
         if indexes is not None:
-            mask = np.zeros((X.shape[0],self.hidden_size * len(indexes)))
+            mask = np.zeros(X.shape)
             for i, idxs in enumerate(indexes):
-                mask[idxs, i * self.hidden_size: (i + 1)* self.hidden_size] = 1.    
+                mask[idxs, offset: offset + lengths[i]] = 1.    
+            offset += lengths[i]    
         else:
             mask = None
 
@@ -104,21 +116,24 @@ class MLPRB:
         
         
     def decision_function(self,X, indexes = None, bias = None):
-        X = torch.from_numpy(X).to(device=self.device) 
+        lengths = [x.shape[1] for x in X]
+        X = torch.from_numpy(np.hstack(X)).to(device=self.device) 
         #create mask
         if indexes is not None:
-            mask = np.zeros((X.shape[0],self.hidden_size * len(indexes)))
+            offset = 0
+            mask = np.zeros(X.shape)
             for i, idxs in enumerate(indexes):
-                mask[idxs, i * self.hidden_size: (i + 1)* self.hidden_size] = 1.    
+                mask[idxs, offset: offset + lengths[i]] = 1.    
+            offset += lengths[i]    
         else:
             mask = None   
 
         with torch.no_grad():
-                if mask is not None:
-                    output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
-                                        bias = torch.from_numpy(bias).to(device=self.device))  
-                else:
-                    output, hidden = self.model(X, mask = None,
-                                        bias = torch.from_numpy(bias).to(device=self.device))  
+            if mask is not None:
+                output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
+                                    bias = torch.from_numpy(bias).to(device=self.device))  
+            else:
+                output, hidden = self.model(X, mask = None,
+                                    bias = torch.from_numpy(bias).to(device=self.device))  
 
         return output.detach().to(torch.device('cpu')).numpy(), hidden.detach().to(torch.device('cpu')).numpy()                       
