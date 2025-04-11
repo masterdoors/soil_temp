@@ -61,13 +61,13 @@ for k in all_data[0]:
     x01,x02,y01,y02 = train_test_split(all_data[0][k][0], all_data[0][k][1], test_size=0.3,random_state=42)
     dict_data["Diabetes"][k] = {"train":{"X":x01,"y":y01},"test":{"X":x02,"y":y02}}
     
-for k in all_data[1]:
-    x11,x12,y11,y12 = train_test_split(all_data[1][k][0], all_data[1][k][1],test_size=0.3,random_state=42)
-    dict_data["California housing"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
+# for k in all_data[1]:
+#     x11,x12,y11,y12 = train_test_split(all_data[1][k][0], all_data[1][k][1],test_size=0.3,random_state=42)
+#     dict_data["California housing"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
-for k in all_data[2]:
-    x11,x12,y11,y12 = train_test_split(all_data[2][k][0], all_data[2][k][1],test_size=0.3,random_state=42)
-    dict_data["Liver disorders"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
+# for k in all_data[2]:
+#     x11,x12,y11,y12 = train_test_split(all_data[2][k][0], all_data[2][k][1],test_size=0.3,random_state=42)
+#     dict_data["Liver disorders"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
 all_data = dict_data
 
@@ -91,14 +91,14 @@ from sklearn.model_selection import KFold
 def make_modelXGB(max_depth,layers,C):
     return xgb.XGBRegressor(max_depth = max_depth, n_estimators = layers)
 
-def make_modelCascade(max_depth,layers,C):
+def make_modelCascade(max_depth,layers,C,hs):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=4,backend="sklearn",criterion='squared_error')
 
 def make_modelBoosted(max_depth,layers,C,hs):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 4, max_depth=max_depth, n_iter_no_change = 1, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1)
+    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 4, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1)
 
 
-models = {"Boosted Forest": make_modelBoosted}
+models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade}
 
 bo_data = []    
 
@@ -115,7 +115,7 @@ for model_name in models:
             layers = 5
             max_depth = 1
 
-            C = 100
+            C = 1000
             hs = 10
 
             model = make_model(max_depth,layers,C,hs)

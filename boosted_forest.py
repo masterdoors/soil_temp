@@ -326,7 +326,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 next_ = next(y_val_pred_iter)
                 validation_loss = loss_(y_val, next_, sample_weight_val)
                 #if self.loss in {"squared_error", "absolute_error", "huber", "quantile"}:
-                #    print("val loss: ", validation_loss)
+                print("val loss: ", validation_loss)
                 #else:    
                 #    encoded_classes = np.argmax(next_, axis=1)
                 #    print("val loss: ", validation_loss, "val_acc: ", accuracy_score(encoded_classes,y_val))
@@ -798,7 +798,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
                                    tol = 0.0000001,
                                    device=self.device,
                                    batch_size=64,
-                                   learning_rate_init=0.0001,
+                                   learning_rate_init=0.001,
                                    hidden_size = self.hidden_size,
                                    verbose = True)
 

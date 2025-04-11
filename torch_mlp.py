@@ -63,7 +63,7 @@ class MLPRB:
             mask = np.zeros(X.shape)
             for i, idxs in enumerate(indexes):
                 mask[idxs, offset: offset + lengths[i]] = 1.    
-            offset += lengths[i]    
+                offset += lengths[i]    
         else:
             mask = None
 
@@ -94,7 +94,7 @@ class MLPRB:
 
                 optimizer.zero_grad()                         
                 output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
-                loss = self.criterion(output, y_batch.double().squeeze())
+                loss = self.criterion(output.squeeze(), y_batch.double().squeeze())
                 l2_norm = sum(p.pow(2).sum() for p in self.model.parameters())
                 loss += self.alpha * l2_norm
                 eloss += loss.item()
@@ -124,7 +124,7 @@ class MLPRB:
             mask = np.zeros(X.shape)
             for i, idxs in enumerate(indexes):
                 mask[idxs, offset: offset + lengths[i]] = 1.    
-            offset += lengths[i]    
+                offset += lengths[i]    
         else:
             mask = None   
 
