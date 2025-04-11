@@ -503,8 +503,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
             for e in ek.estimators_:
                 I.append(self.getIndicators(e, X, do_sample = False))
 
-        I = np.hstack(I)    
-    
         cur_lr.fit(I, y, trains, bias = bias, sample_weight = sample_weight)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum) 
         self.lr.append(cur_lr)
@@ -542,7 +540,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             for estimator in self.estimators_[i]:
                 for e in estimator.estimators_:
                     I.append(self.getIndicators(e, X_aug, do_sample = False)) 
-            I = np.hstack(I)        
+       
             out, hidden = self.lr[i].decision_function(I,None,hidden) 
 
         return out, hidden    
