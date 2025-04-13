@@ -93,10 +93,10 @@ class KFoldWrapper(object):
             if sample_weight is None:
                 # Notice that a bunch of base estimators do not take
                 # `sample_weight` as a valid input.
-                estimator.fit(X[train_idx], y[train_idx])
+                estimator.fit(X[train_idx], y[train_idx].flatten())
             else:
                 estimator.fit(
-                    X[train_idx], y[train_idx], sample_weight[train_idx]
+                    X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
                 )
                 
             self.estimators_.append(estimator) 
