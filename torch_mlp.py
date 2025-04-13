@@ -37,6 +37,8 @@ class MLPRB:
                 hidden_size = 20,
                 tol=1e-4,
                 device = "cpu",
+                n_estimators=1,
+                n_splits=5,
                 verbose=False):
         self.alpha = alpha
         self.batch_size = batch_size
@@ -47,6 +49,8 @@ class MLPRB:
         self.device = device
         self.hidden_size = hidden_size
         self.criterion =  nn.MSELoss()
+        self.n_estimators = n_estimators
+        self.n_splits = n_splits
 
     def fit(self,X,y, indexes = None, bias = None,sample_weight = None):
         if len(y.shape) == 1:
@@ -60,10 +64,17 @@ class MLPRB:
         #create mask
         offset = 0
         if indexes is not None:
-            mask = np.zeros(X.shape)
+            masks = []
             for i, idxs in enumerate(indexes):
+                mask = np.zeros(X.shape)
                 mask[idxs, offset: offset + lengths[i]] = 1.    
                 offset += lengths[i]    
+                masks.append(mask)
+            mask = np.vstack(masks)  
+            X = X.repeat((len(indexes),1))
+            y = y.repeat((len(indexes),1))     
+            if bias is not None:
+                bias = np.tile(bias,(len(indexes),1))        
         else:
             mask = None
 
@@ -121,17 +132,25 @@ class MLPRB:
         #create mask
         if indexes is not None:
             offset = 0
-            mask = np.zeros(X.shape)
+            masks = []
             for i, idxs in enumerate(indexes):
+                mask = np.zeros(X.shape)
                 mask[idxs, offset: offset + lengths[i]] = 1.    
                 offset += lengths[i]    
+                masks.append(mask)
+            mask = np.vstack(masks)  
+            X = X.repeat((len(indexes),1))
+            if bias is not None:
+                bias = np.tile(bias,(len(indexes),1))   
         else:
-            mask = None   
+            mask = None
 
         with torch.no_grad():
             if mask is not None:
                 output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
                                     bias = torch.from_numpy(bias).to(device=self.device))  
+                output = output.reshape((len(indexes),-1) + (output.shape[1],)).mean(axis=0)
+                hidden = hidden.reshape((len(indexes),-1) + (hidden.shape[1],)).mean(axis=0)
             else:
                 output, hidden = self.model(X, mask = None,
                                     bias = torch.from_numpy(bias).to(device=self.device))  

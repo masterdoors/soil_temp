@@ -80,6 +80,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
     def _bin_data(self, binner, X, is_training_data=True):
         """
         Bin data X. If X is training data, the bin mapper is fitted first."""
+        
+        return X
         description = "training" if is_training_data else "testing"
 
         tic = time.time()
@@ -397,7 +399,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         )        
 
         residual = - loss.gradient(
-            y, raw_predictions_copy 
+            y.flatten(), raw_predictions_copy.flatten() 
         )
         
         if len(residual.shape) == 1:
@@ -495,7 +497,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         return np.hstack(Is)       
 
     def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight):
-        bias = history_sum
         cur_lr = copy.deepcopy(self.lin_estimator)
     
         I = []
@@ -503,7 +504,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             for e in ek.estimators_:
                 I.append(self.getIndicators(e, X, do_sample = False))
 
-        cur_lr.fit(I, y, trains, bias = bias, sample_weight = sample_weight)
+        cur_lr.fit(I, y, trains, bias = history_sum, sample_weight = sample_weight)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum) 
         self.lr.append(cur_lr)
         return raw_predictions, hidden
@@ -800,6 +801,8 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
                                    batch_size=64,
                                    learning_rate_init=0.001,
                                    hidden_size = self.hidden_size,
+                                   n_splits=self.n_splits,
+                                   n_estimators=self.n_estimators,
                                    verbose = True)
 
     def _encode_y(self, y=None, sample_weight=None):
