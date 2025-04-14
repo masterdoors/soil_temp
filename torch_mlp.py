@@ -143,7 +143,17 @@ class MLPRB:
             if bias is not None:
                 bias = np.tile(bias,(len(indexes),1))   
         else:
-            mask = None
+            masks = []
+            repeats = self.n_estimators * self.n_splits
+            for i in range(repeats):
+                mask = np.zeros(X.shape)
+                mask[:, offset: offset + lengths[i]] = 1.    
+                offset += lengths[i]    
+                masks.append(mask)
+            mask = np.vstack(masks)  
+            X = X.repeat((repeats,1))
+            if bias is not None:
+                bias = np.tile(bias,(repeats,1))               
 
         with torch.no_grad():
             if mask is not None:
@@ -151,8 +161,6 @@ class MLPRB:
                                     bias = torch.from_numpy(bias).to(device=self.device))  
                 output = output.reshape((len(indexes),-1) + (output.shape[1],)).mean(axis=0)
                 hidden = hidden.reshape((len(indexes),-1) + (hidden.shape[1],)).mean(axis=0)
-            else:
-                output, hidden = self.model(X, mask = None,
-                                    bias = torch.from_numpy(bias).to(device=self.device))  
+
 
         return output.detach().to(torch.device('cpu')).numpy(), hidden.detach().to(torch.device('cpu')).numpy()                       
