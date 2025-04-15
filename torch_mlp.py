@@ -130,7 +130,9 @@ class MLPRB:
         lengths = [x.shape[1] for x in X]
         X = torch.from_numpy(np.hstack(X)).to(device=self.device) 
         #create mask
+        repeats = 0
         if indexes is not None:
+            repeats = len(indexes)
             offset = 0
             masks = []
             for i, idxs in enumerate(indexes):
@@ -139,11 +141,12 @@ class MLPRB:
                 offset += lengths[i]    
                 masks.append(mask)
             mask = np.vstack(masks)  
-            X = X.repeat((len(indexes),1))
+            X = X.repeat((repeats,1))
             if bias is not None:
-                bias = np.tile(bias,(len(indexes),1))   
+                bias = np.tile(bias,(repeats,1))   
         else:
             masks = []
+            offset = 0
             repeats = self.n_estimators * self.n_splits
             for i in range(repeats):
                 mask = np.zeros(X.shape)
@@ -159,8 +162,8 @@ class MLPRB:
             if mask is not None:
                 output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
                                     bias = torch.from_numpy(bias).to(device=self.device))  
-                output = output.reshape((len(indexes),-1) + (output.shape[1],)).mean(axis=0)
-                hidden = hidden.reshape((len(indexes),-1) + (hidden.shape[1],)).mean(axis=0)
+                output = output.reshape((repeats,-1) + (output.shape[1],)).mean(axis=0)
+                hidden = hidden.reshape((repeats,-1) + (hidden.shape[1],)).mean(axis=0)
 
 
         return output.detach().to(torch.device('cpu')).numpy(), hidden.detach().to(torch.device('cpu')).numpy()                       
