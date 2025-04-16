@@ -74,8 +74,6 @@ all_data = dict_data
 
 # # Boosting
 
-
-
 import xgboost as xgb
 from boosted_forest import CascadeBoostingRegressor
 from deepforest import CascadeForestRegressor
@@ -112,7 +110,7 @@ for model_name in models:
             Y_train = dat["train"]["y"].flatten()
             Y_test = dat["test"]["y"].flatten()            
 
-            layers = 5
+            layers = 2
             max_depth = 1
 
             C = 1000

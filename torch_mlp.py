@@ -9,6 +9,7 @@ class MaskedPerceptron(nn.Module):
       self.fc1 = nn.Linear(input_size, hidden_size,dtype=torch.float64)
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64)
       self.hidden_activation = nn.ReLU()
+      self.drop = nn.Dropout(p=0.2)
 
     def forward(self, x, mask = None, bias = None):
         if mask is not None:
@@ -25,6 +26,7 @@ class MaskedPerceptron(nn.Module):
             h3 = h2    
 
         out = self.fc2(h3)
+        out = self.drop(out)
         
         return out, h3
     
@@ -164,6 +166,5 @@ class MLPRB:
                                     bias = torch.from_numpy(bias).to(device=self.device))  
                 output = output.reshape((repeats,-1) + (output.shape[1],)).mean(axis=0)
                 hidden = hidden.reshape((repeats,-1) + (hidden.shape[1],)).mean(axis=0)
-
 
         return output.detach().to(torch.device('cpu')).numpy(), hidden.detach().to(torch.device('cpu')).numpy()                       
