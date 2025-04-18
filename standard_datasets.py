@@ -93,39 +93,40 @@ def make_modelCascade(max_depth,layers,C,hs):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=4,backend="sklearn",criterion='squared_error')
 
 def make_modelBoosted(max_depth,layers,C,hs):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 4, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1)
+    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 20, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1)
 
 
 models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade}
 
 bo_data = []    
 
-for model_name in models:
-    make_model = models[model_name]
-    for ds_name in all_data:
-        for depth in all_data[ds_name]:
-            dat = all_data[ds_name][depth]
-            x_train = dat["train"]["X"]
-            x_test = dat["test"]["X"]
-            Y_train = dat["train"]["y"].flatten()
-            Y_test = dat["test"]["y"].flatten()            
+for _ in range(3):
+    for model_name in models:
+        make_model = models[model_name]
+        for ds_name in all_data:
+            for depth in all_data[ds_name]:
+                dat = all_data[ds_name][depth]
+                x_train = dat["train"]["X"]
+                x_test = dat["test"]["X"]
+                Y_train = dat["train"]["y"].flatten()
+                Y_test = dat["test"]["y"].flatten()            
 
-            layers = 2
-            max_depth = 1
+                layers = 2
+                max_depth = 1
 
-            C = 1000
-            hs = 10
+                C = 100
+                hs = 5
 
-            model = make_model(max_depth,layers,C,hs)
+                model = make_model(max_depth,layers,C,hs)
+                    
+                model.fit(
+                    x_train,
+                    Y_train,
+                )        
                 
-            model.fit(
-                 x_train,
-                 Y_train,
-            )        
-            
-            y_pred = model.predict(x_test) #, batch_size=batch_size)
-            mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
-            mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
-            print(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max())     
-    
+                y_pred = model.predict(x_test) #, batch_size=batch_size)
+                mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
+                mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
+                print(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max())     
+        
 

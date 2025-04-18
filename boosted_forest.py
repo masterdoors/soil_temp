@@ -505,7 +505,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 I.append(self.getIndicators(e, X, do_sample = False))
 
         cur_lr.fit(I, y, trains, bias = history_sum, sample_weight = sample_weight)
-        raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum) 
+        raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
+        rp, _ = cur_lr.decision_function(I,None,history_sum)  
+        lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
+        print("Test like res:",lrp)
         self.lr.append(cur_lr)
         return raw_predictions, hidden
     
