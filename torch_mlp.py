@@ -9,7 +9,7 @@ class MaskedPerceptron(nn.Module):
       self.fc1 = nn.Linear(input_size, hidden_size,dtype=torch.float64)
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64)
       self.hidden_activation = nn.ReLU()
-      self.drop = nn.Dropout(p=0.2)
+      #self.drop = nn.Dropout(p=0.1)
 
     def forward(self, x, mask = None, bias = None):
         if mask is not None:
@@ -26,7 +26,7 @@ class MaskedPerceptron(nn.Module):
             h3 = h2    
 
         out = self.fc2(h3)
-        out = self.drop(out)
+        #out = self.drop(out)
         
         return out, h3
     
@@ -67,16 +67,23 @@ class MLPRB:
         offset = 0
         if indexes is not None:
             masks = []
+            xs = []
+            ys = []
+            bs = []
             for i, idxs in enumerate(indexes):
                 mask = np.zeros(X.shape)
                 mask[idxs, offset: offset + lengths[i]] = 1.    
                 offset += lengths[i]    
-                masks.append(mask)
+                masks.append(mask[idxs])
+                xs.append(X[idxs])
+                ys.append(y[idxs])
+                if bias is not None:
+                    bs.append(bias[idxs])
             mask = np.vstack(masks)  
-            X = X.repeat((len(indexes),1))
-            y = y.repeat((len(indexes),1))     
-            if bias is not None:
-                bias = np.tile(bias,(len(indexes),1))        
+            X = torch.vstack(xs)
+            y = torch.vstack(ys)     
+            if len(bs) > 0:
+                bias = np.vstack(bs)        
         else:
             mask = None
 
@@ -134,18 +141,29 @@ class MLPRB:
         #create mask
         repeats = 0
         if indexes is not None:
-            repeats = len(indexes)
+            repeats = self.n_estimators
             offset = 0
             masks = []
-            for i, idxs in enumerate(indexes):
+            xs = []
+            bs = []
+            j = 0
+            for i  in range(self.n_estimators):
                 mask = np.zeros(X.shape)
-                mask[idxs, offset: offset + lengths[i]] = 1.    
-                offset += lengths[i]    
+
+                for _ in range(self.n_splits):
+                    idxs = indexes[j]
+                    mask[idxs, offset: offset + lengths[j]] = 1.    
+                    offset += lengths[j]    
+                    j += 1
                 masks.append(mask)
+                xs.append(X)
+                if bias is not None:
+                    bs.append(bias)
+  
             mask = np.vstack(masks)  
-            X = X.repeat((repeats,1))
-            if bias is not None:
-                bias = np.tile(bias,(repeats,1))   
+            X = torch.vstack(xs)
+            if len(bs) > 0:
+                bias = np.vstack(bs)        
         else:
             masks = []
             offset = 0
