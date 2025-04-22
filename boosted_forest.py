@@ -32,9 +32,7 @@ from sklearn.ensemble import ExtraTreesRegressor
 from _binner import Binner
 from sklearn.model_selection import train_test_split
 
-from _logistic import LogisticRegression
-from _ridge import Ridge
-from svr import LinearSVRB
+from torch.nn import BCEWithLogitsLoss
 from torch_mlp import MLPRB
 
 import copy
@@ -328,7 +326,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 next_ = next(y_val_pred_iter)
                 validation_loss = loss_(y_val, next_, sample_weight_val)
                 #if self.loss in {"squared_error", "absolute_error", "huber", "quantile"}:
-                print("val loss: ", validation_loss)
+                #print("val loss: ", validation_loss)
                 #else:    
                 #    encoded_classes = np.argmax(next_, axis=1)
                 #    print("val loss: ", validation_loss, "val_acc: ", accuracy_score(encoded_classes,y_val))
@@ -508,7 +506,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
         rp, _ = cur_lr.decision_function(I,None,history_sum)  
         lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
-        print("Test like res:",lrp)
+        #print("Test like res:",lrp)
         self.lr.append(cur_lr)
         return raw_predictions, hidden
     
@@ -612,11 +610,17 @@ class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
             tol=tol,
             ccp_alpha=ccp_alpha,
         )
-        self.lin_estimator = LogisticRegression(C=self.C,
-                                fit_intercept=False,
-                                solver='lbfgs',
-                                max_iter=100,
-                                multi_class='ovr', n_jobs=1)
+        self.lin_estimator = MLPRB(alpha = 1. / C, 
+                                   max_iter=1000,
+                                   tol = 0.0000001,
+                                   device=self.device,
+                                   batch_size=64,
+                                   learning_rate_init=0.001,
+                                   hidden_size = self.hidden_size,
+                                   n_splits=self.n_splits,
+                                   n_estimators=self.n_estimators,
+                                   criterion=BCEWithLogitsLoss,
+                                   verbose = False)
 
     def _encode_y(self, y, sample_weight):
         # encode classes into 0 ... n_classes - 1 and sets attributes classes_
@@ -806,7 +810,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,
-                                   verbose = True)
+                                   verbose = False)
 
     def _encode_y(self, y=None, sample_weight=None):
         # Just convert y to the expected dtype

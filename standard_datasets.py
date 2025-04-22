@@ -100,7 +100,7 @@ models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascad
 
 bo_data = []    
 
-for _ in range(3):
+for _ in range(1):
     for model_name in models:
         make_model = models[model_name]
         for ds_name in all_data:
@@ -115,7 +115,7 @@ for _ in range(3):
                 max_depth = 1
 
                 C = 100
-                hs = 5
+                hs = 3
 
                 model = make_model(max_depth,layers,C,hs)
                     

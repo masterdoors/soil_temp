@@ -2,6 +2,7 @@ import torch
 from torch import nn
 
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):    
@@ -30,6 +31,20 @@ class MaskedPerceptron(nn.Module):
         
         return out, h3
     
+class EarlyStopping:
+    def __init__(self, tolerance=5, min_delta=0):
+
+        self.tolerance = tolerance
+        self.min_delta = min_delta
+        self.counter = 0
+        self.early_stop = False
+
+    def __call__(self, train_loss, validation_loss):
+        if (validation_loss - train_loss) > self.min_delta:
+            self.counter +=1
+            if self.counter >= self.tolerance:  
+                self.early_stop = True    
+    
 class MLPRB:
     def __init__(self,
                 alpha=0.0001,
@@ -41,6 +56,7 @@ class MLPRB:
                 device = "cpu",
                 n_estimators=1,
                 n_splits=5,
+                criterion = nn.MSELoss(),
                 verbose=False):
         self.alpha = alpha
         self.batch_size = batch_size
@@ -50,7 +66,7 @@ class MLPRB:
         self.verbose = verbose
         self.device = device
         self.hidden_size = hidden_size
-        self.criterion =  nn.MSELoss()
+        self.criterion = criterion 
         self.n_estimators = n_estimators
         self.n_splits = n_splits
 
@@ -90,15 +106,22 @@ class MLPRB:
         optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate_init,eps=1e-07)
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
                                                          factor=0.1,
-                                                         patience=10,
-                                                         verbose=False)
+                                                         patience=10)
 
         if mask is not None and bias is not None:
-            train_dataset = torch.utils.data.TensorDataset(X, y, torch.from_numpy(mask).to(device=self.device),
-                                                           torch.from_numpy(bias).to(device=self.device))
+            Xtr, Xtst, ytr,ytst,masktr,masktst,biastr,biastst = train_test_split(X,y,torch.from_numpy(mask).to(device=self.device),
+                                                                                torch.from_numpy(bias).to(device=self.device),test_size=0.3)            
+
+            train_dataset = torch.utils.data.TensorDataset(Xtr, ytr, masktr, biastr)
+            val_dataset = torch.utils.data.TensorDataset(Xtst, ytst, masktst, biastst)
         else:
-            train_dataset = torch.utils.data.TensorDataset(X, y)    
+            Xtr, Xtst, ytr,ytst = train_test_split(X,y)               
+            train_dataset = torch.utils.data.TensorDataset(Xtr, ytr)    
+            val_dataset = torch.utils.data.TensorDataset(Xtst, ytst)
+
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)
+        val_loader = torch.utils.data.DataLoader(val_dataset)
+        early_stopping = EarlyStopping(tolerance=20, min_delta=10)
 
         for epoch in range(self.max_iter):
             eloss = 0.
@@ -123,15 +146,33 @@ class MLPRB:
                 nn.utils.clip_grad_norm_(self.model.parameters(), 1)
                 optimizer.step()
 
-                
-            #with torch.no_grad():
-            #     output = self.model(X, mask =  torch.from_numpy(mask).to(device=self.device),
-            #                          bias = torch.from_numpy(bias).to(device=self.device)) 
-            #     lss = self.criterion(output.flatten(), y.double().flatten())
+            vloss = 0.
+            vsteps = 0                
+            with torch.no_grad():
+                for tensors in val_loader:   
+                    vsteps += 1
+                    if len(tensors) > 2:
+                        X_batch, y_batch, mask_batch, bias_batch = tensors
+                    else:
+                        X_batch, y_batch = tensors
+                        mask_batch = None
+                        bias_batch = None
+
+                    output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
+                    loss = self.criterion(output.squeeze(), y_batch.double().squeeze())
+                    l2_norm = sum(p.pow(2).sum() for p in self.model.parameters())
+                    loss += self.alpha * l2_norm
+                    vloss += loss.item()                    
+
+                vloss = vloss / vsteps
+                early_stopping(eloss / steps,vloss) 
+                if early_stopping.early_stop:
+                    print("Early stop:", eloss / steps, vloss)
+                    break
             scheduler.step(eloss)
             if self.verbose and epoch % 100 == 0:
                 print(
-                    eloss / steps,
+                    eloss / steps, vloss
                 )          
         
         
