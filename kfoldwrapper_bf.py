@@ -75,7 +75,7 @@ class KFoldWrapper(object):
         """Return the list of internal estimators."""
         return self.estimators_
 
-    @profile
+    #@profile
     def fit(self, X, y, sample_weight=None):
         splitter = KFold(
             n_splits=self.n_splits,
