@@ -36,6 +36,7 @@ from torch.nn import BCEWithLogitsLoss
 from torch_mlp import MLPRB
 
 import copy
+import torch
 
 from sklearn._loss.loss import (
     _LOSSES,
@@ -171,7 +172,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.bin_subsample = bin_subsample
         self.bin_type = bin_type
         self.binners = []
-        self.device = "cpu"
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.init = "zero"
         self.n_forests = 100
         
