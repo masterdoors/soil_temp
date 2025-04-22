@@ -123,7 +123,7 @@ class MLPRB:
 
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)
         val_loader = torch.utils.data.DataLoader(val_dataset)
-        early_stopping = EarlyStopping(tolerance=20, min_delta=10)
+        early_stopping = EarlyStopping(tolerance=25, min_delta=100)
 
         for epoch in range(self.max_iter):
             eloss = 0.
@@ -168,7 +168,7 @@ class MLPRB:
 
                 vloss = vloss / vsteps
                 early_stopping(eloss / steps,vloss) 
-                if early_stopping.early_stop:
+                if early_stopping.early_stop and epoch > 100:
                     print("Early stop:", eloss / steps, vloss)
                     break
             scheduler.step(eloss)
