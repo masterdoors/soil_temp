@@ -78,6 +78,8 @@ class MLPRB:
         y = torch.from_numpy(y).to(device=self.device)
 
         self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
+        self.model.to(device=self.device)
+        self.model.device = self.device        
 
         #create mask
         offset = 0
