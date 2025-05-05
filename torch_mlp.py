@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-
+import copy
 import numpy as np
 from sklearn.model_selection import train_test_split
 
@@ -79,7 +79,10 @@ class MLPRB:
 
         self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
         self.model.to(device=self.device)
-        self.model.device = self.device        
+        self.model.device = self.device      
+
+        best_model = self.model  
+        best_loss = 100000000  
 
         #create mask
         offset = 0
@@ -123,7 +126,7 @@ class MLPRB:
 
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)
         val_loader = torch.utils.data.DataLoader(val_dataset)
-        early_stopping = EarlyStopping(tolerance=25, min_delta=100)
+        #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
 
         for epoch in range(self.max_iter):
             eloss = 0.
@@ -167,16 +170,17 @@ class MLPRB:
                     vloss += loss.item()                    
 
                 vloss = vloss / vsteps
-                early_stopping(eloss / steps,vloss) 
-                if early_stopping.early_stop and epoch > 100:
-                    print("Early stop:", eloss / steps, vloss)
-                    break
+
+                if vloss < best_loss:
+                    best_model = copy.deepcopy(self.model)    
+                    best_loss = vloss 
+
             scheduler.step(eloss)
             if self.verbose and epoch % 100 == 0:
                 print(
-                    eloss / steps, vloss
-                )          
-        
+                    eloss / steps, vloss, best_loss
+                )
+        self.model = best_model          
         
     def decision_function(self,X, indexes = None, bias = None):
         lengths = [x.shape[1] for x in X]
