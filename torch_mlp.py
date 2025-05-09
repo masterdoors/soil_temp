@@ -127,7 +127,7 @@ class MLPRB:
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)
         val_loader = torch.utils.data.DataLoader(val_dataset)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
-
+        last_up = -1
         for epoch in range(self.max_iter):
             eloss = 0.
             steps = 0
@@ -174,12 +174,15 @@ class MLPRB:
                 if vloss < best_loss:
                     best_model = copy.deepcopy(self.model)    
                     best_loss = vloss 
+                    last_up = epoch
 
             scheduler.step(eloss)
             if self.verbose and epoch % 100 == 0:
                 print(
                     eloss / steps, vloss, best_loss
                 )
+            if epoch - last_up > 100:
+                break #early stopping    
         self.model = best_model          
         
     def decision_function(self,X, indexes = None, bias = None):
