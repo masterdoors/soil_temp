@@ -339,7 +339,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
         n_splits=3,
         n_bins=255,
         bin_subsample=200000,
-        bin_type="percentile"):
+        bin_type="percentile",
+        n_trees=100):
         super().__init__(loss = loss,
                          learning_rate = learning_rate,
                          n_estimators = n_layers,
@@ -371,7 +372,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.binners = []
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.init = "zero"
-        self.n_forests = 100
+        self.n_trees = n_trees
         
     def _init_state(self):
         """Initialize model state and allocate model state data structures."""
@@ -576,7 +577,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=self.n_forests
+            n_estimators=self.n_trees
         )  
         
         restimator = ExtraTreesRegressor(
@@ -591,7 +592,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=self.n_forests
+            n_estimators=self.n_trees
         )        
 
         residual = - loss.gradient(
@@ -700,7 +701,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             for e in ek.estimators_:
                 I.append(self.getIndicators(e, X, do_sample = False))
 
-        cur_lr.fit(I, y, trains, bias = history_sum, sample_weight = sample_weight)
+        cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
         rp, _ = cur_lr.decision_function(I,None,history_sum)  
         lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
@@ -783,6 +784,7 @@ class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
         n_iter_no_change=None,
         tol=1e-4,
         ccp_alpha=0.0,
+        n_trees=100
     ):
         super().__init__(
             loss=loss,
@@ -807,6 +809,7 @@ class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
             n_iter_no_change=n_iter_no_change,
             tol=tol,
             ccp_alpha=ccp_alpha,
+            n_trees=n_trees
         )
         self.lin_estimator = MLPRB(alpha = 1. / C, 
                                    max_iter=1000,
@@ -972,6 +975,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         tol=1e-4,
         ccp_alpha=0.0,
         hidden_size = 10,
+        n_trees = 100,
     ):
         super().__init__(
             loss=loss,
@@ -997,14 +1001,15 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
             n_iter_no_change=n_iter_no_change,
             tol=tol,
             ccp_alpha=ccp_alpha,
+            n_trees=n_trees
         )
         self.hidden_size = hidden_size
         self.lin_estimator = MLPRB(alpha = 1. / C, 
-                                   max_iter=1000,
+                                   max_iter=50,
                                    tol = 0.0000001,
                                    device=self.device,
                                    batch_size=64,
-                                   learning_rate_init=0.001,
+                                   learning_rate_init=0.1,
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,

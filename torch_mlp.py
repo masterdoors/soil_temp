@@ -70,7 +70,7 @@ class MLPRB:
         self.n_estimators = n_estimators
         self.n_splits = n_splits
 
-    def fit(self,X,y, indexes = None, bias = None,sample_weight = None):
+    def fit(self,X,y, indexes = None, test_indexes = None, bias = None,sample_weight = None):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
         lengths = [x.shape[1] for x in X]
@@ -104,7 +104,29 @@ class MLPRB:
             X = torch.vstack(xs)
             y = torch.vstack(ys)     
             if len(bs) > 0:
-                bias = np.vstack(bs)        
+                bias = np.vstack(bs)       
+            if test_indexes is not None:
+                xs = []
+                ys = []
+                bs = []
+                masks = []
+                offset = 0
+                for i, idxs in enumerate(test_indexes):
+                    mask_ = np.zeros(X.shape)
+                    mask_[idxs, offset: offset + lengths[i]] = 1.    
+                    offset += lengths[i]    
+                    masks.append(mask[idxs])
+                    xs.append(X[idxs])
+                    ys.append(y[idxs])
+                    if bias is not None:
+                        bs.append(bias[idxs])
+                test_mask = np.vstack(masks)  
+                test_X = torch.vstack(xs)
+                test_y = torch.vstack(ys)     
+                if len(bs) > 0:
+                    test_bias = np.vstack(bs)                     
+            else:
+                test_mask = None
         else:
             mask = None
 
@@ -114,9 +136,18 @@ class MLPRB:
                                                          patience=10)
 
         if mask is not None and bias is not None:
-            Xtr, Xtst, ytr,ytst,masktr,masktst,biastr,biastst = train_test_split(X,y,torch.from_numpy(mask).to(device=self.device),
-                                                                                torch.from_numpy(bias).to(device=self.device),test_size=0.3)            
-
+            if test_mask is None:
+                Xtr,Xtst,ytr,ytst,masktr,masktst,biastr,biastst=train_test_split(X,y,torch.from_numpy(mask).to(device=self.device),torch.from_numpy(bias).to(device=self.device),test_size=0.3)
+            else:
+                Xtr = X
+                ytr = y
+                masktr = torch.from_numpy(mask).to(device=self.device)
+                biastr = torch.from_numpy(bias).to(device=self.device)
+                Xtst = test_X
+                ytst = test_y
+                masktst = torch.from_numpy(test_mask).to(device=self.device)
+                biastst = torch.from_numpy(test_bias).to(device=self.device)
+                
             train_dataset = torch.utils.data.TensorDataset(Xtr, ytr, masktr, biastr)
             val_dataset = torch.utils.data.TensorDataset(Xtst, ytst, masktst, biastst)
         else:
@@ -128,6 +159,9 @@ class MLPRB:
         val_loader = torch.utils.data.DataLoader(val_dataset)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
         last_up = -1
+
+        if self.verbose:
+            print("Start...")        
         for epoch in range(self.max_iter):
             eloss = 0.
             steps = 0
@@ -177,12 +211,14 @@ class MLPRB:
                     last_up = epoch
 
             scheduler.step(eloss)
-            if self.verbose and epoch % 100 == 0:
+            if self.verbose and epoch % 1 == 0:
                 print(
                     eloss / steps, vloss, best_loss
                 )
-            if epoch - last_up > 100:
+            if epoch - last_up > 20:
                 break #early stopping    
+        if self.verbose:
+            print("Stop...")
         self.model = best_model          
         
     def decision_function(self,X, indexes = None, bias = None):
