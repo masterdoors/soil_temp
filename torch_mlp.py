@@ -4,11 +4,6 @@ import copy
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-def sparse_dense_mul(s, d):
-  i = s._indices()
-  v = s._values()
-  dv = d[i[0,:], i[1,:]]  # get values from relevant entries of dense matrix
-  return torch.sparse.FloatTensor(i, v * dv, s.size())
 
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):    
@@ -20,7 +15,7 @@ class MaskedPerceptron(nn.Module):
 
     def forward(self, x, mask = None, bias = None):
         if mask is not None:
-            masked = sparse_dense_mul(mask,x)
+            masked = x * mask
         else: 
             masked = x
 
@@ -144,37 +139,25 @@ class MLPRB:
         if mask is not None and bias is not None:
             if test_mask is None:
                 Xtr,Xtst,ytr,ytst,masktr,masktst,biastr,biastst=train_test_split(X,y,torch.from_numpy(mask).to(device=self.device),torch.from_numpy(bias).to(device=self.device),test_size=0.3)
-                Xtr = Xtr.to(device=self.device)
-                ytr = ytr.to(device=self.device)
-                Xtst = Xtst.to(device=self.device)
-                ytst = ytst.to(device=self.device)
-                biastr = biastr.to(device=self.device)
-                masktr = masktr.to(device=self.device)
-                biastst = biastst.to(device=self.device)
-                masktst = masktst.to(device=self.device)
             else:
-                Xtr = X.to(device=self.device)
-                ytr = y.to(device=self.device)
-                masktr = torch.from_numpy(mask).to_sparse().to(device=self.device)
-                biastr = torch.from_numpy(bias).to(device=self.device)
-                Xtst = test_X.to(device=self.device)
-                ytst = test_y.to(device=self.device)
-                masktst = torch.from_numpy(test_mask).to_sparse().to(device=self.device)
-                biastst = torch.from_numpy(test_bias).to(device=self.device)
+                Xtr = X
+                ytr = y
+                masktr = torch.from_numpy(mask)
+                biastr = torch.from_numpy(bias)
+                Xtst = test_X
+                ytst = test_y
+                masktst = torch.from_numpy(test_mask)
+                biastst = torch.from_numpy(test_bias)
                 
             train_dataset = torch.utils.data.TensorDataset(Xtr, ytr, masktr, biastr)
             val_dataset = torch.utils.data.TensorDataset(Xtst, ytst, masktst, biastst)
         else:
             Xtr, Xtst, ytr,ytst = train_test_split(X,y)     
-            Xtr = Xtr.to(device=self.device)
-            ytr = ytr.to(device=self.device)
-            Xtst = Xtst.to(device=self.device)
-            ytst = ytst.to(device=self.device)
             train_dataset = torch.utils.data.TensorDataset(Xtr, ytr)    
             val_dataset = torch.utils.data.TensorDataset(Xtst, ytst)
 
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)
-        val_loader = torch.utils.data.DataLoader(val_dataset)
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True,pin_memory=True)
+        val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size,pin_memory=True)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
         last_up = -1
 
@@ -187,10 +170,16 @@ class MLPRB:
                 steps += 1
                 if len(tensors) > 2:
                     X_batch, y_batch, mask_batch, bias_batch = tensors
+                    X_batch = X_batch.to(device=self.device)
+                    y_batch = y_batch.to(device=self.device)
+                    mask_batch = mask_batch.to(device=self.device)
+                    bias_batch = bias_batch.to(device=self.device)
                 else:
                     X_batch, y_batch = tensors
                     mask_batch = None
                     bias_batch = None
+                    X_batch = X_batch.to(device=self.device)
+                    y_batch = y_batch.to(device=self.device)                    
 
                 optimizer.zero_grad()                         
                 output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
@@ -210,8 +199,14 @@ class MLPRB:
                     vsteps += 1
                     if len(tensors) > 2:
                         X_batch, y_batch, mask_batch, bias_batch = tensors
+                        X_batch = X_batch.to(device=self.device)
+                        y_batch = y_batch.to(device=self.device)
+                        mask_batch = mask_batch.to(device=self.device)
+                        bias_batch = bias_batch.to(device=self.device)                        
                     else:
                         X_batch, y_batch = tensors
+                        X_batch = X_batch.to(device=self.device)
+                        y_batch = y_batch.to(device=self.device)                        
                         mask_batch = None
                         bias_batch = None
 
@@ -254,7 +249,7 @@ class MLPRB:
         
     def decision_function(self,X, indexes = None, bias = None):
         lengths = [x.shape[1] for x in X]
-        X = torch.from_numpy(np.hstack(X)).to(device=self.device) 
+        X = torch.from_numpy(np.hstack(X))
         #create mask
         repeats = 0
         if indexes is not None:
@@ -295,11 +290,31 @@ class MLPRB:
             if bias is not None:
                 bias = np.tile(bias,(repeats,1))               
 
-        with torch.no_grad():
-            if mask is not None:
-                output, hidden = self.model(X, mask = torch.from_numpy(mask).to(device=self.device),
-                                    bias = torch.from_numpy(bias).to(device=self.device))  
+        output = None
+        hidden = None
+
+        if mask is not None and bias is not None:
+            mask = torch.from_numpy(mask)
+            bias = torch.from_numpy(bias)
+            dataset = torch.utils.data.TensorDataset(X,mask,bias) 
+
+            loader = torch.utils.data.DataLoader(dataset, batch_size=self.batch_size,shuffle=False,pin_memory=True)       
+        
+            with torch.no_grad():
+                outputs = []
+                hiddens = [] 
+                for tensors in loader:
+                    X, mask, bias = tensors
+                    X = X.to(device=self.device)
+                    mask = mask.to(device=self.device)
+                    bias = bias.to(device=self.device)
+
+                    output, hidden = self.model(X, mask = mask, bias = bias)  
+                    outputs.append(output.detach().to(torch.device('cpu')))
+                    hiddens.append(hidden.detach().to(torch.device('cpu')))
+
+                output = torch.vstack(outputs)
+                hidden = torch.vstack(hiddens)
                 output = output.reshape((repeats,-1) + (output.shape[1],)).mean(axis=0)
                 hidden = hidden.reshape((repeats,-1) + (hidden.shape[1],)).mean(axis=0)
-
-        return output.detach().to(torch.device('cpu')).numpy(), hidden.detach().to(torch.device('cpu')).numpy()                       
+        return output.numpy(), hidden.numpy()                       
