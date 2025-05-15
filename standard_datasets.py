@@ -93,7 +93,7 @@ def make_modelCascade(max_depth,layers,C,hs):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=4,backend="sklearn",criterion='squared_error')
 
 def make_modelBoosted(max_depth,layers,C,hs):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 20, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1)
+    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = 20, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=30)
 
 
 models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade}
