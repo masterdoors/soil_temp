@@ -4,6 +4,12 @@ import copy
 import numpy as np
 from sklearn.model_selection import train_test_split
 
+def sparse_dense_mul(s, d):
+  i = s._indices()
+  v = s._values()
+  dv = d[i[0,:], i[1,:]]  # get values from relevant entries of dense matrix
+  return torch.sparse.FloatTensor(i, v * dv, s.size())
+
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):    
       super(MaskedPerceptron, self).__init__()
@@ -14,7 +20,7 @@ class MaskedPerceptron(nn.Module):
 
     def forward(self, x, mask = None, bias = None):
         if mask is not None:
-            masked = x*mask
+            masked = sparse_dense_mul(mask,x)
         else: 
             masked = x
 
@@ -74,8 +80,8 @@ class MLPRB:
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
         lengths = [x.shape[1] for x in X]
-        X = torch.from_numpy(np.hstack(X)).to(device=self.device) 
-        y = torch.from_numpy(y).to(device=self.device)
+        X = torch.from_numpy(np.hstack(X)) 
+        y = torch.from_numpy(y)
 
         self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
         self.model.to(device=self.device)
@@ -138,20 +144,32 @@ class MLPRB:
         if mask is not None and bias is not None:
             if test_mask is None:
                 Xtr,Xtst,ytr,ytst,masktr,masktst,biastr,biastst=train_test_split(X,y,torch.from_numpy(mask).to(device=self.device),torch.from_numpy(bias).to(device=self.device),test_size=0.3)
+                Xtr = Xtr.to(device=self.device)
+                ytr = ytr.to(device=self.device)
+                Xtst = Xtst.to(device=self.device)
+                ytst = ytst.to(device=self.device)
+                biastr = biastr.to(device=self.device)
+                masktr = masktr.to(device=self.device)
+                biastst = biastst.to(device=self.device)
+                masktst = masktst.to(device=self.device)
             else:
-                Xtr = X
-                ytr = y
-                masktr = torch.from_numpy(mask).to(device=self.device)
+                Xtr = X.to(device=self.device)
+                ytr = y.to(device=self.device)
+                masktr = torch.from_numpy(mask).to_sparse().to(device=self.device)
                 biastr = torch.from_numpy(bias).to(device=self.device)
-                Xtst = test_X
-                ytst = test_y
-                masktst = torch.from_numpy(test_mask).to(device=self.device)
+                Xtst = test_X.to(device=self.device)
+                ytst = test_y.to(device=self.device)
+                masktst = torch.from_numpy(test_mask).to_sparse().to(device=self.device)
                 biastst = torch.from_numpy(test_bias).to(device=self.device)
                 
             train_dataset = torch.utils.data.TensorDataset(Xtr, ytr, masktr, biastr)
             val_dataset = torch.utils.data.TensorDataset(Xtst, ytst, masktst, biastst)
         else:
-            Xtr, Xtst, ytr,ytst = train_test_split(X,y)               
+            Xtr, Xtst, ytr,ytst = train_test_split(X,y)     
+            Xtr = Xtr.to(device=self.device)
+            ytr = ytr.to(device=self.device)
+            Xtst = Xtst.to(device=self.device)
+            ytst = ytst.to(device=self.device)
             train_dataset = torch.utils.data.TensorDataset(Xtr, ytr)    
             val_dataset = torch.utils.data.TensorDataset(Xtst, ytst)
 
@@ -219,7 +237,20 @@ class MLPRB:
                 break #early stopping    
         if self.verbose:
             print("Stop...")
-        self.model = best_model          
+        self.model = best_model    
+        del Xtr
+        del ytr
+        del Xtst
+        del ytst
+
+        if masktr is not None:
+            del masktr
+        if masktst is not None:
+            del masktst
+        if biastr is not None:
+            del biastr
+        if biastst is not None:
+            del biastst
         
     def decision_function(self,X, indexes = None, bias = None):
         lengths = [x.shape[1] for x in X]
