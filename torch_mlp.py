@@ -3,7 +3,7 @@ from torch import nn
 import copy
 import numpy as np
 from sklearn.model_selection import train_test_split
-
+from torch.utils.data import Dataset
 
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):    
@@ -32,20 +32,31 @@ class MaskedPerceptron(nn.Module):
         
         return out, h3
     
-class EarlyStopping:
-    def __init__(self, tolerance=5, min_delta=0):
+class KVDataset(Dataset):
+    def __init__(self, X,y = None,indexes = None, bias = None,sample_weight = None,lengths= None):
+        assert indexes is not None
+        assert lengths is not None
+        assert len(indexes) > 0
+        self.batch_size = len(indexes[0])
+        self.total_len = self.batch_size * len(indexes)
+        self.data = X
+        self.labels = y
+        self.indexes = indexes
+        self.bias = bias
+        self.sample_weight = sample_weight
 
-        self.tolerance = tolerance
-        self.min_delta = min_delta
-        self.counter = 0
-        self.early_stop = False
+    def __len__(self):
+        return self.total_len
 
-    def __call__(self, train_loss, validation_loss):
-        if (validation_loss - train_loss) > self.min_delta:
-            self.counter +=1
-            if self.counter >= self.tolerance:  
-                self.early_stop = True    
-    
+    def __getitem__(self, idx):
+        batch_num = int(idx / self.batch_size)
+        batch_offset = idx % self.batch_size
+        id_ = self.indexes[batch_num][batch_offset]
+        if self.labels is not None:
+            return self.data[id_], self.labels[id_],self.bias[id_],self.sample_weight[id_]
+        else:
+            return self.data[id_], self.bias[id_],self.sample_weight[id_]
+
 class MLPRB:
     def __init__(self,
                 alpha=0.0001,
@@ -156,8 +167,8 @@ class MLPRB:
             train_dataset = torch.utils.data.TensorDataset(Xtr, ytr)    
             val_dataset = torch.utils.data.TensorDataset(Xtst, ytst)
 
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True,pin_memory=True)
-        val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size,pin_memory=True)
+            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True,pin_memory=True,num_workers=4,persistent_workers=True)
+        val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size,pin_memory=True,num_workers=4)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
         last_up = -1
 
