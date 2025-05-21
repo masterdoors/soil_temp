@@ -577,7 +577,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=self.n_trees
+            n_estimators=self.n_trees,
+            n_jobs = -1
         )  
         
         restimator = ExtraTreesRegressor(
@@ -592,7 +593,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
-            n_estimators=self.n_trees
+            n_estimators=self.n_trees,
+            n_jobs = -1
         )        
 
         residual = - loss.gradient(

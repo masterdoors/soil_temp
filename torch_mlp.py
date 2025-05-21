@@ -107,8 +107,8 @@ class MLPRB:
             train_dataset = KVDataset(X, y, indexes,bias,lengths)
             val_dataset = KVDataset(X, y, test_indexes, bias,lengths)
 
-            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True,pin_memory=True,num_workers=4,persistent_workers=True)
-            val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size,pin_memory=True,num_workers=4)
+            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True,pin_memory=True)#,num_workers=4,persistent_workers=True)
+            val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size)#,pin_memory=True,num_workers=4)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
         last_up = -1
 
@@ -120,10 +120,10 @@ class MLPRB:
             for tensors in train_loader:
                 steps += 1
                 X_batch, y_batch, mask_batch, bias_batch = tensors
-                X_batch = torch.from_numpy(X_batch).to(device=self.device)
-                y_batch = torch.from_numpy(y_batch).to(device=self.device)
-                mask_batch = torch.from_numpy(mask_batch).to(device=self.device)
-                bias_batch = torch.from_numpy(bias_batch).to(device=self.device)
+                X_batch = X_batch.to(device=self.device)
+                y_batch = y_batch.to(device=self.device)
+                mask_batch = mask_batch.to(device=self.device)
+                bias_batch = bias_batch.to(device=self.device)
 
                 optimizer.zero_grad()                         
                 output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
@@ -142,10 +142,10 @@ class MLPRB:
                 for tensors in val_loader:   
                     vsteps += 1
                     X_batch, y_batch, mask_batch, bias_batch = tensors
-                    X_batch = torch.from_numpy(X_batch).to(device=self.device)
-                    y_batch = torch.from_numpy(y_batch).to(device=self.device)
-                    mask_batch = torch.from_numpy(mask_batch).to(device=self.device)
-                    bias_batch = torch.from_numpy(bias_batch).to(device=self.device)                        
+                    X_batch = X_batch.to(device=self.device)
+                    y_batch = y_batch.to(device=self.device)
+                    mask_batch = mask_batch.to(device=self.device)
+                    bias_batch = bias_batch.to(device=self.device)                        
 
                     output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
                     loss = self.criterion(output.squeeze(), y_batch.double().squeeze())
@@ -179,13 +179,15 @@ class MLPRB:
         if indexes is None:
             indexes = []
             repeats = self.n_estimators * self.n_splits
-            for i in range(repeats):
+            for _ in range(repeats):
                 indexes.append(np.arange(0,X.shape[0]))
+        else:
+            repeats = int(len(indexes) / self.n_splits)       
 
         output = None
         hidden = None
 
-        if mask is not None and bias is not None:
+        if bias is not None:
             bias = torch.from_numpy(bias)
             dataset = KVDataset(X,None,indexes,bias,lengths) 
 
@@ -195,12 +197,12 @@ class MLPRB:
                 outputs = []
                 hiddens = [] 
                 for tensors in loader:
-                    X, mask, bias = tensors
-                    X = torch.from_numpy(X).to(device=self.device)
-                    mask = torch.from_numpy(mask).to(device=self.device)
-                    bias = torch.from_numpy(bias).to(device=self.device)
+                    X_batch, mask_batch, bias_batch = tensors
+                    X_batch = X_batch.to(device=self.device)
+                    mask_batch = mask_batch.to(device=self.device)
+                    bias_batch = bias_batch.to(device=self.device)
 
-                    output, hidden = self.model(X, mask = mask, bias = bias)  
+                    output, hidden = self.model(X_batch, mask = mask_batch, bias = bias_batch)  
                     outputs.append(output.detach().to(torch.device('cpu')))
                     hiddens.append(hidden.detach().to(torch.device('cpu')))
 
