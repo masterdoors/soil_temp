@@ -4,6 +4,7 @@ import copy
 import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset
+from sortedcontainers import SortedList
 
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):    
@@ -37,20 +38,28 @@ class KVDataset(Dataset):
         assert indexes is not None
         assert lengths is not None
         assert len(indexes) > 0
-        self.batch_size = len(indexes[0])
-        self.total_len = self.batch_size * len(indexes)
         self.data = X
         self.labels = y
         self.indexes = indexes
         self.bias = bias
         self.lengths = lengths
+        total_size = 0
+        self.sizes = []
+        for i in self.indexes:
+            self.sizes.append(total_size)
+            total_size += len(i)
+        self.index_tree = SortedList(self.sizes)
+        self.total_len = total_size
 
     def __len__(self):
         return self.total_len
 
     def __getitem__(self, idx):
-        batch_num = int(idx / self.batch_size)
-        batch_offset = idx % self.batch_size
+        if idx in self.index_tree:
+            batch_num = self.index_tree.index(idx)    
+        else:    
+            batch_num = self.index_tree.bisect_left(idx) - 1
+        batch_offset = idx - self.sizes[batch_num]
         id_ = self.indexes[batch_num][batch_offset]
         offset = sum(l for l in self.lengths[:batch_num])
         mask = np.zeros((self.data.shape[1]))
