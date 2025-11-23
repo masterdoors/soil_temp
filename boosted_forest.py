@@ -1085,11 +1085,11 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         self.batch_size = batch_size
         self.hidden_size = hidden_size
         self.lin_estimator = MLPRB(alpha = 1. / C, 
-                                   max_iter=30,
+                                   max_iter=50,
                                    tol = 0.0000001,
                                    device=self.device,
                                    batch_size=batch_size,
-                                   learning_rate_init=0.0001,
+                                   learning_rate_init=0.01,
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,

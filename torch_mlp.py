@@ -19,21 +19,31 @@ from bisect import bisect
 #        return result
 #    return wrapper
 
+
+#X[ijk]
+#sampleXestimatorXfeatures
+class MyMaskedLayer(nn.Module):
+    def __init__(self, in_features, out_features, channels,dtype=torch.float64):
+        super().__init__()
+        self.weight = nn.Parameter(torch.empty(in_features, channels, out_features),dtype=dtype)
+        self.bias = nn.Parameter(torch.empty(out_features),dtype=dtype)
+        torch.nn.init.kaiming_uniform_(self.weight)
+        torch.nn.init.kaiming_uniform_(self.bias)
+
+    def forward(self, x, mask):
+        return torch.einsum('ijk,kjn->ijn',x, self.weight)[mask].mean(axis=1) + self.bias
+
 class MaskedPerceptron(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):    
+    def __init__(self, input_size, hidden_size, output_size, channels):    
       super(MaskedPerceptron, self).__init__()
-      self.fc1 = nn.Linear(input_size, hidden_size,dtype=torch.float64)
+      self.fc1 = MyMaskedLayer(input_size, hidden_size,channels,dtype=torch.float64)
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64)
       self.hidden_activation = nn.ReLU()
       #self.drop = nn.Dropout(p=0.1)
 
     def forward(self, x, mask = None, bias = None):
-        if mask is not None:
-            masked = x.mul(mask)
-        else: 
-            masked = x
         
-        h = self.fc1(masked)
+        h = self.fc1(x, mask)
         h2 = self.hidden_activation(h)
 
         if bias is not None:
@@ -49,43 +59,41 @@ class MaskedPerceptron(nn.Module):
 class KVDataset(Dataset):
     def __init__(self, X,y = None,indexes = None, bias = None,lengths= None, device = None):
         assert indexes is not None
-        assert lengths is not None
         assert device is not None
         assert len(indexes) > 0
-        #self.device = device        
-        #self.data = torch.from_numpy(X).to(device=self.device)
-        #if y is not None:
-        #    self.labels = torch.from_numpy(y).to(device=self.device)
-        #else:
-        #    self.labels = None
+        self.device = device        
+        self.data = torch.from_numpy(X).to(device=self.device)
+        if y is not None:
+            self.labels = torch.from_numpy(y).to(device=self.device)
+        else:
+            self.labels = None
             
         self.indexes = indexes
-        #self.bias = torch.from_numpy(bias).to(device=self.device)
-        self.lengths = lengths
-        self.cum_lengths = []
-        cl = 0
-        for l in self.lengths:
-            self.cum_lengths.append(cl)
-            cl += l
-            
-        total_size = 0
-        self.sizes = []
-        for i in self.indexes:
-            self.sizes.append(total_size)
-            total_size += len(i)
-        self.total_len = total_size
-        #self.mask = torch.zeros((self.data.shape[1]))
+
+        mask = torch.zeros(self.data.shape[0],self.data.shape[1],dtype=self.data.dtype)
+        for i,idx in enumerate(self.indexes):
+            j = np.ones(self.data.shape[1]) * i
+            mask[j,idx] = 1.
+        mask = mask.to(device=self.device)
+        if bias is not None:
+            self.bias = torch.from_numpy(bias).to(device=self.device)
+        else:
+            self.bias = None    
 
     def __len__(self):
-        return self.total_len
+        return self.data.shape[0]
 
     def __getitem__(self, idx):
-        batch_num = bisect(self.sizes,idx)
-        if batch_num >= len(self.sizes) or self.sizes[batch_num] != idx:
-            batch_num -= 1    
-        batch_offset = idx - self.sizes[batch_num]
-        id_ = self.indexes[batch_num][batch_offset]
-        return id_,batch_num
+        if self.labels is not None: 
+            if self.bias is not None:            
+                return self.data[idx],self.labels[idx],self.mask[idx],self.bias[idx]
+            else:
+                return self.data[idx],self.labels[idx],self.mask[idx]
+        else:
+            if self.bias is not None:
+                return self.data[idx],self.mask[idx],self.bias[idx]
+            else:
+                return self.data[idx],self.mask[idx]
 
 class MLPRB:
     def __init__(self,
@@ -116,49 +124,32 @@ class MLPRB:
     def fit(self,X,y, indexes = None, test_indexes = None, bias = None,sample_weight = None):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
-        lengths = [x.shape[1] for x in X]
-        X = np.hstack(X) 
+        #lengths = [x.shape[1] for x in X]
+        X = np.asarray(X) 
 
         X = torch.from_numpy(X).to(device=self.device)
         y = torch.from_numpy(y).to(device=self.device)
         bias = torch.from_numpy(bias).to(device=self.device)
 
-        self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1])
+        self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1],X.shape[1])
         self.model.to(device=self.device)
         self.model.device = self.device      
 
         best_model = self.model  
         best_loss = 100000000  
 
-        optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate_init,eps=1e-07)
+        optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.learning_rate_init,eps=1e-07,weight_decay=self.alpha)
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
                                                          factor=0.1,
                                                          patience=10)
 
         
         if bias is not None:
-            train_dataset = KVDataset(X, y, indexes,bias,lengths,self.device)
-            val_dataset = KVDataset(X, y, test_indexes, bias,lengths,self.device)
+            train_dataset = KVDataset(X, y, indexes,bias,self.device)
+            val_dataset = KVDataset(X, y, test_indexes, bias,self.device)
 
-            ranges = []
-            for i in range(len(train_dataset.cum_lengths)):
-                ranges.append((train_dataset.cum_lengths[i],train_dataset.cum_lengths[i] + train_dataset.lengths[i]))
-                
-            mask = torch.zeros((self.batch_size,X.shape[1])).to(self.device)
-            def custom_collate(data):
-                datas = np.array(list(zip(*data)))
-                if len(data) != self.batch_size:
-                    mask_ = torch.zeros((len(data),X.shape[1])).to(self.device)
-                else:
-                    mask_ = mask
-                    mask_.zero_()
-                
-                for i in range(self.n_estimators * self.n_splits):
-                    mask_[datas[1] == i,ranges[i][0]:ranges[i][1]] = 1.
-                return X[datas[0]],y[datas[0]],mask_,bias[datas[0]]  
-            
-            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True, collate_fn=custom_collate)#,num_workers=4,persistent_workers=True)
-            val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size, collate_fn=custom_collate)#,num_workers=4,persistent_workers=True)
+            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)#,num_workers=4,persistent_workers=True)
+            val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size)#,num_workers=4,persistent_workers=True)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
         last_up = -1
 
@@ -183,8 +174,6 @@ class MLPRB:
                 optimizer.zero_grad()                         
                 output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
                 loss = self.criterion(output.squeeze(), y_batch.double().squeeze())
-                l2_norm = sum(p.pow(2).sum() for p in self.model.parameters())
-                loss += self.alpha * l2_norm
                 eloss += loss.item()
 
                 loss.backward()
@@ -201,8 +190,6 @@ class MLPRB:
 
                     output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
                     loss = self.criterion(output.squeeze(), y_batch.double().squeeze())
-                    l2_norm = sum(p.pow(2).sum() for p in self.model.parameters())
-                    loss += self.alpha * l2_norm
                     vloss += loss.item()                    
 
                 vloss = vloss / vsteps
@@ -226,7 +213,6 @@ class MLPRB:
         self.model = best_model    
         
     def decision_function(self,X, indexes = None, bias = None):
-        lengths = [x.shape[1] for x in X]
         X = np.hstack(X)
         X = torch.from_numpy(X).to(device=self.device)
         bias = torch.from_numpy(bias).to(device=self.device)
@@ -245,27 +231,9 @@ class MLPRB:
         hidden = None
 
         if bias is not None:
-            dataset = KVDataset(X,None,indexes,bias,lengths,self.device) 
+            dataset = KVDataset(X,None,indexes,bias,self.device) 
 
-            ranges = []
-            for i in range(len(dataset.cum_lengths)):
-                #ranges.append(np.arange(dataset.cum_lengths[i],dataset.cum_lengths[i] + dataset.lengths[i],1))             
-                ranges.append((dataset.cum_lengths[i],dataset.cum_lengths[i] + dataset.lengths[i]))
-
-            mask = torch.zeros((self.batch_size,X.shape[1])).to(self.device)
-            def custom_collate(data):
-                datas = np.array(list(zip(*data)))
-                if len(data) != self.batch_size:
-                    mask_ = torch.zeros((len(data),X.shape[1])).to(self.device)
-                else:
-                    mask_ = mask
-                    mask_.zero_()
-                
-                for i in range(self.n_estimators * self.n_splits):
-                    mask_[datas[1] == i,ranges[i][0]:ranges[i][1]] = 1.
-                return X[datas[0]], mask_,bias[datas[0]]          
-                
-            loader = torch.utils.data.DataLoader(dataset, batch_size=256,shuffle=False,collate_fn=custom_collate)       
+            loader = torch.utils.data.DataLoader(dataset, batch_size=256,shuffle=False)       
         
             with torch.no_grad():
                 outputs = []
