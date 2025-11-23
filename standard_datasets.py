@@ -222,13 +222,13 @@ for k in all_data[0]:
      x01,x02,y01,y02 = train_test_split(all_data[0][k][0], all_data[0][k][1], test_size=0.3,random_state=42)
      dict_data["Diabetes"][k] = {"train":{"X":x01,"y":y01},"test":{"X":x02,"y":y02}}
     
-# for k in all_data[1]:
-#     x11,x12,y11,y12 = train_test_split(all_data[1][k][0], all_data[1][k][1],test_size=0.3,random_state=42)
-#     dict_data["California housing"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
+for k in all_data[1]:
+    x11,x12,y11,y12 = train_test_split(all_data[1][k][0], all_data[1][k][1],test_size=0.3,random_state=42)
+    dict_data["California housing"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
-# for k in all_data[2]:
-#     x11,x12,y11,y12 = train_test_split(all_data[2][k][0], all_data[2][k][1],test_size=0.3,random_state=42)
-#     dict_data["Liver disorders"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
+for k in all_data[2]:
+    x11,x12,y11,y12 = train_test_split(all_data[2][k][0], all_data[2][k][1],test_size=0.3,random_state=42)
+    dict_data["Liver disorders"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
 all_data = dict_data
 
@@ -264,7 +264,7 @@ bo_data = []
 for _ in range(1):
     for model_name in models:
         make_model = models[model_name]
-        for ds_name in ["Diabetes"]:
+        for ds_name in ["Diabetes","California housing","Liver disorders"]:
             for depth in all_data[ds_name]:
                 dat = all_data[ds_name][depth]
                 x_train = dat["train"]["X"]
@@ -275,8 +275,8 @@ for _ in range(1):
                 layers = 2
                 max_depth = 1
 
-                C = 100
-                hs = 3
+                C = 1000
+                hs = 10
 
                 model = make_model(max_depth,layers,C,hs)
                     
