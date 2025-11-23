@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.data import Dataset
 from bisect import bisect
+import math
 #from torch.profiler import profile, record_function, ProfilerActivity
 
 #import cProfile
@@ -25,13 +26,16 @@ from bisect import bisect
 class MyMaskedLayer(nn.Module):
     def __init__(self, in_features, out_features, channels,dtype=torch.float64):
         super().__init__()
-        self.weight = nn.Parameter(torch.empty(in_features, channels, out_features),dtype=dtype)
-        self.bias = nn.Parameter(torch.empty(out_features),dtype=dtype)
+        self.weight = nn.Parameter(torch.empty(in_features, channels, out_features,dtype=dtype))
+        self.bias = nn.Parameter(torch.empty(out_features,dtype=dtype))
         torch.nn.init.kaiming_uniform_(self.weight)
-        torch.nn.init.kaiming_uniform_(self.bias)
+
+        fan_in, _ = torch.nn.init._calculate_fan_in_and_fan_out(self.weight)
+        bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
+        torch.nn.init.uniform_(self.bias, -bound, bound)        
 
     def forward(self, x, mask):
-        return torch.einsum('ijk,kjn->ijn',x, self.weight)[mask].mean(axis=1) + self.bias
+        return torch.einsum('ijk,kjn->ijn',x, self.weight)[mask].reshape(x.shape[0],-1,self.weight.shape[2]).mean(axis=1) + self.bias
 
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, channels):    
@@ -57,26 +61,26 @@ class MaskedPerceptron(nn.Module):
         return out, h3
     
 class KVDataset(Dataset):
-    def __init__(self, X,y = None,indexes = None, bias = None,lengths= None, device = None):
+    def __init__(self, X,y = None,indexes = None, bias = None, device = None):
         assert indexes is not None
         assert device is not None
         assert len(indexes) > 0
         self.device = device        
-        self.data = torch.from_numpy(X).to(device=self.device)
+        self.data = X.to(device=self.device)
         if y is not None:
-            self.labels = torch.from_numpy(y).to(device=self.device)
+            self.labels = y.to(device=self.device)
         else:
             self.labels = None
             
         self.indexes = indexes
 
-        mask = torch.zeros(self.data.shape[0],self.data.shape[1],dtype=self.data.dtype)
+        mask = torch.zeros(self.data.shape[0],self.data.shape[1],dtype=bool)
         for i,idx in enumerate(self.indexes):
-            j = np.ones(self.data.shape[1]) * i
-            mask[j,idx] = 1.
-        mask = mask.to(device=self.device)
+            j = np.ones(len(idx)) * i
+            mask[idx,j] = True
+        self.mask = mask.to(device=self.device)
         if bias is not None:
-            self.bias = torch.from_numpy(bias).to(device=self.device)
+            self.bias = bias.to(device=self.device)
         else:
             self.bias = None    
 
@@ -125,13 +129,13 @@ class MLPRB:
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
         #lengths = [x.shape[1] for x in X]
-        X = np.asarray(X) 
+        X = np.swapaxes(np.asarray(X),0,1)
 
         X = torch.from_numpy(X).to(device=self.device)
         y = torch.from_numpy(y).to(device=self.device)
         bias = torch.from_numpy(bias).to(device=self.device)
 
-        self.model = MaskedPerceptron(X.shape[1],self.hidden_size,y.shape[1],X.shape[1])
+        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,y.shape[1],X.shape[1])
         self.model.to(device=self.device)
         self.model.device = self.device      
 
@@ -213,17 +217,20 @@ class MLPRB:
         self.model = best_model    
         
     def decision_function(self,X, indexes = None, bias = None):
-        X = np.hstack(X)
+        X = np.asarray(X)
+        X = np.swapaxes(X,0,1)
         X = torch.from_numpy(X).to(device=self.device)
         bias = torch.from_numpy(bias).to(device=self.device)
         
         #create mask
         repeats = 0
+        do_sort = True
         if indexes is None:
             indexes = []
             repeats = self.n_estimators * self.n_splits
             for _ in range(repeats):
                 indexes.append(np.arange(0,X.shape[0]))
+            do_sort = False    
         else:
             repeats = int(len(indexes) / self.n_splits)       
 
@@ -248,6 +255,5 @@ class MLPRB:
 
                 output = torch.vstack(outputs)
                 hidden = torch.vstack(hiddens)
-                output = output.reshape((repeats,-1) + (output.shape[1],)).mean(axis=0)
-                hidden = hidden.reshape((repeats,-1) + (hidden.shape[1],)).mean(axis=0)
+
         return output.numpy(), hidden.numpy()                       
