@@ -765,7 +765,13 @@ class BaseBoostedCascade(BaseGradientBoosting):
             else:
                 indices = list(range(X.shape[0]))                    
         
-            I = np.zeros((X.shape[0], clf.tree_.node_count))
+            depth = clf.get_depth()
+ 
+            if depth < 1:
+                I = np.zeros((X.shape[0], 3))
+            else:  
+                I = np.zeros((X.shape[0], 2**(depth + 1) - 1))
+
             for j in indices:
                 I[j,idx[j,i]] = 1.0    
             Is.append(I)
@@ -1093,7 +1099,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,
-                                   verbose = True)
+                                   verbose = False)
 
     def _encode_y(self, y=None, sample_weight=None):
         # Just convert y to the expected dtype
