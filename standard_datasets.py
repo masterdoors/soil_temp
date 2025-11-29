@@ -247,10 +247,10 @@ np.bool = np.bool_
 from sklearn.model_selection import KFold
 #xgb.set_config(verbosity=2)
 
-def make_modelXGB(max_depth,layers,C,n_trees):
+def make_modelXGB(max_depth,layers,C,n_trees,n_estimators):
     return xgb.XGBRegressor(max_depth = max_depth, n_estimators = layers)
 
-def make_modelCascade(max_depth,layers,C,hs,n_trees,n_estimators):
+def make_modelCascade(max_depth,layers,C,n_trees,n_estimators):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=n_estimators,backend="sklearn",criterion='squared_error',n_trees=n_trees)
 
 def make_modelBoosted(max_depth,layers,C,hs,n_trees,n_estimators):
@@ -262,9 +262,9 @@ models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascad
 bo_data = []    
 
 for _ in range(1):
-    for model_name in models:
+    for model_name in ["Cascade Forest", "XGB"]:
         make_model = models[model_name]
-        for ds_name in ["Diabetes","California housing","Liver disorders"]:
+        for ds_name in ["KDD98"]:
             for depth in all_data[ds_name]:
                 dat = all_data[ds_name][depth]
                 x_train = dat["train"]["X"]
@@ -301,7 +301,7 @@ for _ in range(1):
                         if hs > 0:
                             model = make_model(max_depth,layers,C,hs,n_trees,n_est)
                         else:    
-                            model = make_model(max_depth,layers,C,n_trees)
+                            model = make_model(max_depth,layers,C,n_trees,n_est)
                         
                         model.fit(
                             x_train[train_index],
@@ -336,7 +336,7 @@ for _ in range(1):
                     if hs > 0:    
                         model = make_model(max_depth,layers,C,hs,n_trees,n_est)
                     else:
-                        model = make_model(max_depth,layers,C,n_trees)
+                        model = make_model(max_depth,layers,C,n_trees,n_est)
                         
                     model.fit(
                         x_train,
