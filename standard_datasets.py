@@ -222,15 +222,15 @@ for k in all_data[0]:
     x01,x02,y01,y02 = all_data[0][k][0], all_data[0][k][2], all_data[0][k][1], all_data[0][k][3]
     dict_data["KDD98"][k] = {"train":{"X":x01,"y":y01},"test":{"X":x02,"y":y02}}
 
-for k in all_data[0]:
+for k in all_data[1]:
      x01,x02,y01,y02 = train_test_split(all_data[1][k][0], all_data[1][k][1], test_size=0.3,random_state=42)
      dict_data["Diabetes"][k] = {"train":{"X":x01,"y":y01},"test":{"X":x02,"y":y02}}
     
-for k in all_data[1]:
+for k in all_data[2]:
     x11,x12,y11,y12 = train_test_split(all_data[2][k][0], all_data[2][k][1],test_size=0.3,random_state=42)
     dict_data["California housing"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
-for k in all_data[2]:
+for k in all_data[3]:
     x11,x12,y11,y12 = train_test_split(all_data[3][k][0], all_data[3][k][1],test_size=0.3,random_state=42)
     dict_data["Liver disorders"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
