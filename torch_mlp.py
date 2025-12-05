@@ -131,9 +131,9 @@ class MLPRB:
         #lengths = [x.shape[1] for x in X]
         X = np.swapaxes(np.asarray(X),0,1)
 
-        X = torch.from_numpy(X).to(device=self.device)
-        y = torch.from_numpy(y).to(device=self.device)
-        bias = torch.from_numpy(bias).to(device=self.device)
+        X = torch.from_numpy(X)
+        y = torch.from_numpy(y)
+        bias = torch.from_numpy(bias)
 
         self.model = MaskedPerceptron(X.shape[2],self.hidden_size,y.shape[1],X.shape[1])
         self.model.to(device=self.device)
@@ -173,7 +173,10 @@ class MLPRB:
             for tensors in train_loader:
                 steps += 1
                 X_batch, y_batch, mask_batch, bias_batch = tensors
-                #mask_batch = mask_batch.to(device=self.device)
+                X_batch = X_batch.to(device=self.device)
+                y_batch = y_batch.to(device=self.device)
+                bias_batch = bias_batch.to(device=self.device)
+                mask_batch = mask_batch.to(device=self.device)
 
                 optimizer.zero_grad()                         
                 output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
@@ -190,6 +193,9 @@ class MLPRB:
                 for tensors in val_loader:   
                     vsteps += 1
                     X_batch, y_batch, mask_batch, bias_batch = tensors
+                    X_batch = X_batch.to(device=self.device)
+                    y_batch = y_batch.to(device=self.device)
+                    bias_batch = bias_batch.to(device=self.device)
                     mask_batch = mask_batch.to(device=self.device)
 
                     output,_ = self.model(X_batch, mask = mask_batch, bias = bias_batch)   
