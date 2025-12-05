@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+import warnings
+warnings.filterwarnings("ignore")
+import argparse
 from os.path import join
+import gc
+
 def printf(*args, fname="log.txt"):
     with open(join("test_outputs",fname),"a+") as f:
         for a in args:
@@ -254,99 +258,72 @@ def make_modelCascade(max_depth,layers,C,n_trees,n_estimators):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=n_estimators,backend="sklearn",criterion='squared_error',n_trees=n_trees)
 
 def make_modelBoosted(max_depth,layers,C,hs,n_trees,n_estimators):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees)
+    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = 2, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees)
 
 
 models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade,"XGB":make_modelXGB}
 
 bo_data = []    
 
-for _ in range(1):
-    for model_name in ["Cascade Forest", "XGB"]:
-        make_model = models[model_name]
-        for ds_name in ["KDD98"]:
-            for depth in all_data[ds_name]:
-                dat = all_data[ds_name][depth]
-                x_train = dat["train"]["X"]
-                x_test = dat["test"]["X"]
-                Y_train = dat["train"]["y"].flatten()
-                Y_test = dat["test"]["y"].flatten()            
+parser = argparse.ArgumentParser()
+parser.add_argument("--model", type=str, help="Model (XGB, BOOSTED, CASCADE)")
+parser.add_argument("--dataset", type=str, help="Model (Diabetes,California,Liver,KDD98)")
 
-                def objective(trial):
-                    if model_name == "XGB":
-                        layers = trial.suggest_int('layers', 1, 100)
-                    else:   
-                        layers = trial.suggest_int('layers', 1, 10)
+parser.add_argument("--layers", type=int)
+parser.add_argument("--max_depth", type=int)
+parser.add_argument("--C", type=int)
+parser.add_argument("--hs", type=int)
+parser.add_argument("--n_trees", type=int)
 
-                    max_depth = trial.suggest_int('max_depth', 1, 2)
+args = parser.parse_args()
+model_ = args.model
+dataset_ = args.dataset
 
-                    if model_name == "Boosted Forest":
-                        C = trial.suggest_int('C', 10, 3000)
-                        hs = trial.suggest_int('hs', 2, 10)
-                        n_trees = trial.suggest_int('trees', 10, 100)
-                        n_est = trial.suggest_int('n_est', 2, 10)
-                    else:
-                        if model_name == "Cascade Forest":
-                            n_trees = trial.suggest_int('trees', 10, 100)
-                            n_est = trial.suggest_int('n_est', 2, 10)
-                        else:
-                            n_trees = 0    
-                            n_est = 0
-                        C = 0
-                        hs = 0
+if model_ == "XGB":
+    model_name = "XGB"
+elif model_ == "BOOSTED":
+    model_name = "Boosted Forest"    
+else:
+    model_name = "Cascade Forest"    
 
-                    scores = []
-                    kf = KFold(n_splits=5)
-                    for _, (train_index, test_index) in enumerate(kf.split(x_train)):
-                        if hs > 0:
-                            model = make_model(max_depth,layers,C,hs,n_trees,n_est)
-                        else:    
-                            model = make_model(max_depth,layers,C,n_trees,n_est)
-                        
-                        model.fit(
-                            x_train[train_index],
-                            Y_train[train_index],
-                        )
-                        y_pred = model.predict(x_train[test_index]) #, batch_size=batch_size)
-                        scores.append(mean_squared_error(Y_train[test_index].flatten(),y_pred.flatten()))
-                    return np.asarray(scores).mean() 
-                
-                study = optuna.create_study(direction='minimize')
-                study.optimize(objective, n_trials=100)    
-                
-                layers = study.best_trial.params["layers"]  
-                max_depth = study.best_trial.params["max_depth"]  
+if dataset_ == "California":
+    ds_name = "California housing"
+elif dataset_ == "Liver":
+    ds_name = "Liver disorders"        
+else:
+    ds_name = dataset_
 
-                if model_name == "Boosted Forest":
-                    C = study.best_trial.params["C"]
-                    hs = study.best_trial.params["hs"]
-                    n_trees = study.best_trial.params["trees"]
-                    n_est = study.best_trial.params["n_est"]
-                else:
-                    if model_name == "Cascade Forest":
-                        n_trees = study.best_trial.params["trees"]
-                        n_est = study.best_trial.params["n_est"]                        
-                    else:
-                        n_trees = 0
-                        n_est = 0
-                    C = 0
-                    hs = 0
+layers = int(args.layers)
+max_depth = int(args.max_depth)
+C = int(args.C)
+hs = int(args.hs)
+n_trees = int(args.n_trees)
 
-                for _ in range(3):
-                    if hs > 0:    
-                        model = make_model(max_depth,layers,C,hs,n_trees,n_est)
-                    else:
-                        model = make_model(max_depth,layers,C,n_trees,n_est)
-                        
-                    model.fit(
-                        x_train,
-                        Y_train,
-                    )        
-                    
-                    y_pred = model.predict(x_test) #, batch_size=batch_size)
-                    mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
-                    mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
-                    printf(model_name,ds_name,depth,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="classic_datasets/boosting_output.txt")     
-                    bo_data.append([model_name,ds_name,depth,mse_score, mae_score])
+n_est = 50
+
+make_model = models[model_name]
+for depth in all_data[ds_name]:
+    dat = all_data[ds_name][depth]
+    x_train = dat["train"]["X"]
+    x_test = dat["test"]["X"]
+    Y_train = dat["train"]["y"].flatten()
+    Y_test = dat["test"]["y"].flatten()            
+
+    for _ in range(3):
+        if hs > 0:    
+            model = make_model(max_depth,layers,C,hs,n_trees,n_est)
+        else:
+            model = make_model(max_depth,layers,C,n_trees,n_est)
+            
+        model.fit(
+            x_train,
+            Y_train,
+        )        
         
+        y_pred = model.predict(x_test) #, batch_size=batch_size)
+        mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
+        mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
+        printf(model_name,ds_name,depth,max_depth,layers,C,hs,n_trees,n_est,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="classic_datasets/boosting_output.txt")     
+
+    
 
