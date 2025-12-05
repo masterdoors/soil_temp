@@ -99,6 +99,16 @@ class KFoldWrapper(object):
                     X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
                 )
                 
+            indexes = []
+            trhxs = []            
+            for est in estimator:
+                sel = est.tree_.feature >= 0
+                indexes.append(est.tree_.feature[sel])
+                trhxs.append(est.tree_.threshold[sel])
+
+            estimator._indexes = np.hstack(indexes)
+            estimator._trhxs = np.hstack(trhxs)                
+            
             self.estimators_.append(estimator) 
             trains.append(train_idx)
             tests.append(val_idx)

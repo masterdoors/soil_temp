@@ -1,10 +1,12 @@
 {
     "configurations": [
+
         {
-            "name": "Python Debugger: Python File",
+            "name": "Python Debugger: Pythqon File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}"
+            "program": "${file}",
+            "args": ["--model", "BOOSTED", "--dataset", "KDD98","--layers","3","--max_depth","1","--C","100","--hs","2","--n_trees","10"]
         }
     ]
 }
