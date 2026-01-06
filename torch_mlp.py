@@ -8,19 +8,6 @@ from bisect import bisect
 import math
 #from torch.profiler import profile, record_function, ProfilerActivity
 
-#import cProfile
-
-# def profile(func):
-#    """Decorator for run function profile"""
-#    def wrapper(*args, **kwargs):
-#        profile_filename = func.__name__ + '.prof'
-#        profiler = cProfile.Profile()
-#        result = profiler.runcall(func, *args, **kwargs)
-#        profiler.dump_stats(profile_filename)
-#        return result
-#    return wrapper
-
-
 #X[ijk]
 #sampleXestimatorXfeatures
 class MyMaskedLayer(nn.Module):
@@ -59,7 +46,7 @@ class MaskedPerceptron(nn.Module):
         #out = self.drop(out)
         
         return out, h3
-    
+
 class KVDataset(Dataset):
     def __init__(self, X,y = None,indexes = None, bias = None, device = None):
         assert indexes is not None
@@ -148,6 +135,7 @@ class MLPRB:
                                                          patience=10)
 
         
+        batch_size = min(self.batch_size, int(X.shape[0] / 4))
         if bias is not None:
             train_dataset = KVDataset(X, y, indexes,bias,self.device)
             val_dataset = KVDataset(X, y, test_indexes, bias,self.device)

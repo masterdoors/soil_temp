@@ -4,6 +4,7 @@ Created on Sep 16, 2023
 @author: keen
 '''
 
+from sklearn.metrics import mean_squared_error
 from sklearn.ensemble._gb import BaseGradientBoosting
 from sklearn.dummy import DummyClassifier, DummyRegressor
 import numpy as np
@@ -49,7 +50,6 @@ from sklearn._loss.loss import (
     PinballLoss,
 )
 
-
 def fitter(eid,estimator,restimator,lin_estimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,sample_weight):
     if eid %2 == 0:
         kfold_estimator = KFoldWrapper(
@@ -74,7 +74,6 @@ def fitter(eid,estimator,restimator,lin_estimator,n_splits,C,n_estimators,random
         
     trains_, tests_ = kfold_estimator.fit(X_aug, residual,sample_weight)    
     return kfold_estimator, trains_, tests_ 
-
 
 def _init_raw_predictions(X, estimator, loss, use_predict_proba):
     # TODO: Use loss.fit_intercept_only where appropriate instead of
@@ -177,7 +176,7 @@ class VerboseReporter:
             if self.verbose == 1 and ((i + 1) // (self.verbose_mod * 10) > 0):
                 # adjust verbose frequency (powers of 10)
                 self.verbose_mod *= 10        
-    
+
 class BaseBoostedCascade(BaseGradientBoosting):
     @_fit_context(
         # GradientBoosting*.init is not validated yet
@@ -439,7 +438,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         tol=1e-4,
         ccp_alpha=0.0,
         C=1.0,
-        n_splits=3,
+        n_splits=5,
         n_bins=255,
         bin_subsample=200000,
         bin_type="percentile",
@@ -473,7 +472,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.bin_subsample = bin_subsample
         self.bin_type = bin_type
         self.binners = []
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = "cpu"#torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.init = "zero"
         self.n_trees = n_trees
         
@@ -774,7 +773,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         end_time = time()
         execution_time = end_time - start_time      
-        print("RF training time: ", execution_time)      
+        print("RF training time: ", execution_time)    
         raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight)    
         # add tree to ensemble
      
@@ -843,13 +842,14 @@ class BaseBoostedCascade(BaseGradientBoosting):
         cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
         oob_loss = self._loss(y.flatten(), raw_predictions.flatten(), sample_weight)
-        #rp, _ = cur_lr.decision_function(I,None,history_sum)  
-        #lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
+        rp, _ = cur_lr.decision_function(I,None,history_sum)  
+        lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
         end_time = time()
         execution_time = end_time - start_time        
         print("NN time: ", execution_time) 
 
         print("OOB res:",oob_loss)
+        print("Train res: ", lrp,mean_squared_error(y.flatten(),rp.flatten()))
         self.lr.append(cur_lr)
         return raw_predictions, hidden
     
@@ -898,7 +898,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         for i in range(len(self.estimators_)):
             out, hidden = self.predict_stage(i, X, hidden)
         return out    
- 
+
 class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
     _parameter_constraints: dict = {
         **BaseBoostedCascade._parameter_constraints,
@@ -1086,7 +1086,6 @@ class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
                 "loss=%r does not support predict_proba" % self.loss
             ) from e
 
-
 class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
     _parameter_constraints: dict = {
         **BaseBoostedCascade._parameter_constraints,
@@ -1154,15 +1153,15 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         self.batch_size = batch_size
         self.hidden_size = hidden_size
         self.lin_estimator = MLPRB(alpha = 1. / C, 
-                                   max_iter=100,
+                                   max_iter=50,
                                    tol = 0.0000001,
                                    device=self.device,
                                    batch_size=batch_size,
-                                   learning_rate_init=0.01,
+                                   learning_rate_init=0.001,
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,
-                                   verbose = False)
+                                   verbose = True)
 
     def _encode_y(self, y=None, sample_weight=None):
         # Just convert y to the expected dtype
@@ -1198,4 +1197,3 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         leaves = super().apply(X)
         leaves = leaves.reshape(X.shape[0], self.estimators_.shape[0])
         return leaves   
-    
