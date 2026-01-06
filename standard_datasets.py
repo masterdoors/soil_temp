@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
 import warnings
 warnings.filterwarnings("ignore")
 import argparse
@@ -60,7 +58,6 @@ df['MAXADATE'] = df['MAXADATE'].astype('str')
 df['MINRDATE'] = df['MINRDATE'].astype('str')
 df['LASTDATE'] = df['LASTDATE'].astype('str')
 df['FISTDATE'] = df['FISTDATE'].astype('str')
-
 
 def label_encoding(y, frequency_threshold=100):
   value_counts = pd.value_counts(y)
@@ -133,7 +130,6 @@ NUMERIC_FEATURES = [
     'LASTGIFT',
     'AVGGIFT',
 ]
-     
 
 df['MAILCODE'] = (df['MAILCODE'] == 'B').astype('float32')
 df['PVASTATE'] = df['PVASTATE'].isin(['P', 'E']).astype('float32')
@@ -182,24 +178,15 @@ x_train, x_eval, y_train, y_eval = dnn_split(df)
 
 all_data = [{0:[np.hstack(list(x_train.values())),y_train,np.hstack(list(x_eval.values())),y_eval]}]
 
-# # Diabetes
-
 diabetes = datasets.load_diabetes()
 X, y = diabetes.data, diabetes.target
 
 all_data.append({0:[X,y]})
 
-
-# # California housing
-
 from sklearn.datasets import fetch_california_housing
 
 X, y = fetch_california_housing(return_X_y=True, as_frame=True)
 all_data.append({0:[X.to_numpy(),y.to_numpy()]})
-
-
-# # Liver disorders
-
 
 from sklearn.datasets import fetch_openml
 ld = fetch_openml(name='liver-disorders')
@@ -225,7 +212,7 @@ for k in all_data[0]:
 for k in all_data[1]:
      x01,x02,y01,y02 = train_test_split(all_data[1][k][0], all_data[1][k][1], test_size=0.3,random_state=42)
      dict_data["Diabetes"][k] = {"train":{"X":x01,"y":y01},"test":{"X":x02,"y":y02}}
-    
+
 for k in all_data[2]:
     x11,x12,y11,y12 = train_test_split(all_data[2][k][0], all_data[2][k][1],test_size=0.3,random_state=42)
     dict_data["California housing"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
@@ -235,9 +222,6 @@ for k in all_data[3]:
     dict_data["Liver disorders"][k] = {"train":{"X":x11,"y":y11},"test":{"X":x12,"y":y12}} 
 
 all_data = dict_data
-
-
-# # Boosting
 
 import xgboost as xgb
 from boosted_forest import CascadeBoostingRegressor
@@ -255,11 +239,10 @@ def make_modelXGB(max_depth,layers,C,n_trees,n_estimators):
     return xgb.XGBRegressor(max_depth = max_depth, n_estimators = layers)
 
 def make_modelCascade(max_depth,layers,C,n_trees,n_estimators):
-    return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=n_estimators,backend="sklearn",criterion='squared_error',n_trees=n_trees)
+    return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=n_estimators,backend="sklearn",criterion='squared_error',n_trees=n_trees,n_tolerant_rounds = 100)
 
 def make_modelBoosted(max_depth,layers,C,hs,n_trees,n_estimators):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = 2, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees)
-
+    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees,batch_size = 256)
 
 models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade,"XGB":make_modelXGB}
 
@@ -271,7 +254,7 @@ parser.add_argument("--dataset", type=str, help="Model (Diabetes,California,Live
 
 parser.add_argument("--layers", type=int)
 parser.add_argument("--max_depth", type=int)
-parser.add_argument("--C", type=int)
+parser.add_argument("--C", type=float)
 parser.add_argument("--hs", type=int)
 parser.add_argument("--n_trees", type=int)
 
@@ -295,7 +278,7 @@ else:
 
 layers = int(args.layers)
 max_depth = int(args.max_depth)
-C = int(args.C)
+C = float(args.C)
 hs = int(args.hs)
 n_trees = int(args.n_trees)
 
@@ -321,9 +304,10 @@ for depth in all_data[ds_name]:
         )        
         
         y_pred = model.predict(x_test) #, batch_size=batch_size)
+        y_pred2 = model.predict(x_train)
         mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
         mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
+        print("Outer train error: ", mean_squared_error(Y_train.flatten(),y_pred2.flatten()))
         printf(model_name,ds_name,depth,max_depth,layers,C,hs,n_trees,n_est,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="classic_datasets/boosting_output.txt")     
 
     
-
