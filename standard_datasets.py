@@ -282,7 +282,7 @@ C = float(args.C)
 hs = int(args.hs)
 n_trees = int(args.n_trees)
 
-n_est = 50
+n_est = 30
 
 make_model = models[model_name]
 for depth in all_data[ds_name]:
