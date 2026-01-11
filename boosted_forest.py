@@ -773,10 +773,12 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         end_time = time()
         execution_time = end_time - start_time      
-        print("RF training time: ", execution_time)    
-        raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight)    
-        # add tree to ensemble
-     
+        print("RF training time: ", execution_time) 
+        init_values = None
+        if i > 0:
+            init_values = copy.deepcopy(self.lr[i - 1].model.fc2.weight.detach().cpu()), copy.deepcopy(self.lr[i - 1].model.fc2.bias.detach().cpu())
+        raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight,init_values)    
+    
         return raw_predictions, history_sum  
     
     def getIndicatorsLt(self,estimator, X):
@@ -822,7 +824,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             Is.append(I)
         return np.hstack(Is)       
 
-    def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight):
+    def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight,init_values):
         cur_lr = copy.deepcopy(self.lin_estimator)
 
         start_time = time()
@@ -839,7 +841,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         execution_time = end_time - start_time        
         print("Indicator building time: ", execution_time)        
         start_time = time()
-        cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight)
+        cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight,init_values = init_values)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
         oob_loss = self._loss(y.flatten(), raw_predictions.flatten(), sample_weight)
         rp, _ = cur_lr.decision_function(I,None,history_sum)  
@@ -1157,7 +1159,7 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
                                    tol = 0.0000001,
                                    device=self.device,
                                    batch_size=batch_size,
-                                   learning_rate_init=0.001,
+                                   learning_rate_init=0.01,
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,
