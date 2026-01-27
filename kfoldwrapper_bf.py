@@ -27,21 +27,6 @@ def profile(func):
         return result
     return wrapper
 
-def kfoldtrain(k,X,y,train_idx, dummy_estimator_,sample_weight):
-    estimator = copy.deepcopy(dummy_estimator_)
-
-    # Fit on training samples
-    if sample_weight is None:
-        # Notice that a bunch of base estimators do not take
-        # `sample_weight` as a valid input.
-        estimator.fit(X[train_idx], y[train_idx])
-    else:
-        estimator.fit(
-            X[train_idx], y[train_idx], sample_weight[train_idx]
-        )
-
-    return k,estimator
-
 class KFoldWrapper(object):
     """
     A general wrapper for base estimators without the characteristic of
@@ -51,7 +36,6 @@ class KFoldWrapper(object):
     def __init__(
         self,
         estimator_forest,
-        estimator_linear, 
         n_splits,
         C=1.0,
         factor = 0.5,
@@ -113,5 +97,5 @@ class KFoldWrapper(object):
             trains.append(train_idx)
             tests.append(val_idx)
         return trains, tests    
-            
+
          
