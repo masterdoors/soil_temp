@@ -37,9 +37,7 @@ class MyMaskedULayer(nn.Module):
         with torch.no_grad():
             return torch.sign(F.relu(torch.einsum('ijk,kjn->ijn',x, self.weight)[mask].reshape(x.shape[0],-1,self.weight.shape[2])))    
 
-
 # -
-
 class MaskedPerceptron(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, channels, init_values = None, weight = 1.):    
       super(MaskedPerceptron, self).__init__()
