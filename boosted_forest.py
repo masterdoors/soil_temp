@@ -51,13 +51,14 @@ from sklearn._loss.loss import (
     PinballLoss,
 )
 
-def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,sample_weight):
+def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,hidden_size,sample_weight):
     if eid %2 == 0:
         kfold_estimator = KFoldWrapper(
             estimator,
             n_splits,
             C,
             1. / n_estimators,
+            hidden_size,
             random_state,
             verbose
         )
@@ -67,11 +68,12 @@ def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose
             n_splits,
             C,
             1. / n_estimators,
+            hidden_size,
             random_state,
             verbose
         )                       
         
-    trains_, tests_ = kfold_estimator.fit(X_aug, residual,sample_weight)    
+    trains_, tests_ = kfold_estimator.fit(X_aug, residual,r,sample_weight)    
     return kfold_estimator, trains_, tests_ 
 
 def _init_raw_predictions(X, estimator, loss, use_predict_proba):
@@ -739,35 +741,13 @@ class BaseBoostedCascade(BaseGradientBoosting):
         trains = []
         tests = []
         start_time = time()
-        # for eid  in range(self.n_estimators):
-        #     if eid %2 == 0:
-        #         kfold_estimator = KFoldWrapper(
-        #             estimator,
-        #             self.lin_estimator,
-        #             self.n_splits,
-        #             self.C,
-        #             1. / self.n_estimators,
-        #             self.random_state,
-        #             self.verbose
-        #         )
-        #     else:
-        #         kfold_estimator = KFoldWrapper(
-        #             restimator,
-        #             self.lin_estimator,
-        #             self.n_splits,
-        #             self.C,
-        #             1. / self.n_estimators,
-        #             self.random_state,
-        #             self.verbose
-        #         )                       
-                
-        #     trains_, tests_ = kfold_estimator.fit(X_aug, residual,sample_weight)
-        #     trains += trains_
-        #     tests += tests_
-        #     self.estimators_[i].append(kfold_estimator)
 
+        if i == 0:
+            r = y
+        else:    
+            r = y - raw_predictions
 
-        all_ze_staff = Parallel(n_jobs=10,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,sample_weight) for eid in range(self.n_estimators))
+        all_ze_staff = Parallel(n_jobs=10,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight) for eid in range(self.n_estimators))
         for kfold_estimator, trains_, tests_ in all_ze_staff: 
             trains += trains_
             tests += tests_
@@ -828,8 +808,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         return np.hstack(Is)       
 
     def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight,init_values,weight):
-        cur_lr = self.lin_estimator(weight)
-
         start_time = time()
     
         I = []
@@ -844,7 +822,20 @@ class BaseBoostedCascade(BaseGradientBoosting):
         execution_time = end_time - start_time        
         print("Indicator building time: ", execution_time)        
         start_time = time()
-        cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight,init_values = init_values)
+
+        init_values = [[],[]]
+        for ek in estimators:        
+            init_values[0].append(ek.nn_estimator_w)            
+            init_values[1].append(ek.nn_estimator_g)   
+            print([e.shape for e in ek.nn_estimator_w])   
+            print([e.shape for e in ek.nn_estimator_g])   
+
+        init_values[0] = np.swapaxes(np.asarray(init_values[0]),0,1)
+        init_values[1] = np.swapaxes(np.asarray(init_values[1],0,1))
+
+        cur_lr = self.lin_estimator(weight)
+        cur_lr.mimic_fit(I,y,init_values)
+        #cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight,init_values = init_values)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
         oob_loss = self._loss(y.flatten(), raw_predictions.flatten(), sample_weight)
         rp, _ = cur_lr.decision_function(I,None,history_sum)  

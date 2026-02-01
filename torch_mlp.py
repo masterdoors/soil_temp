@@ -16,15 +16,16 @@ class MyMaskedLayer(nn.Module):
     def __init__(self, in_features, out_features, channels,dtype=torch.float64):
         super().__init__()
         self.weight = nn.Parameter(torch.empty(in_features, channels, out_features,dtype=dtype))
-        self.bias = nn.Parameter(torch.empty(channels, out_features,dtype=dtype))
+        #self.bias = nn.Parameter(torch.empty(channels, out_features,dtype=dtype))
         torch.nn.init.kaiming_uniform_(self.weight)
 
-        fan_in, _ = torch.nn.init._calculate_fan_in_and_fan_out(self.weight)
-        bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
-        torch.nn.init.uniform_(self.bias, -bound, bound)        
+        #fan_in, _ = torch.nn.init._calculate_fan_in_and_fan_out(self.weight)
+        #bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
+        #torch.nn.init.uniform_(self.bias, -bound, bound)        
 
     def forward(self, x, mask):
-        return (torch.einsum('ijk,kjn->ijn',x, self.weight) + self.bias)[mask].reshape(x.shape[0],-1,self.weight.shape[2])
+        #return (torch.einsum('ijk,kjn->ijn',x, self.weight) + self.bias)[mask].reshape(x.shape[0],-1,self.weight.shape[2])
+        return (torch.einsum('ijk,kjn->ijn',x, self.weight))[mask].reshape(x.shape[0],-1,self.weight.shape[2])
     
 #X[ijk]
 #sampleXestimatorXfeatures
@@ -45,14 +46,11 @@ class MaskedPerceptron(nn.Module):
       self.gate = MyMaskedULayer(input_size, hidden_size,channels,dtype=torch.float64)  
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64,bias=False)
       self.fc2.weight  = torch.nn.Parameter(torch.ones(self.fc2.weight.shape,dtype=torch.float64))
-      #if init_values is not None:
-      #    self.fc2.weight, self.fc2.bias = torch.nn.Parameter(init_values[0]), torch.nn.Parameter(init_values[1])
-      #else:
-        #self.fc2.weight += torch.eye(self.fc2.weight.shape)    
-      #self.hidden_activation = nn.ReLU()
+      if init_values is not None:
+          self.fc1.weight = torch.nn.Parameter(init_values[0])
+          self.gate.weight = torch.nn.Parameter(init_values[1])
       self.weight = weight
       print("SW: ",self.weight)  
-      #self.drop = nn.Dropout(p=0.1)
 
     def forward(self, x, mask = None, bias = None, avg_pass = False):
         
@@ -145,6 +143,13 @@ class MLPRB:
         self.n_splits = n_splits
         self.weight = weight
         
+    
+    def mimic_fit(self,X,y,init_values):
+        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,y.shape[1],X.shape[1], init_values=init_values, weight = self.weight)
+        self.model.to(device=self.device)
+        self.model.device = self.device            
+
+    
     #@profile
     def fit(self,X,y, indexes = None, test_indexes = None, bias = None,sample_weight = None, init_values = None):
         if len(y.shape) == 1:
