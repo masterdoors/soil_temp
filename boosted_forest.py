@@ -745,7 +745,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         if i == 0:
             r = y
         else:    
-            r = y - raw_predictions
+            r = y.flatten() - raw_predictions.flatten()
 
         all_ze_staff = Parallel(n_jobs=10,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight) for eid in range(self.n_estimators))
         for kfold_estimator, trains_, tests_ in all_ze_staff: 
@@ -827,11 +827,11 @@ class BaseBoostedCascade(BaseGradientBoosting):
         for ek in estimators:        
             init_values[0].append(ek.nn_estimator_w)            
             init_values[1].append(ek.nn_estimator_g)   
-            print([e.shape for e in ek.nn_estimator_w])   
-            print([e.shape for e in ek.nn_estimator_g])   
+            #print([e.shape for e in ek.nn_estimator_w])   
+            #print([e.shape for e in ek.nn_estimator_g])   
 
-        init_values[0] = np.swapaxes(np.asarray(init_values[0]),0,1)
-        init_values[1] = np.swapaxes(np.asarray(init_values[1],0,1))
+        init_values[0] = np.swapaxes(np.vstack(init_values[0]),0,1)
+        init_values[1] = np.swapaxes(np.vstack(init_values[1]),0,1)
 
         cur_lr = self.lin_estimator(weight)
         cur_lr.mimic_fit(I,y,init_values)

@@ -16,10 +16,20 @@ from scnn.optimize import optimize_model, sample_gate_vectors
 from scnn.models import ConvexGatedReLU
 from scnn.solvers import RFISTA
 from scnn.metrics import Metrics
+from sklearn.metrics import mean_squared_error
 
 from joblib import Parallel, delayed
 
 import cProfile
+
+def to_shape(a, shape):
+    y_, x_ = shape
+    y, x = a.shape
+    y_pad = (y_-y)
+    x_pad = (x_-x)
+    return np.pad(a,((y_pad//2, y_pad//2 + y_pad%2), 
+                     (x_pad//2, x_pad//2 + x_pad%2)),
+                  mode = 'constant')
 
 def getIndicatorsLt(estimator, X):
     W = X[:,estimator._indexes]    
@@ -150,9 +160,9 @@ class KFoldWrapper(object):
             tests.append(val_idx)
 
             if estimator.max_depth == 1:
-                I = getIndicatorsLt(estimator, X)
+                I = getIndicatorsLt(estimator, X[train_idx])
             else:    
-                I = getIndicators(estimator, X, do_sample = False)
+                I = getIndicators(estimator, X[train_idx], do_sample = False)
 
             G = sample_gate_vectors(None, I.shape[1], self.hidden_size)
             model = ConvexGatedReLU(G)
@@ -163,17 +173,23 @@ class KFoldWrapper(object):
                                             solver,
                                             metrics,
                                             I,
-                                            r,
+                                            r[train_idx],
                                             None,
                                             None,
                                             None,
                                             device="cpu")
-            
-            p1 = model.parameters[0]
-            p2 = np.swapaxes(model.G,0,1)
-            #TODO
-            p1 = np.pad(p1)
-            p2 = np.pad(p2)
+
+            if estimator.max_depth == 1:
+                I = getIndicatorsLt(estimator, X[val_idx])
+            else:    
+                I = getIndicators(estimator, X[val_idx], do_sample = False)
+
+            y_ = model(I).flatten()
+            #print("metrics: ", metrics.objective[-1],mean_squared_error(r[val_idx],y_) / 2)
+            p1 = np.swapaxes(model.parameters[0],0,1)
+            p2 = model.G
+            p1 = to_shape(p1,(I.shape[1],self.hidden_size))
+            p2 = to_shape(p2,(I.shape[1],self.hidden_size))
             self.nn_estimator_w.append(p1)
             self.nn_estimator_g.append(p2)             
         return trains, tests    

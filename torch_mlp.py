@@ -47,8 +47,8 @@ class MaskedPerceptron(nn.Module):
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64,bias=False)
       self.fc2.weight  = torch.nn.Parameter(torch.ones(self.fc2.weight.shape,dtype=torch.float64))
       if init_values is not None:
-          self.fc1.weight = torch.nn.Parameter(init_values[0])
-          self.gate.weight = torch.nn.Parameter(init_values[1])
+          self.fc1.weight = torch.nn.Parameter(torch.tensor(init_values[0],dtype=torch.float64))
+          self.gate.weight = torch.nn.Parameter(torch.tensor(init_values[1],dtype=torch.float64))
       self.weight = weight
       print("SW: ",self.weight)  
 
@@ -145,6 +145,9 @@ class MLPRB:
         
     
     def mimic_fit(self,X,y,init_values):
+        if len(y.shape) == 1:
+            y = y.reshape(-1,1)        
+        X = np.swapaxes(np.asarray(X),0,1)
         self.model = MaskedPerceptron(X.shape[2],self.hidden_size,y.shape[1],X.shape[1], init_values=init_values, weight = self.weight)
         self.model.to(device=self.device)
         self.model.device = self.device            
