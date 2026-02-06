@@ -6,7 +6,7 @@
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
-            "args": ["--model", "BOOSTED", "--dataset", "KDD98","--layers","100","--max_depth","1","--C","1000","--hs","4","--n_trees","5"]
+            "args": ["--model", "BOOSTED", "--dataset", "KDD98","--layers","100","--max_depth","1","--hs","4","--n_trees","2"]
         }
     ]
 }

@@ -7,6 +7,7 @@ from torch.utils.data import Dataset
 from bisect import bisect
 import math
 import torch.nn.functional as F
+
 #from torch.profiler import profile, record_function, ProfilerActivity
 
 # +
@@ -187,8 +188,8 @@ class MLPRB:
             train_dataset = KVDataset(X, y, indexes,bias,self.device)
             val_dataset = KVDataset(X, y, test_indexes, bias,self.device)
 
-            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=self.batch_size,shuffle=True)#,num_workers=4,persistent_workers=True)
-            val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=self.batch_size)#,num_workers=4,persistent_workers=True)
+            train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,shuffle=True)#,num_workers=4,persistent_workers=True)
+            val_loader = torch.utils.data.DataLoader(val_dataset,batch_size=batch_size)#,num_workers=4,persistent_workers=True)
         #early_stopping = EarlyStopping(tolerance=25, min_delta=100)
         last_up = -1
 

@@ -747,7 +747,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
         else:    
             r = y.flatten() - raw_predictions.flatten()
 
-        all_ze_staff = Parallel(n_jobs=10,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight) for eid in range(self.n_estimators))
+        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight) for eid in range(self.n_estimators))
+        # all_ze_staff = []
+        # for eid in range(self.n_estimators):
+        #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))
         for kfold_estimator, trains_, tests_ in all_ze_staff: 
             trains += trains_
             tests += tests_
@@ -843,6 +846,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
         end_time = time()
         execution_time = end_time - start_time        
         print("NN time: ", execution_time) 
+
+        for val_idx in tests:
+            obb_loss_t = self._loss(y[val_idx].flatten(), raw_predictions[val_idx].flatten())
+            print("OOB KV",obb_loss_t)
 
         print("OOB res:",oob_loss)
         print("Train res: ", lrp,mean_squared_error(y.flatten(),rp.flatten()))

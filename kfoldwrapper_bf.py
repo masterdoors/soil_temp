@@ -13,14 +13,16 @@ from sklearn.pipeline import make_pipeline
 from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples_bootstrap, _generate_sample_indices
 
 from scnn.optimize import optimize_model, sample_gate_vectors
-from scnn.models import ConvexGatedReLU
+from scnn.models import ConvexGatedReLU, NonConvexGatedReLU
 from scnn.solvers import RFISTA
+from scnn.solvers import CVXPYSolver
 from scnn.metrics import Metrics
 from sklearn.metrics import mean_squared_error
 
 from joblib import Parallel, delayed
 
 import cProfile
+import nlopt
 
 def to_shape(a, shape):
     y_, x_ = shape
@@ -164,20 +166,76 @@ class KFoldWrapper(object):
             else:    
                 I = getIndicators(estimator, X[train_idx], do_sample = False)
 
-            G = sample_gate_vectors(None, I.shape[1], self.hidden_size)
+            G = sample_gate_vectors(None, I.shape[1], self.hidden_size)#,gate_type='feature_sparse',order = 10)
             model = ConvexGatedReLU(G)
-            solver = RFISTA(model, tol=1e-6)
-            metrics = Metrics()
+            # solver = RFISTA(model, max_iters = 100, tol=1e-6)
+            # metrics = Metrics()
 
-            model, metrics = optimize_model(model,
-                                            solver,
-                                            metrics,
-                                            I,
-                                            r[train_idx],
-                                            None,
-                                            None,
-                                            None,
-                                            device="cpu")
+            # model, metrics = optimize_model(model,
+            #                                 solver,
+            #                                 metrics,
+            #                                 I,
+            #                                 r[train_idx],
+            #                                 None,
+            #                                 None,
+            #                                 None,
+            #                                 device="cpu",
+            #                                 seed = None)
+
+            D = model.compute_activations(I)
+
+            best_res = 1e+31
+            best_v = None
+
+            def data_mvp(v, X, D):
+                w = v.reshape(-1, D.shape[1], X.shape[1])
+                return np.einsum("ij, lkj, ik->il", X, w, D)
+
+            def gradient(
+                v,
+                X,
+                y,
+                D,
+            ):
+                w = v.reshape(-1, D.shape[1], X.shape[1])
+                return np.einsum("ij, il, ik->ljk", D, data_mvp(w, X, D) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
+
+            
+            def myfunc(v, grad):
+                nonlocal best_res
+                nonlocal best_v
+                if grad.size > 0:
+                    grad[:] = gradient(v,I,r[train_idx],D)
+  
+                res = mean_squared_error(r[train_idx].flatten(),data_mvp(v, I, D).flatten())
+
+                if res < best_res:
+                    best_res = res
+                    best_v = copy.deepcopy(v) 
+                return res
+
+            x0 = np.random.rand(model.parameters[0].flatten().shape[0])
+            opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
+
+            opt.set_min_objective(myfunc)
+
+            opt.set_maxeval(500)
+            opt.set_xtol_rel(0.01)
+            try:
+                opt.optimize(x0)
+            except Exception as e:
+                print(e)
+            #minf = opt.last_optimum_value()
+            #print("minimum value = ", minf)
+            #print("result code = ", opt.last_optimize_result())
+
+            print("Best opt: ", best_res)
+            #print("U has nans: ", np.isnan(best_v).any().sum())    
+            U = best_v.reshape(D.shape[1], I.shape[1]) 
+
+            model = NonConvexGatedReLU(G,1,False)
+            model.parameters[0] = U
+            model.parameters[1] = np.ones((1,U.shape[0]))                       
 
             if estimator.max_depth == 1:
                 I = getIndicatorsLt(estimator, X[val_idx])
@@ -185,11 +243,22 @@ class KFoldWrapper(object):
                 I = getIndicators(estimator, X[val_idx], do_sample = False)
 
             y_ = model(I).flatten()
-            #print("metrics: ", metrics.objective[-1],mean_squared_error(r[val_idx],y_) / 2)
-            p1 = np.swapaxes(model.parameters[0],0,1)
-            p2 = model.G
-            p1 = to_shape(p1,(I.shape[1],self.hidden_size))
-            p2 = to_shape(p2,(I.shape[1],self.hidden_size))
+            ve = mean_squared_error(r[val_idx],y_) / 2
+            if estimator.max_depth == 1:
+                I = getIndicatorsLt(estimator, X[train_idx])
+            else:    
+                I = getIndicators(estimator, X[train_idx], do_sample = False)
+            y_ = model(I).flatten()
+            te = mean_squared_error(r[train_idx],y_) / 2    
+
+            y_ = data_mvp(best_v, I, D)            
+            te2 = mean_squared_error(r[train_idx].flatten(),y_.flatten()) / 2  
+
+            print("metrics: ", ve,te,te2)
+            p1 = np.swapaxes(U,0,1)
+            p2 = G
+            #p1 = to_shape(p1,(I.shape[1],self.hidden_size))
+            #p2 = to_shape(p2,(I.shape[1],self.hidden_size))
             self.nn_estimator_w.append(p1)
             self.nn_estimator_g.append(p2)             
         return trains, tests    
