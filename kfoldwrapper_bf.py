@@ -8,12 +8,10 @@ __all__ = ["KFoldWrapper"]
 import copy
 import numpy as np
 from sklearn.model_selection import KFold
-from sklearn.preprocessing import MinMaxScaler, Normalizer
-from sklearn.pipeline import make_pipeline
 from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples_bootstrap, _generate_sample_indices
+import scnn
 
-from scnn.optimize import sample_gate_vectors
-from scnn.models import ConvexGatedReLU, NonConvexGatedReLU
+from scnn.models import ConvexGatedReLU 
 # from scnn.solvers import RFISTA
 # from scnn.solvers import CVXPYSolver
 # from scnn.metrics import Metrics
@@ -166,7 +164,7 @@ class KFoldWrapper(object):
             else:    
                 I = getIndicators(estimator, X[train_idx], do_sample = False)
 
-            G = sample_gate_vectors(None, I.shape[1], self.hidden_size)#,gate_type='feature_sparse',order = 10)
+            G = scnn.optimize.sample_gate_vectors(None, I.shape[1], self.hidden_size)#,gate_type='feature_sparse',order = 10)
             model = ConvexGatedReLU(G)
             # solver = RFISTA(model, max_iters = 100, tol=1e-6)
             # metrics = Metrics()
