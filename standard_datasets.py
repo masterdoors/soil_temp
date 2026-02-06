@@ -312,6 +312,6 @@ for depth in all_data[ds_name]:
         mse_score = mean_squared_error(Y_test.flatten(),y_pred.flatten())
         mae_score = mean_absolute_error(Y_test.flatten(),y_pred.flatten())
         print("Outer train error: ", mean_squared_error(Y_train.flatten(),y_pred2.flatten()))
-        printf(model_name,ds_name,depth,max_depth,layers,C,hs,n_trees,n_est,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="classic_datasets/boosting_output.txt")     
+        printf(model_name,ds_name,depth,max_depth,layers,hs,n_trees,n_est,mse_score, mae_score, Y_test.min(),Y_test.max(),fname="classic_datasets/boosting_output.txt")     
 
     
