@@ -4,6 +4,8 @@ import argparse
 from os.path import join
 import gc
 
+from catboost import CatBoostRegressor
+
 def printf(*args, fname="log.txt"):
     with open(join("test_outputs",fname),"a+") as f:
         for a in args:
@@ -18,8 +20,6 @@ import numpy as np
 from sklearn import datasets
 
 all_data = []
-
-
 
 import pandas as pd
 import numpy as np
@@ -236,15 +236,17 @@ np.bool = np.bool_
 from sklearn.model_selection import KFold
 #xgb.set_config(verbosity=2)
 
-def make_modelXGB(max_depth,layers,C,n_trees,n_estimators):
-    #return xgb.XGBRegressor(max_depth = max_depth, n_estimators = layers)
-    return GradientBoostingRegressor(max_depth = max_depth, n_estimators = layers, learning_rate=0.1)
+def make_modelXGB(max_depth,layers,n_trees,n_estimators):
+    return xgb.XGBRegressor(max_depth = max_depth, n_estimators = layers)
 
-def make_modelCascade(max_depth,layers,C,n_trees,n_estimators):
+def make_modelCAT(max_depth,layers,n_trees,n_estimators):
+    return CatBoostRegressor(learning_rate = 0.1,num_trees = layers,max_depth = max_depth)
+
+def make_modelCascade(max_depth,layers,n_trees,n_estimators):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=n_estimators,backend="sklearn",criterion='squared_error',n_trees=n_trees,n_tolerant_rounds = 100)
 
-def make_modelBoosted(max_depth,layers,C,hs,n_trees,n_estimators):
-    return CascadeBoostingRegressor(C=C, n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees,batch_size = 256)
+def make_modelBoosted(max_depth,layers,hs,n_trees,n_estimators):
+    return CascadeBoostingRegressor(n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees,batch_size = 1000)
 
 models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade,"XGB":make_modelXGB}
 
@@ -256,7 +258,6 @@ parser.add_argument("--dataset", type=str, help="Model (Diabetes,California,Live
 
 parser.add_argument("--layers", type=int)
 parser.add_argument("--max_depth", type=int)
-parser.add_argument("--C", type=float)
 parser.add_argument("--hs", type=int)
 parser.add_argument("--n_trees", type=int)
 
@@ -266,6 +267,8 @@ dataset_ = args.dataset
 
 if model_ == "XGB":
     model_name = "XGB"
+elif model_ == "CAT":    
+    model_name = "CAT"
 elif model_ == "BOOSTED":
     model_name = "Boosted Forest"    
 else:
@@ -280,7 +283,6 @@ else:
 
 layers = int(args.layers)
 max_depth = int(args.max_depth)
-C = float(args.C)
 hs = int(args.hs)
 n_trees = int(args.n_trees)
 
@@ -296,9 +298,9 @@ for depth in all_data[ds_name]:
 
     for _ in range(3):
         if hs > 0:    
-            model = make_model(max_depth,layers,C,hs,n_trees,n_est)
+            model = make_model(max_depth,layers,hs,n_trees,n_est)
         else:
-            model = make_model(max_depth,layers,C,n_trees,n_est)
+            model = make_model(max_depth,layers,n_trees,n_est)
             
         model.fit(
             x_train,
