@@ -12,11 +12,11 @@ from sklearn.preprocessing import MinMaxScaler, Normalizer
 from sklearn.pipeline import make_pipeline
 from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples_bootstrap, _generate_sample_indices
 
-from scnn.optimize import optimize_model, sample_gate_vectors
+from scnn.optimize import sample_gate_vectors
 from scnn.models import ConvexGatedReLU, NonConvexGatedReLU
-from scnn.solvers import RFISTA
-from scnn.solvers import CVXPYSolver
-from scnn.metrics import Metrics
+# from scnn.solvers import RFISTA
+# from scnn.solvers import CVXPYSolver
+# from scnn.metrics import Metrics
 from sklearn.metrics import mean_squared_error
 
 from joblib import Parallel, delayed
