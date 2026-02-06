@@ -582,7 +582,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             )
             
             nrm = np.linalg.norm(history_sum_old - history_sum,axis=1)
-            print("Hidden diff: ", nrm.max(),nrm.min(),nrm.mean())
+            #print("Hidden diff: ", nrm.max(),nrm.min(),nrm.mean())
             # track loss
             if do_oob:
                 self.train_score_[i] = loss_(
@@ -840,19 +840,19 @@ class BaseBoostedCascade(BaseGradientBoosting):
         cur_lr.mimic_fit(I,y,init_values)
         #cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight,init_values = init_values)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
-        oob_loss = self._loss(y.flatten(), raw_predictions.flatten(), sample_weight)
-        rp, _ = cur_lr.decision_function(I,None,history_sum)  
-        lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
+        # oob_loss = self._loss(y.flatten(), raw_predictions.flatten(), sample_weight)
+        # rp, _ = cur_lr.decision_function(I,None,history_sum)  
+        # lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
         end_time = time()
         execution_time = end_time - start_time        
-        print("NN time: ", execution_time) 
+        # print("NN time: ", execution_time) 
 
-        for val_idx in tests:
-            obb_loss_t = self._loss(y[val_idx].flatten(), raw_predictions[val_idx].flatten())
-            print("OOB KV",obb_loss_t)
+        # for val_idx in tests:
+        #     obb_loss_t = self._loss(y[val_idx].flatten(), raw_predictions[val_idx].flatten())
+        #     print("OOB KV",obb_loss_t)
 
-        print("OOB res:",oob_loss)
-        print("Train res: ", lrp,mean_squared_error(y.flatten(),rp.flatten()))
+        # print("OOB res:",oob_loss)
+        # print("Train res: ", lrp,mean_squared_error(y.flatten(),rp.flatten()))
         self.lr.append(cur_lr)
         return raw_predictions, hidden
     

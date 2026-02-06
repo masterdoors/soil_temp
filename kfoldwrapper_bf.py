@@ -224,37 +224,38 @@ class KFoldWrapper(object):
             try:
                 opt.optimize(x0)
             except Exception as e:
-                print(e)
+                #print(e)
+                pass
             #minf = opt.last_optimum_value()
             #print("minimum value = ", minf)
             #print("result code = ", opt.last_optimize_result())
 
-            print("Best opt: ", best_res)
+            #print("Best opt: ", best_res)
             #print("U has nans: ", np.isnan(best_v).any().sum())    
             U = best_v.reshape(D.shape[1], I.shape[1]) 
 
-            model = NonConvexGatedReLU(G,1,False)
-            model.parameters[0] = U
-            model.parameters[1] = np.ones((1,U.shape[0]))                       
+            # model = NonConvexGatedReLU(G,1,False)
+            # model.parameters[0] = U
+            # model.parameters[1] = np.ones((1,U.shape[0]))                       
 
-            if estimator.max_depth == 1:
-                I = getIndicatorsLt(estimator, X[val_idx])
-            else:    
-                I = getIndicators(estimator, X[val_idx], do_sample = False)
+            # if estimator.max_depth == 1:
+            #     I = getIndicatorsLt(estimator, X[val_idx])
+            # else:    
+            #     I = getIndicators(estimator, X[val_idx], do_sample = False)
 
-            y_ = model(I).flatten()
-            ve = mean_squared_error(r[val_idx],y_) / 2
-            if estimator.max_depth == 1:
-                I = getIndicatorsLt(estimator, X[train_idx])
-            else:    
-                I = getIndicators(estimator, X[train_idx], do_sample = False)
-            y_ = model(I).flatten()
-            te = mean_squared_error(r[train_idx],y_) / 2    
+            # y_ = model(I).flatten()
+            # ve = mean_squared_error(r[val_idx],y_) / 2
+            # if estimator.max_depth == 1:
+            #     I = getIndicatorsLt(estimator, X[train_idx])
+            # else:    
+            #     I = getIndicators(estimator, X[train_idx], do_sample = False)
+            # y_ = model(I).flatten()
+            # te = mean_squared_error(r[train_idx],y_) / 2    
 
-            y_ = data_mvp(best_v, I, D)            
-            te2 = mean_squared_error(r[train_idx].flatten(),y_.flatten()) / 2  
+            # y_ = data_mvp(best_v, I, D)            
+            # te2 = mean_squared_error(r[train_idx].flatten(),y_.flatten()) / 2  
 
-            print("metrics: ", ve,te,te2)
+            # print("metrics: ", ve,te,te2)
             p1 = np.swapaxes(U,0,1)
             p2 = G
             #p1 = to_shape(p1,(I.shape[1],self.hidden_size))
