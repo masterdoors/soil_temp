@@ -224,12 +224,10 @@ for k in all_data[3]:
 all_data = dict_data
 
 import xgboost as xgb
-from sklearn.ensemble import GradientBoostingRegressor
 from boosted_forest import CascadeBoostingRegressor
 from deepforest import CascadeForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
-import optuna
 
 np.bool = np.bool_
 
@@ -246,7 +244,7 @@ def make_modelCascade(max_depth,layers,n_trees,n_estimators):
     return CascadeForestRegressor(max_depth = max_depth, max_layers = layers, n_estimators=n_estimators,backend="sklearn",criterion='squared_error',n_trees=n_trees,n_tolerant_rounds = 100)
 
 def make_modelBoosted(max_depth,layers,hs,n_trees,n_estimators):
-    return CascadeBoostingRegressor(n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = hs,verbose=1, n_trees=n_trees,batch_size = 1000)
+    return CascadeBoostingRegressor(n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = hs,verbose=1, n_trees=n_trees,batch_size = 1000)
 
 models = {"Boosted Forest": make_modelBoosted,"Cascade Forest": make_modelCascade,"XGB":make_modelXGB}
 

@@ -4,7 +4,7 @@ Created on Sep 16, 2023
 @author: keen
 '''
 
-from sklearn.metrics import mean_squared_error
+
 from sklearn.ensemble._gb import BaseGradientBoosting
 from sklearn.dummy import DummyClassifier, DummyRegressor
 import numpy as np
@@ -22,7 +22,7 @@ from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples
 
 from kfoldwrapper_bf import KFoldWrapper
 from sklearn.ensemble import RandomForestRegressor
-from numbers import Integral, Real
+from numbers import Real
 from sklearn.preprocessing import LabelEncoder
 
 from sklearn.metrics import  accuracy_score
@@ -30,14 +30,12 @@ from time import time
 
 from sklearn.ensemble import ExtraTreesRegressor
 from _binner import Binner
-from sklearn.model_selection import train_test_split
 
-from torch.nn import BCEWithLogitsLoss
+from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss
 from torch.nn import MSELoss
 from torch_mlp import MLPRB
 
-import copy
-import torch
+
 from joblib import Parallel, delayed
 
 from sklearn._loss.loss import (
@@ -51,7 +49,7 @@ from sklearn._loss.loss import (
     PinballLoss,
 )
 
-def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,hidden_size,sample_weight):
+def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,hidden_size,sample_weight, loss):
     if eid %2 == 0:
         kfold_estimator = KFoldWrapper(
             estimator,
@@ -60,6 +58,7 @@ def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose
             1. / n_estimators,
             hidden_size,
             random_state,
+            loss,
             verbose
         )
     else:
@@ -70,6 +69,7 @@ def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose
             1. / n_estimators,
             hidden_size,
             random_state,
+            loss,
             verbose
         )                       
         
@@ -242,35 +242,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         # self.loss is guaranteed to be a string
         self._loss = self._get_loss(sample_weight=sample_weight)
 
-        # if self.n_iter_no_change is not None:
-        #     stratify = y if is_classifier(self) else None
-        #     (
-        #         X_train,
-        #         X_val,
-        #         y_train,
-        #         y_val,
-        #         sample_weight_train,
-        #         sample_weight_val,
-        #     ) = train_test_split(
-        #         X,
-        #         y,
-        #         sample_weight,
-        #         random_state=self.random_state,
-        #         test_size=self.validation_fraction,
-        #         stratify=stratify,
-        #     )
-        #     if is_classifier(self):
-        #         if self.n_classes_ != np.unique(y_train).shape[0]:
-        #             # We choose to error here. The problem is that the init
-        #             # estimator would be trained on y, which has some missing
-        #             # classes now, so its predictions would not have the
-        #             # correct shape.
-        #             raise ValueError(
-        #                 "The training data after the early stopping split "
-        #                 "is missing some classes. Try using another random "
-        #                 "seed."
-        #             )
-        # else:
         X_train, y_train, sample_weight_train = X, y, sample_weight
         X_val = y_val = sample_weight_val = None
 
@@ -375,46 +346,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         self.n_estimators_ = n_stages
         return self
 
-
-    def _bin_data(self, binner, X, is_training_data=True):
-        """
-        Bin data X. If X is training data, the bin mapper is fitted first."""
-        
-        return X
-        description = "training" if is_training_data else "testing"
-
-        tic = time()
-        if len(X.shape) > 2:
-            X_ = X.reshape(-1,X.shape[2])
-        else:
-            X_ = X    
-        
-        if is_training_data:
-            X_binned = binner.fit_transform(X_)
-        else:
-            X_binned = binner.transform(X_)
-            X_binned = np.ascontiguousarray(X_binned)
-        toc = time()
-        binning_time = toc - tic
-
-        if self.verbose > 1:
-            msg = (
-                "{} Binning {} data: {:.3f} MB => {:.3f} MB |"
-                " Elapsed = {:.3f} s"
-            )
-            print(
-                msg.format(
-                    str(time()),
-                    description,
-                    X.nbytes / (1024 * 1024),
-                    X_binned.nbytes / (1024 * 1024),
-                    binning_time,
-                )
-            )
-        if len(X.shape) > 2:
-            X_binned = X_binned.reshape(X.shape) 
-        return X_binned    
-    
     def __init__(self,
         *,
         loss="log_loss",
@@ -520,15 +451,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
         due to early stopping.
         """
         self.lr = []
-        binner_ = Binner(
-            n_bins=self.n_bins,
-            bin_subsample=self.bin_subsample,
-            bin_type=self.bin_type,
-            random_state=self.random_state,
-        )  
-        
-        self.binners.append(binner_)      
-        X_ = self._bin_data(binner_, X, is_training_data=True)
+   
+        X_ = X
         
         n_samples = X.shape[0]
         do_oob = self.subsample < 1.0
@@ -581,8 +505,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 X_csr
             )
             
-            nrm = np.linalg.norm(history_sum_old - history_sum,axis=1)
-            #print("Hidden diff: ", nrm.max(),nrm.min(),nrm.mean())
             # track loss
             if do_oob:
                 self.train_score_[i] = loss_(
@@ -608,13 +530,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
             if self.verbose > 0:
                 verbose_reporter.update(i, self)
-                if self.loss in {"squared_error", "absolute_error", "huber", "quantile"}:
-                    #print("Regressor loss: ", self.train_score_[i])
-                    #pred_ = self._raw_predict(X)
-                    #print("Regressor pred loss: ", loss_(y.flatten(), pred_.flatten(), sample_weight))
-                    #print(y.flatten()[:5],pred_.flatten()[:5])
-                    pass
-                else:    
+                if self.loss not  in {"squared_error", "absolute_error", "huber", "quantile"}:
                     if self._loss.n_classes == 2:
                         encoded_classes = np.asarray(raw_predictions.reshape(y.shape) >= 0, dtype=int)
                     else:  
@@ -664,7 +580,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         assert sample_mask.dtype == bool
         loss = self._loss
-        original_y = y
 
         # Need to pass a copy of raw_predictions to negative_gradient()
         # because raw_predictions is partially updated at the end of the loop
@@ -711,21 +626,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
         if len(residual.shape) == 1:
             residual = residual.reshape(-1,1)
             
-        binner_ = Binner(
-            n_bins=self.n_bins,
-            bin_subsample=self.bin_subsample,
-            bin_type=self.bin_type,
-            random_state=self.random_state,
-        )  
-        
-        self.binners.append(binner_)      
-        
-        rp_old_bin = self._bin_data(binner_, history_sum, is_training_data=True)           
+        rp_old_bin = history_sum
          
-        #TODO convert y for classifier case
-        #if loss.n_classes > 2:
-        #    y = np.array(original_y == k, dtype=np.float64)
-
         # induce regression forest on residuals
         if self.subsample < 1.0:
             # no inplace multiplication!
@@ -740,14 +642,13 @@ class BaseBoostedCascade(BaseGradientBoosting):
             X_aug = hstack([X, csr_matrix(rp_old_bin)])               
         trains = []
         tests = []
-        start_time = time()
 
         if i == 0:
             r = y
         else:    
             r = y.flatten() - raw_predictions.flatten()
 
-        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight) for eid in range(self.n_estimators))
+        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
         # all_ze_staff = []
         # for eid in range(self.n_estimators):
         #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))
@@ -756,13 +657,8 @@ class BaseBoostedCascade(BaseGradientBoosting):
             tests += tests_
             self.estimators_[i].append(kfold_estimator)            
 
-        end_time = time()
-        execution_time = end_time - start_time      
-        print("RF training time: ", execution_time) 
         init_values = None
-        #if i > 0:
-        #    init_values = copy.deepcopy(self.lr[i - 1].model.fc2.weight.detach().cpu()), copy.deepcopy(self.lr[i - 1].model.fc2.bias.detach().cpu())
-        weight = 0.1 #pow(0.1, i)    
+        weight = self.learning_rate 
         raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight,init_values,weight)    
     
         return raw_predictions, history_sum  
@@ -811,8 +707,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         return np.hstack(Is)       
 
     def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight,init_values,weight):
-        start_time = time()
-    
         I = []
         for ek in estimators:        
             for e in ek.estimators_:
@@ -821,38 +715,20 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 else:    
                     I.append(self.getIndicators(e, X, do_sample = False))
 
-        end_time = time()
-        execution_time = end_time - start_time        
-        print("Indicator building time: ", execution_time)        
-        start_time = time()
 
         init_values = [[],[]]
         for ek in estimators:        
             init_values[0].append(ek.nn_estimator_w)            
             init_values[1].append(ek.nn_estimator_g)   
-            #print([e.shape for e in ek.nn_estimator_w])   
-            #print([e.shape for e in ek.nn_estimator_g])   
 
         init_values[0] = np.swapaxes(np.vstack(init_values[0]),0,1)
         init_values[1] = np.swapaxes(np.vstack(init_values[1]),0,1)
 
         cur_lr = self.lin_estimator(weight)
         cur_lr.mimic_fit(I,y,init_values)
-        #cur_lr.fit(I, y, trains, tests, bias = history_sum, sample_weight = sample_weight,init_values = init_values)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
-        # oob_loss = self._loss(y.flatten(), raw_predictions.flatten(), sample_weight)
-        # rp, _ = cur_lr.decision_function(I,None,history_sum)  
-        # lrp = self._loss(y.flatten(), rp.flatten(), sample_weight)
-        end_time = time()
-        execution_time = end_time - start_time        
-        # print("NN time: ", execution_time) 
+        
 
-        # for val_idx in tests:
-        #     obb_loss_t = self._loss(y[val_idx].flatten(), raw_predictions[val_idx].flatten())
-        #     print("OOB KV",obb_loss_t)
-
-        # print("OOB res:",oob_loss)
-        # print("Train res: ", lrp,mean_squared_error(y.flatten(),rp.flatten()))
         self.lr.append(cur_lr)
         return raw_predictions, hidden
     
@@ -877,7 +753,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             yield out.copy() 
             
     def predict_stage(self, i, X, hidden):
-        rp = self._bin_data(self.binners[i + 1], hidden, False) #copy.deepcopy(raw_predictions) #
+        rp = hidden
         if isinstance(X,np.ndarray):
             X_aug = np.hstack([X,rp])         
         else:
@@ -897,7 +773,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
         return out, hidden    
     
     def predict_stages(self, X, hidden):
-        X = self._bin_data(self.binners[0], X, False)        
         for i in range(len(self.estimators_)):
             out, hidden = self.predict_stage(i, X, hidden)
         return out    
@@ -928,14 +803,14 @@ def getMLPRB(alpha,max_iter,tol,device,batch_size,learning_rate_init,
 class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
     _parameter_constraints: dict = {
         **BaseBoostedCascade._parameter_constraints,
-        "loss": [StrOptions({"log_loss", "exponential"})],
+        "loss": [StrOptions({"log_loss"})],
         "init": [StrOptions({"zero"}), None, HasMethods(["fit", "predict_proba"])],
     }
 
     def __init__(
         self,
         *,
-        loss="log_loss",
+        loss="binomial",
         learning_rate=0.1,
         n_estimators=2,
         n_layers=3,
@@ -957,10 +832,12 @@ class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
         n_iter_no_change=2,
         tol=1e-4,
         ccp_alpha=0.0,
-        n_trees=100
+        hidden_size,
+        n_trees=100,
+        batch_size = 64,
     ):
         super().__init__(
-            loss=loss,
+            loss="log_loss",
             learning_rate=learning_rate,
             n_layers=n_layers,
             n_estimators=n_estimators,
@@ -984,16 +861,24 @@ class CascadeBoostingClassifier(ClassifierMixin, BaseBoostedCascade):
             ccp_alpha=ccp_alpha,
             n_trees=n_trees
         )
+
+        if loss == "multinomial":
+            loss = CrossEntropyLoss
+        else:
+            loss = BCEWithLogitsLoss    
+        
+        self.batch_size = batch_size
+        self.hidden_size = hidden_size
         self.lin_estimator = getMLPRB(alpha = 1. / C, 
-                                   max_iter=50,
+                                   max_iter=200,
                                    tol = 0.0000001,
                                    device=self.device,
-                                   batch_size=64,
+                                   batch_size=batch_size,
                                    learning_rate_init=0.001,
                                    hidden_size = self.hidden_size,
                                    n_splits=self.n_splits,
                                    n_estimators=self.n_estimators,
-                                   criterion=BCEWithLogitsLoss,
+                                   criterion=loss,
                                    verbose = False)
 
     def _encode_y(self, y, sample_weight):
@@ -1141,7 +1026,6 @@ class CascadeBoostingRegressor(RegressorMixin, BaseBoostedCascade):
         C = 1.0,
         random_state=None,
         max_features=None,
-        alpha=0.9,
         verbose=0,
         max_leaf_nodes=None,
         warm_start=False,
