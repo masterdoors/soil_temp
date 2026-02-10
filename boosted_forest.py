@@ -653,8 +653,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         trains = []
         tests = []
 
- 
-        r = raw_predictions.flatten()
+        r = raw_predictions#.flatten()
 
         all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, y,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
         # all_ze_staff = []
