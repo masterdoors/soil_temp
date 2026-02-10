@@ -49,7 +49,7 @@ from sklearn._loss.loss import (
     PinballLoss,
 )
 
-def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,hidden_size,sample_weight, loss):
+def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,y,hidden_size,sample_weight, loss):
     if eid %2 == 0:
         kfold_estimator = KFoldWrapper(
             estimator,
@@ -73,7 +73,7 @@ def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose
             verbose
         )                       
         
-    trains_, tests_ = kfold_estimator.fit(X_aug, residual,r,sample_weight)    
+    trains_, tests_ = kfold_estimator.fit(X_aug, residual,y,r,sample_weight)    
     return kfold_estimator, trains_, tests_ 
 
 def _init_raw_predictions(X, estimator, loss, use_predict_proba):
@@ -526,7 +526,11 @@ class BaseBoostedCascade(BaseGradientBoosting):
                     K = 1
                 else:
                     K = self._loss.n_classes    
-                self.train_score_[i] = loss_(y.flatten(), raw_predictions.flatten(), sample_weight)
+
+                if K == 1:    
+                    self.train_score_[i] = loss_(y.flatten(), raw_predictions.flatten(), sample_weight)
+                else:    
+                    self.train_score_[i] = loss_(y.flatten(), raw_predictions.reshape(-1,K), sample_weight)
 
             if self.verbose > 0:
                 verbose_reporter.update(i, self)
@@ -619,10 +623,16 @@ class BaseBoostedCascade(BaseGradientBoosting):
             n_jobs = -1
         )        
 
-        residual = - loss.gradient(
-            y.flatten(), raw_predictions_copy.flatten() 
-        )
-        
+        #loss
+        if self._loss.n_classes < 3:
+            residual = - loss.gradient(
+                y.flatten(), raw_predictions_copy.flatten() 
+            )
+        else:
+            residual = - loss.gradient(
+                y.flatten(), raw_predictions_copy.reshape(-1,self._loss.n_classes) 
+            )
+
         if len(residual.shape) == 1:
             residual = residual.reshape(-1,1)
             
@@ -643,12 +653,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
         trains = []
         tests = []
 
-        if i == 0:
-            r = y
-        else:    
-            r = y.flatten() - raw_predictions.flatten()
+ 
+        r = raw_predictions.flatten()
 
-        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
+        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, y,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
         # all_ze_staff = []
         # for eid in range(self.n_estimators):
         #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))
@@ -725,7 +733,12 @@ class BaseBoostedCascade(BaseGradientBoosting):
         init_values[1] = np.swapaxes(np.vstack(init_values[1]),0,1)
 
         cur_lr = self.lin_estimator(weight)
-        cur_lr.mimic_fit(I,y,init_values)
+        if self._loss.n_classes == 2:
+            K = 1
+        else:
+            K = self._loss.n_classes   
+
+        cur_lr.mimic_fit(I,y,init_values,n_classes = K)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
         
 

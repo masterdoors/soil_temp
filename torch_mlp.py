@@ -51,7 +51,7 @@ class MaskedPerceptron(nn.Module):
           self.fc1.weight = torch.nn.Parameter(torch.tensor(init_values[0],dtype=torch.float64))
           self.gate.weight = torch.nn.Parameter(torch.tensor(init_values[1],dtype=torch.float64))
       self.weight = weight
-      print("SW: ",self.weight)  
+      #print("SW: ",self.weight)  
 
     def forward(self, x, mask = None, bias = None, avg_pass = False):
         
@@ -145,17 +145,17 @@ class MLPRB:
         self.weight = weight
         
     
-    def mimic_fit(self,X,y,init_values):
+    def mimic_fit(self,X,y,init_values,n_classes = 1):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)        
         X = np.swapaxes(np.asarray(X),0,1)
-        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,y.shape[1],X.shape[1], init_values=init_values, weight = self.weight)
+        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,n_classes,X.shape[1], init_values=init_values, weight = self.weight)
         self.model.to(device=self.device)
         self.model.device = self.device            
 
     
     #@profile
-    def fit(self,X,y, indexes = None, test_indexes = None, bias = None,sample_weight = None, init_values = None):
+    def fit(self,X,y, n_classes = 1, indexes = None, test_indexes = None, bias = None,sample_weight = None, init_values = None):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)
         #lengths = [x.shape[1] for x in X]
@@ -166,7 +166,7 @@ class MLPRB:
         print("Input: ", X.shape)
         bias = torch.from_numpy(bias)
 
-        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,y.shape[1],X.shape[1], init_values=init_values, weight = self.weight)
+        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,n_classes,X.shape[1], init_values=init_values, weight = self.weight)
         self.model.to(device=self.device)
         self.model.device = self.device      
 
