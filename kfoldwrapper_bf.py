@@ -15,7 +15,6 @@ from gated_perceptron import ConvexGatedReLU
 from gated_perceptron import data_mvp, gradient_hb, gradient_hm, gradient_l2
 
 
-import cProfile
 import nlopt
 
 from sklearn._loss.loss import HalfBinomialLoss, HalfMultinomialLoss, HalfSquaredError
@@ -72,23 +71,14 @@ def getIndicators(estimator, X, sampled = True, do_sample = True):
         Is.append(I)
     return np.hstack(Is)
 
-
-def profile(func):
-    """Decorator for run function profile"""
-    def wrapper(*args, **kwargs):
-        profile_filename = func.__name__ + '.prof'
-        profiler = cProfile.Profile()
-        result = profiler.runcall(func, *args, **kwargs)
-        profiler.dump_stats(profile_filename)
-        return result
-    return wrapper
-
-def get_loss(best_res, best_v,I,r,D, gradient, data_mvp, raw_loss):
+def get_loss(best_res, best_v,I,r,D, gradient, data_mvp, raw_loss, bias):
     def myfunc(v, grad):
         if grad.size > 0:
-            grad[:] = gradient(v,I,r,D)
+            grad[:] = gradient(v,I,r,D, bias)
 
-        res = raw_loss(r.flatten(),data_mvp(v, I, D).flatten())
+        res = raw_loss(r.flatten(),data_mvp(v, I, D, bias).flatten())
+
+        print(res)
 
         if res < best_res:
             best_res[:] = res
@@ -142,8 +132,7 @@ class KFoldWrapper(object):
     def estimator_(self):
         return self.estimators_
 
-    #@profile
-    def fit(self, X, y, r, sample_weight=None):
+    def fit(self, X, y, r, bias, sample_weight=None):
         splitter = KFold(
             n_splits=self.n_splits,
             shuffle=True,
@@ -160,11 +149,19 @@ class KFoldWrapper(object):
             if sample_weight is None:
                 # Notice that a bunch of base estimators do not take
                 # `sample_weight` as a valid input.
-                estimator.fit(X[train_idx], y[train_idx].flatten())
+                if len(y.shape) == 2 and y.shape[1] == 1:
+                    estimator.fit(X[train_idx], y[train_idx].flatten())
+                else:                     
+                    estimator.fit(X[train_idx], y[train_idx])
             else:
-                estimator.fit(
-                    X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
-                )
+                if len(y.shape) == 2 and y.shape[1] == 1:
+                    estimator.fit(
+                        X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
+                    )
+                else:
+                    estimator.fit(
+                        X[train_idx], y[train_idx], sample_weight[train_idx]
+                    ) 
                 
             indexes = []
             trhxs = []            
@@ -186,7 +183,10 @@ class KFoldWrapper(object):
                 I = getIndicators(estimator, X[train_idx], do_sample = False)
 
             G = np.random.default_rng().standard_normal((I.shape[1], self.hidden_size))
-            model = ConvexGatedReLU(G)
+            if len(y.shape) > 1:
+                model = ConvexGatedReLU(G,c=y.shape[1])
+            else:    
+                model = ConvexGatedReLU(G)
 
             D = model.compute_activations(I)
 
@@ -194,7 +194,7 @@ class KFoldWrapper(object):
             x0 = np.random.rand(model.parameters[0].flatten().shape[0])
             best_v = np.zeros(x0.shape)
 
-            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss)
+            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss, bias[train_idx])
 
             opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
 
@@ -205,6 +205,7 @@ class KFoldWrapper(object):
             try:
                 opt.optimize(x0)
             except Exception as e:
+                print(e)
                 pass
             U = best_v.reshape(D.shape[1], I.shape[1]) 
 

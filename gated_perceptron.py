@@ -193,33 +193,42 @@ class ConvexGatedReLU(GatedModel):
             return np.einsum("ij, lkj, ik->il", X, self.parameters[0], D)
 
 
-def data_mvp(v, X, D):
+def data_mvp(v, X, D, bias):
     w = v.reshape(-1, D.shape[1], X.shape[1])
-    return np.einsum("ij, lkj, ik->il", X, w, D)
+    return np.einsum("ij, lkj, ik->il", X, w, D) + bias.reshape(X.shape[0],w.shape[0])
 
 def gradient_l2(
     v,
     X,
     y,
     D,
+    bias
 ):
     w = v.reshape(-1, D.shape[1], X.shape[1])
-    return np.einsum("ij, il, ik->ljk", D, data_mvp(w, X, D) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
+    return np.einsum("ij, il, ik->ljk", D, data_mvp(w, X, D, bias) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
 
 def gradient_hb(
     v,
     X,
     y,
     D,
+    bias    
 ):
     w = v.reshape(-1, D.shape[1], X.shape[1])
-    return np.einsum("ij, il, ik->ljk", D, expit(data_mvp(w, X, D)) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
+    return np.einsum("ij, il, ik->ljk", D, expit(data_mvp(w, X, D, bias)) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
 
 def gradient_hm(
     v,
     X,
     y,
     D,
+    bias    
 ):
     w = v.reshape(-1, D.shape[1], X.shape[1])
-    return np.einsum("ij, il, ik->ljk", D, softmax(data_mvp(w, X, D)) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
+    n_classes = w.shape[0]
+    y_ =  y.flatten()
+    out = softmax(data_mvp(w, X, D, bias))
+    grad = np.zeros((n_classes,D.shape[1],X.shape[1]))
+    for k in range(n_classes):
+        grad[k] =  np.einsum("ij, i, ik->jk", D, out[:,k] - (y_ == k), X).reshape(*v.shape)
+    return grad    
