@@ -197,6 +197,12 @@ def data_mvp(v, X, D, bias):
     w = v.reshape(-1, D.shape[1], X.shape[1])
     return np.einsum("ij, lkj, ik->il", X, w, D) + bias.reshape(X.shape[0],w.shape[0])
 
+def data_mvp_soft(v, X, D, bias):
+    return softmax(data_mvp(v, X, D, bias), axis = 1)
+
+def data_mvp_expit(v, X, D, bias):
+    return expit(data_mvp(v, X, D, bias))
+
 def gradient_l2(
     v,
     X,
@@ -226,9 +232,9 @@ def gradient_hm(
 ):
     w = v.reshape(-1, D.shape[1], X.shape[1])
     n_classes = w.shape[0]
-    y_ =  y.flatten()
-    out = softmax(data_mvp(w, X, D, bias))
+    y_ =  y.flatten().astype(int)
+    out = softmax(data_mvp(w, X, D, bias), axis = 1)
     grad = np.zeros((n_classes,D.shape[1],X.shape[1]))
     for k in range(n_classes):
-        grad[k] =  np.einsum("ij, i, ik->jk", D, out[:,k] - (y_ == k), X).reshape(*v.shape)
-    return grad    
+        grad[k] =  np.einsum("ij, i, ik->jk", D, out[:,k] - (y_ == k).astype(float), X)
+    return grad.reshape(*v.shape)    

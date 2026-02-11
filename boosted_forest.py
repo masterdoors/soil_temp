@@ -479,6 +479,14 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         vobling = 0
 
+        if self._loss.n_classes == 2:
+            K = 1
+        else:
+            K = self._loss.n_classes   
+
+        if history_sum.shape[1] % K != 0:
+            raise ValueError("Length of the hidden embedding should be proportional to class number")            
+
         for i in range(begin_at_stage, self.n_layers):
             # subsampling
             if do_oob:
@@ -490,6 +498,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                         sample_weight[~sample_mask],
                     )
 
+            
             history_sum_old = history_sum
             # fit next stage of trees
             raw_predictions, history_sum = self._fit_stage(
@@ -522,11 +531,6 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 self.oob_score_ = self.oob_scores_[-1]
             else:
                 # no need to fancy index w/ no subsampling
-                if self._loss.n_classes == 2:
-                    K = 1
-                else:
-                    K = self._loss.n_classes    
-
                 if K == 1:    
                     self.train_score_[i] = loss_(y.flatten(), raw_predictions.flatten(), sample_weight)
                 else:    
@@ -655,7 +659,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         r = raw_predictions#.flatten()
 
-        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, y,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
+        all_ze_staff = Parallel(n_jobs=5,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, y,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
         # all_ze_staff = []
         # for eid in range(self.n_estimators):
         #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))
