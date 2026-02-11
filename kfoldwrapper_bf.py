@@ -12,7 +12,7 @@ from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples
 
 
 from gated_perceptron import ConvexGatedReLU 
-from gated_perceptron import data_mvp, gradient_hb, gradient_hm, gradient_l2
+from gated_perceptron import data_mvp, data_mvp_soft, data_mvp_expit, gradient_hb, gradient_hm, gradient_l2
 
 
 import nlopt
@@ -76,10 +76,8 @@ def get_loss(best_res, best_v,I,r,D, gradient, data_mvp, raw_loss, bias):
         if grad.size > 0:
             grad[:] = gradient(v,I,r,D, bias)
 
-        res = raw_loss(r.flatten(),data_mvp(v, I, D, bias).flatten())
-
-        print(res)
-
+        res = raw_loss(r.flatten(),data_mvp(v, I, D, bias))
+        #print(res) 
         if res < best_res:
             best_res[:] = res
             best_v[:] = copy.deepcopy(v) 
@@ -121,10 +119,13 @@ class KFoldWrapper(object):
 
         if isinstance(loss,HalfSquaredError):
             self.grad = gradient_l2
+            self.mvp = data_mvp
         elif isinstance(loss,HalfBinomialLoss):   
             self.grad = gradient_hb
+            self.mvp = data_mvp_expit
         elif isinstance(loss,HalfMultinomialLoss):  
             self.grad = gradient_hm
+            self.mvp = data_mvp_soft
         else:
             raise TypeError("Unsupported loss")
 
@@ -182,11 +183,14 @@ class KFoldWrapper(object):
             else:    
                 I = getIndicators(estimator, X[train_idx], do_sample = False)
 
-            G = np.random.default_rng().standard_normal((I.shape[1], self.hidden_size))
             if len(y.shape) > 1:
-                model = ConvexGatedReLU(G,c=y.shape[1])
-            else:    
-                model = ConvexGatedReLU(G)
+                n_classes = y.shape[1]
+            else:
+                n_classes = 1
+
+            G = np.random.default_rng().standard_normal((I.shape[1], int(self.hidden_size / n_classes)))
+
+            model = ConvexGatedReLU(G,c=n_classes)
 
             D = model.compute_activations(I)
 
@@ -194,7 +198,7 @@ class KFoldWrapper(object):
             x0 = np.random.rand(model.parameters[0].flatten().shape[0])
             best_v = np.zeros(x0.shape)
 
-            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss, bias[train_idx])
+            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, self.mvp, self.loss, bias[train_idx])
 
             opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
 
@@ -205,12 +209,14 @@ class KFoldWrapper(object):
             try:
                 opt.optimize(x0)
             except Exception as e:
-                print(e)
+                #print(e)
                 pass
-            U = best_v.reshape(D.shape[1], I.shape[1]) 
+            
+            
+            U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
 
             p1 = np.swapaxes(U,0,1)
-            p2 = G
+            p2 = np.concatenate([G for _ in range(n_classes)],axis = 1)
             self.nn_estimator_w.append(p1)
             self.nn_estimator_g.append(p2)             
         return trains, tests    

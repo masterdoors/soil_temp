@@ -46,7 +46,15 @@ class MaskedPerceptron(nn.Module):
       self.fc1 = MyMaskedLayer(input_size, hidden_size,channels,dtype=torch.float64)
       self.gate = MyMaskedULayer(input_size, hidden_size,channels,dtype=torch.float64)  
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64,bias=False)
-      self.fc2.weight  = torch.nn.Parameter(torch.ones(self.fc2.weight.shape,dtype=torch.float64))
+      second_weights = torch.zeros(self.fc2.weight.shape,dtype=torch.float64)
+      step = int(hidden_size / output_size) 
+      offset = 0
+
+      for c in range(output_size):
+        second_weights[offset:offset + step,c] = 1.
+        offset += step
+      
+      self.fc2.weight  = torch.nn.Parameter(second_weights)
       if init_values is not None:
           self.fc1.weight = torch.nn.Parameter(torch.tensor(init_values[0],dtype=torch.float64))
           self.gate.weight = torch.nn.Parameter(torch.tensor(init_values[1],dtype=torch.float64))

@@ -24,7 +24,7 @@ x_train, x_validate, Y_train, Y_validate = train_test_split(
 print (np.unique(Y_train,return_counts=True))
 print (np.unique(Y_validate,return_counts=True))
 
-model = CascadeBoostingClassifier(loss = "multinomial", n_layers=10, n_estimators = 10, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 4,verbose=1, n_trees=4,batch_size = 1000)
+model = CascadeBoostingClassifier(loss = "multinomial", n_layers=100, n_estimators = 10, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 40,verbose=1, n_trees=4,batch_size = 1000)
 
 model.fit(
     x_train,
