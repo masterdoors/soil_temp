@@ -4,7 +4,7 @@ from sklearn import preprocessing
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from boosted_forest import CascadeBoostingClassifier
-
+from sklearn.ensemble import GradientBoostingClassifier
 
 digits = datasets.load_digits()
 
@@ -24,7 +24,8 @@ x_train, x_validate, Y_train, Y_validate = train_test_split(
 print (np.unique(Y_train,return_counts=True))
 print (np.unique(Y_validate,return_counts=True))
 
-model = CascadeBoostingClassifier(loss = "multinomial", n_layers=100, n_estimators = 10, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 40,verbose=1, n_trees=4,batch_size = 1000)
+model = CascadeBoostingClassifier(loss = "multinomial", n_layers=100, n_estimators = 10, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 1.0,hidden_size = 20,verbose=1, n_trees=2,batch_size = 1000)
+#model = GradientBoostingClassifier(loss = "log_loss", n_estimators=100,  max_depth=1)
 
 model.fit(
     x_train,
@@ -34,7 +35,7 @@ model.fit(
 y_pred = model.predict(x_validate) 
 y_pred2 = model.predict(x_train)
 mse_score = accuracy_score(Y_validate.flatten(),y_pred.flatten())
-mae_score = accuracy_score(Y_validate.flatten(),y_pred.flatten())
-print("Outer train error: ", accuracy_score(Y_train.flatten(),y_pred2.flatten()))
+print(accuracy_score(Y_validate.flatten(),y_pred.flatten()))
+print("Outer train: ", accuracy_score(Y_train.flatten(),y_pred2.flatten()))
 
 

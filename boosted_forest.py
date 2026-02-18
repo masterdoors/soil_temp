@@ -514,27 +514,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 X_csr
             )
             
-            # track loss
-            if do_oob:
-                self.train_score_[i] = loss_(
-                    y[sample_mask],
-                    raw_predictions[sample_mask],
-                    sample_weight[sample_mask],
-                )
-                self.oob_scores_[i] = loss_(
-                    y[~sample_mask],
-                    raw_predictions[~sample_mask],
-                    sample_weight[~sample_mask],
-                )
-                previous_loss = initial_loss if i == 0 else self.oob_scores_[i - 1]
-                self.oob_improvement_[i] = previous_loss - self.oob_scores_[i]
-                self.oob_score_ = self.oob_scores_[-1]
-            else:
-                # no need to fancy index w/ no subsampling
-                if K == 1:    
-                    self.train_score_[i] = loss_(y.flatten(), raw_predictions.flatten(), sample_weight)
-                else:    
-                    self.train_score_[i] = loss_(y.flatten(), raw_predictions.reshape(-1,K), sample_weight)
+            if K == 1:    
+                self.train_score_[i] = loss_(y.flatten(), raw_predictions.flatten(), sample_weight)
+            else:    
+                self.train_score_[i] = loss_(y.flatten(), raw_predictions.reshape(-1,K), sample_weight)
 
             if self.verbose > 0:
                 verbose_reporter.update(i, self)
@@ -630,7 +613,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         #loss
         if self._loss.n_classes < 3:
             residual = - loss.gradient(
-                y.flatten(), raw_predictions_copy.flatten() 
+                y.flatten(), raw_predictions_copy.flatten()
             )
         else:
             residual = - loss.gradient(
@@ -659,7 +642,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         r = raw_predictions#.flatten()
 
-        all_ze_staff = Parallel(n_jobs=5,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, y,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
+        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, y,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
         # all_ze_staff = []
         # for eid in range(self.n_estimators):
         #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))

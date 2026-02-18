@@ -76,7 +76,7 @@ def get_loss(best_res, best_v,I,r,D, gradient, data_mvp, raw_loss, bias):
         if grad.size > 0:
             grad[:] = gradient(v,I,r,D, bias)
 
-        res = raw_loss(r.flatten(),data_mvp(v, I, D, bias))
+        res = raw_loss(r.flatten(),data_mvp(v, I, D, bias)) + 0.00001 * (v @ v).sum() * 0.5
         #print(res) 
         if res < best_res:
             best_res[:] = res
@@ -198,21 +198,23 @@ class KFoldWrapper(object):
             x0 = np.random.rand(model.parameters[0].flatten().shape[0])
             best_v = np.zeros(x0.shape)
 
-            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, self.mvp, self.loss, bias[train_idx])
+            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss, bias[train_idx])
 
             opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
+            #opt = nlopt.opt(nlopt.LD_MMA, x0.shape[0])
+
 
             opt.set_min_objective(myfunc)
 
-            opt.set_maxeval(500)
+            opt.set_maxeval(2)
             opt.set_xtol_rel(0.01)
             try:
                 opt.optimize(x0)
             except Exception as e:
-                #print(e)
+                print(e)
                 pass
             
-            
+            #print("BR:", best_res)
             U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
 
             p1 = np.swapaxes(U,0,1)
