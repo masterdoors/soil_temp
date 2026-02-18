@@ -26,6 +26,7 @@ from scipy.special import expit, softmax
 from typing import List, Optional
 from scipy import linalg
 
+from sklearn.metrics import mean_squared_error
 
 class Model:
     """Base class for convex and non-convex models.
@@ -211,13 +212,18 @@ def inv_hessian(U,
     C):
     inv_H = np.identity(U.shape[0]) / C
     #print("H det: ", linalg.det(inv_H))
+    vM = np.zeros(U.shape).reshape(-1,1)
 
     for i in range(X.shape[0]):
         M = (X[i].reshape(-1,1) @ D[i].reshape(1,-1)).reshape(-1,1)
         mt = np.transpose(M)
         inv_H = inv_H - (inv_H @ M @ mt @ inv_H) / (1. + mt @ inv_H @ M).sum()
+        vM += v[i] * M
         #print("H det: ",linalg.det(inv_H))
-    return inv_H #inv_H @ X @ D @ v    
+    cur_U = inv_H @ vM
+    out = np.einsum("ij, lkj, ik->il", X, cur_U.reshape(-1, D.shape[1], X.shape[1]), D).flatten()
+    print("L2: ", mean_squared_error(v,out))
+    return inv_H @ vM    
 
      
 def gradient_l2(
