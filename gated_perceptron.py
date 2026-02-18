@@ -25,6 +25,7 @@ import numpy as np
 from scipy.special import expit, softmax
 from typing import List, Optional
 from scipy import linalg
+import copy
 
 from sklearn.metrics import mean_squared_error
 
@@ -211,19 +212,28 @@ def inv_hessian(U,
     D,
     C):
     inv_H = np.identity(U.shape[0]) / C
+    old_H = copy.deepcopy(inv_H)
     #print("H det: ", linalg.det(inv_H))
-    vM = np.zeros(U.shape).reshape(-1,1)
-
+    #vM = np.zeros(U.shape).reshape(-1,1)
+    M_ = []
+    steps = []
     for i in range(X.shape[0]):
         M = (X[i].reshape(-1,1) @ D[i].reshape(1,-1)).reshape(-1,1)
+        M_.append(M)
+
         mt = np.transpose(M)
         inv_H = inv_H - (inv_H @ M @ mt @ inv_H) / (1. + mt @ inv_H @ M).sum()
-        vM += v[i] * M
-        #print("H det: ",linalg.det(inv_H))
-    cur_U = inv_H @ vM
-    out = np.einsum("ij, lkj, ik->il", X, cur_U.reshape(-1, D.shape[1], X.shape[1]), D).flatten()
-    print("L2: ", mean_squared_error(v,out))
-    return inv_H @ vM    
+        steps.append((1. + mt @ inv_H @ M).sum())
+        #vM += v[i] * M
+        #print("H det: ",)
+        if i % 1000 == 0:
+            cur_U = inv_H @ (np.hstack(M_)) @ v[:i+1].reshape(-1,1)
+            out = np.einsum("ij, lkj, ik->il", X, cur_U.reshape(-1, D.shape[1], X.shape[1]), D).flatten()
+            print("L2: ", mean_squared_error(v,out), mean_squared_error(v[:i+1],out[:i+1]),mean_squared_error([v[i]],[out[i]]),np.abs(cur_U).sum(),(cur_U.flatten() @ cur_U.flatten()).sum() * C,np.abs(old_H - inv_H).sum(),np.asarray(steps).min(),np.asarray(steps).max())
+            old_H = copy.deepcopy(inv_H)
+            steps = []
+    print("-------------------------------------------------")        
+    return inv_H @ (np.hstack(M_)) @ v.reshape(-1,1)    
 
      
 def gradient_l2(
@@ -233,7 +243,7 @@ def gradient_l2(
     D,
     bias
 ):
-    inv_hessian(v,X,y,D,0.1)
+    inv_hessian(v,X,y,D,0.00001)
     w = v.reshape(-1, D.shape[1], X.shape[1])
     return np.einsum("ij, il, ik->ljk", D, data_mvp(w, X, D, bias) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape) + v * 0.00001
 
