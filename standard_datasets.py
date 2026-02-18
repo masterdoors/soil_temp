@@ -302,7 +302,7 @@ for depth in all_data[ds_name]:
             
         model.fit(
             x_train,
-            Y_train,
+            Y_train, 
         )        
         
         y_pred = model.predict(x_test) #, batch_size=batch_size)
