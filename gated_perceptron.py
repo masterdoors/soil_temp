@@ -24,6 +24,7 @@
 import numpy as np
 from scipy.special import expit, softmax
 from typing import List, Optional
+from scipy import linalg
 
 
 class Model:
@@ -203,6 +204,22 @@ def data_mvp_soft(v, X, D, bias):
 def data_mvp_expit(v, X, D, bias):
     return expit(data_mvp(v, X, D, bias))
 
+def inv_hessian(U,
+    X,
+    v,
+    D,
+    C):
+    inv_H = np.identity(U.shape[0]) / C
+    #print("H det: ", linalg.det(inv_H))
+
+    for i in range(X.shape[0]):
+        M = (X[i].reshape(-1,1) @ D[i].reshape(1,-1)).reshape(-1,1)
+        mt = np.transpose(M)
+        inv_H = inv_H - (inv_H @ M @ mt @ inv_H) / (1. + mt @ inv_H @ M).sum()
+        #print("H det: ",linalg.det(inv_H))
+    return inv_H #inv_H @ X @ D @ v    
+
+     
 def gradient_l2(
     v,
     X,
@@ -210,8 +227,9 @@ def gradient_l2(
     D,
     bias
 ):
+    inv_hessian(v,X,y,D,0.1)
     w = v.reshape(-1, D.shape[1], X.shape[1])
-    return np.einsum("ij, il, ik->ljk", D, data_mvp(w, X, D, bias) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape)
+    return np.einsum("ij, il, ik->ljk", D, data_mvp(w, X, D, bias) - y.reshape(-1,w.shape[0]), X).reshape(*v.shape) + v * 0.00001
 
 def gradient_hb(
     v,
