@@ -14,6 +14,7 @@ from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples
 from gated_perceptron import ConvexGatedReLU 
 from gated_perceptron import data_mvp, data_mvp_soft, data_mvp_expit, gradient_hb, gradient_hm, gradient_l2
 
+from sklearn.linear_model import ridge_regression
 
 import nlopt
 
@@ -194,28 +195,32 @@ class KFoldWrapper(object):
 
             D = model.compute_activations(I)
 
-            best_res = np.asarray([1e+31])
-            x0 = np.random.rand(model.parameters[0].flatten().shape[0])
-            best_v = np.zeros(x0.shape)
+            # best_res = np.asarray([1e+31])
+            # x0 = np.random.rand(model.parameters[0].flatten().shape[0])
+            # best_v = np.zeros(x0.shape)
 
-            myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss, bias[train_idx])
+            # myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss, bias[train_idx])
 
-            opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
-            #opt = nlopt.opt(nlopt.LD_MMA, x0.shape[0])
+            # opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
+            # #opt = nlopt.opt(nlopt.LD_MMA, x0.shape[0])
 
 
-            opt.set_min_objective(myfunc)
+            # opt.set_min_objective(myfunc)
 
-            opt.set_maxeval(2)
-            opt.set_xtol_rel(0.01)
-            try:
-                opt.optimize(x0)
-            except Exception as e:
-                print(e)
-                pass
+            # opt.set_maxeval(1)
+            # opt.set_xtol_rel(0.01)
+            # try:
+            #     opt.optimize(x0)
+            # except Exception as e:
+            #     print(e)
+            #     pass
             
-            #print("BR:", best_res)
-            U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
+            # print("BR:", best_res)
+
+            M_ = np.transpose(np.einsum("ij, il->lji", I , D).reshape(-1,I.shape[0]))
+            U = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1] * n_classes, I.shape[1]) 
+            print("KV: ",self.loss(r[train_idx].flatten(),data_mvp(U, I, D, bias[train_idx]).flatten()))
+            #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
 
             p1 = np.swapaxes(U,0,1)
             p2 = np.concatenate([G for _ in range(n_classes)],axis = 1)
