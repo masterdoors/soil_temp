@@ -219,7 +219,16 @@ class KFoldWrapper(object):
 
             M_ = np.transpose(np.einsum("ij, il->lji", I , D).reshape(-1,I.shape[0]))
             U = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1] * n_classes, I.shape[1]) 
-            print("KV: ",self.loss(r[train_idx].flatten(),data_mvp(U, I, D, bias[train_idx]).flatten()))
+            # b = np.zeros(bias[train_idx].flatten().shape)
+            # lt = self.loss(r[train_idx].flatten(),data_mvp(U, I, D, b))
+            # if estimator.max_depth == 1:
+            #     I = getIndicatorsLt(estimator, X[val_idx])
+            # else:    
+            #     I = getIndicators(estimator, X[val_idx], do_sample = False)    
+            # D = model.compute_activations(I)                        
+            # b = np.zeros(bias[val_idx].flatten().shape)
+            # ltest = self.loss(r[val_idx].flatten(),data_mvp(U, I, D, b).flatten())
+            # print("KV: ",lt,ltest)
             #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
 
             p1 = np.swapaxes(U,0,1)
