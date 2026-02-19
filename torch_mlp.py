@@ -51,7 +51,7 @@ class MaskedPerceptron(nn.Module):
       offset = 0
 
       for c in range(output_size):
-        second_weights[offset:offset + step,c] = 1.
+        second_weights[c,offset:offset + step] = 1.
         offset += step
       
       self.fc2.weight  = torch.nn.Parameter(second_weights)
