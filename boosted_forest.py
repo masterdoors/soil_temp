@@ -34,9 +34,30 @@ from _binner import Binner
 from torch.nn import BCEWithLogitsLoss, CrossEntropyLoss
 from torch.nn import MSELoss
 from torch_mlp import MLPRB
-
+import math
+import warnings
 
 from joblib import Parallel, delayed
+
+def _safe_divide(numerator, denominator):
+    """Prevents overflow and division by zero."""
+    # This is used for classifiers where the denominator might become zero exactly.
+    # For instance for log loss, HalfBinomialLoss, if proba=0 or proba=1 exactly, then
+    # denominator = hessian = 0, and we should set the node value in the line search to
+    # zero as there is no improvement of the loss possible.
+    # For numerical safety, we do this already for extremely tiny values.
+    if abs(denominator) < 1e-150:
+        return 0.0
+    else:
+        # Cast to Python float to trigger Python errors, e.g. ZeroDivisionError,
+        # without relying on `np.errstate` that is not supported by Pyodide.
+        result = float(numerator) / float(denominator)
+        # Cast to Python float to trigger a ZeroDivisionError without relying
+        # on `np.errstate` that is not supported by Pyodide.
+        result = float(numerator) / float(denominator)
+        if math.isinf(result):
+            warnings.warn("overflow encountered in _safe_divide", RuntimeWarning)
+        return result
 
 from sklearn._loss.loss import (
     _LOSSES,
@@ -642,14 +663,38 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         r = raw_predictions#.flatten()
 
-        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, residual.flatten(),history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
+        
+        if isinstance(loss, HalfBinomialLoss):
+            prob = y - residual
+            # numerator = negative gradient = y - prob
+            numerator = np.average(residual)
+            # denominator = hessian = prob * (1 - prob)
+            denominator = np.average(prob * (1 - prob))
+            update = _safe_divide(numerator, denominator).flatten()
+        elif isinstance(loss, HalfMultinomialLoss):  
+            K = loss.n_classes
+            update = np.zeros(residual.shape)
+            for k in range(K):        
+                y_ = (y == k).astype(float) 
+                prob = y_ - residual[:,k]
+
+                numerator = residual[:,k]
+                numerator *= (K - 1) / K
+                denominator = prob * (1 - prob)
+                den_not_zero = denominator != 0
+                update[:,k][den_not_zero] = numerator[den_not_zero] / denominator[den_not_zero]
+        else:  
+            update = residual.flatten()
+
+        all_ze_staff = Parallel(n_jobs=5,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
         # all_ze_staff = []
         # for eid in range(self.n_estimators):
         #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))
         for kfold_estimator, trains_, tests_ in all_ze_staff: 
             trains += trains_
             tests += tests_
-            self.estimators_[i].append(kfold_estimator)            
+            self.estimators_[i].append(kfold_estimator) 
+
 
         init_values = None
         weight = self.learning_rate 
