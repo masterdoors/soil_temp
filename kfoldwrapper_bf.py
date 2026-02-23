@@ -14,7 +14,7 @@ from sklearn.ensemble._forest import _generate_unsampled_indices, _get_n_samples
 from gated_perceptron import ConvexGatedReLU 
 from gated_perceptron import data_mvp, data_mvp_soft, data_mvp_expit, gradient_hb, gradient_hm, gradient_l2
 
-from sklearn.linear_model import ridge_regression
+from sklearn.linear_model import ridge_regression, Ridge
 
 import nlopt
 
@@ -134,7 +134,7 @@ class KFoldWrapper(object):
     def estimator_(self):
         return self.estimators_
 
-    def fit(self, X, y, r, bias, sample_weight=None):
+    def fit(self, X, y, r, bias, y_,sample_weight=None):
         splitter = KFold(
             n_splits=self.n_splits,
             shuffle=True,
@@ -148,22 +148,22 @@ class KFoldWrapper(object):
             estimator = copy.deepcopy(self.dummy_estimator_)
 
             # Fit on training samples
-            if sample_weight is None:
+            #if sample_weight is None:
                 # Notice that a bunch of base estimators do not take
                 # `sample_weight` as a valid input.
-                if len(y.shape) == 2 and y.shape[1] == 1:
-                    estimator.fit(X[train_idx], y[train_idx].flatten())
-                else:                     
-                    estimator.fit(X[train_idx], y[train_idx])
-            else:
-                if len(y.shape) == 2 and y.shape[1] == 1:
-                    estimator.fit(
-                        X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
-                    )
-                else:
-                    estimator.fit(
-                        X[train_idx], y[train_idx], sample_weight[train_idx]
-                    ) 
+            if len(y.shape) == 2 and y.shape[1] == 1:
+                estimator.fit(X[train_idx], y[train_idx].flatten())
+            else:                     
+                estimator.fit(X[train_idx], y[train_idx])
+            # else:
+            #     if len(y.shape) == 2 and y.shape[1] == 1:
+            #         estimator.fit(
+            #             X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
+            #         )
+            #     else:
+            #         estimator.fit(
+            #             X[train_idx], y[train_idx], sample_weight[train_idx]
+            #         ) 
                 
             indexes = []
             trhxs = []            
@@ -218,20 +218,38 @@ class KFoldWrapper(object):
             # print("BR:", best_res)
 
             M_ = np.transpose(np.einsum("ij, il->lji", I , D).reshape(-1,I.shape[0]))
-            U = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1] * n_classes, I.shape[1]) 
-            # b = np.zeros(bias[train_idx].flatten().shape)
-            # lt = self.loss(r[train_idx].flatten(),data_mvp(U, I, D, b))
+            #step = int(self.hidden_size / n_classes)
+            if n_classes > 1:
+                U = []
+
+                for k in range(n_classes):
+                    if sample_weight is None:
+                        U.append(ridge_regression(M_,r[train_idx,k], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1]))
+                    else:
+                        U.append(ridge_regression(M_,r[train_idx,k], sample_weight = sample_weight[:,k][train_idx].flatten(),alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])) 
+                U = np.asarray(U)
+            else:
+                if sample_weight is None:
+                    U  = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])                
+                else:    
+                    U  = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg',sample_weight = sample_weight[train_idx].flatten()).reshape(D.shape[1], I.shape[1])                
+
+            
+            #mkv = (M_ @ U.reshape(-1,1)).flatten()
+            #lt0 = self.loss(r[train_idx].flatten(),mkv) 
+            #lt = self.loss(y_[train_idx].flatten(),data_mvp(U, I, D, bias[train_idx]))  
+            #lt = self.loss(y_[train_idx].flatten(), ((I @ U.T) * D).sum(axis=1) + bias[train_idx].flatten())  
+
             # if estimator.max_depth == 1:
             #     I = getIndicatorsLt(estimator, X[val_idx])
             # else:    
             #     I = getIndicators(estimator, X[val_idx], do_sample = False)    
             # D = model.compute_activations(I)                        
-            # b = np.zeros(bias[val_idx].flatten().shape)
-            # ltest = self.loss(r[val_idx].flatten(),data_mvp(U, I, D, b).flatten())
-            # print("KV: ",lt,ltest)
-            #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
+            # ltest = self.loss(y_[val_idx].flatten(),data_mvp(U, I, D, bias[val_idx]))  
 
-            p1 = np.swapaxes(U,0,1)
+            #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
+            # print("KV: ",lt,ltest)            
+            p1 = np.swapaxes(U.reshape(-1, I.shape[1]),0,1)
             p2 = np.concatenate([G for _ in range(n_classes)],axis = 1)
             self.nn_estimator_w.append(p1)
             self.nn_estimator_g.append(p2)             

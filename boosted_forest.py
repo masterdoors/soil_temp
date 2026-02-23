@@ -39,26 +39,6 @@ import warnings
 
 from joblib import Parallel, delayed
 
-def _safe_divide(numerator, denominator):
-    """Prevents overflow and division by zero."""
-    # This is used for classifiers where the denominator might become zero exactly.
-    # For instance for log loss, HalfBinomialLoss, if proba=0 or proba=1 exactly, then
-    # denominator = hessian = 0, and we should set the node value in the line search to
-    # zero as there is no improvement of the loss possible.
-    # For numerical safety, we do this already for extremely tiny values.
-    if abs(denominator) < 1e-150:
-        return 0.0
-    else:
-        # Cast to Python float to trigger Python errors, e.g. ZeroDivisionError,
-        # without relying on `np.errstate` that is not supported by Pyodide.
-        result = float(numerator) / float(denominator)
-        # Cast to Python float to trigger a ZeroDivisionError without relying
-        # on `np.errstate` that is not supported by Pyodide.
-        result = float(numerator) / float(denominator)
-        if math.isinf(result):
-            warnings.warn("overflow encountered in _safe_divide", RuntimeWarning)
-        return result
-
 from sklearn._loss.loss import (
     _LOSSES,
     AbsoluteError,
@@ -70,7 +50,7 @@ from sklearn._loss.loss import (
     PinballLoss,
 )
 
-def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,y,hidden_size,sample_weight, loss):
+def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,y,y_,hidden_size,sample_weight, loss):
     if eid %2 == 0:
         kfold_estimator = KFoldWrapper(
             estimator,
@@ -94,7 +74,7 @@ def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose
             verbose
         )                       
         
-    trains_, tests_ = kfold_estimator.fit(X_aug, residual,y,r,sample_weight)    
+    trains_, tests_ = kfold_estimator.fit(X_aug, residual,y,r,y_,sample_weight)    
     return kfold_estimator, trains_, tests_ 
 
 def _init_raw_predictions(X, estimator, loss, use_predict_proba):
@@ -663,17 +643,21 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         r = raw_predictions#.flatten()
 
-        
+        sw = None
         if isinstance(loss, HalfBinomialLoss):
-            prob = y - residual
+            update = np.zeros(residual.flatten().shape)
+            prob = y - residual.flatten()
             # numerator = negative gradient = y - prob
-            numerator = np.average(residual)
+            numerator = residual.flatten()
             # denominator = hessian = prob * (1 - prob)
-            denominator = np.average(prob * (1 - prob))
-            update = _safe_divide(numerator, denominator).flatten()
+            denominator = prob * (1 - prob)
+            sw = denominator
+            den_not_zero = denominator != 0
+            update[den_not_zero] = numerator[den_not_zero] / denominator[den_not_zero]
         elif isinstance(loss, HalfMultinomialLoss):  
             K = loss.n_classes
             update = np.zeros(residual.shape)
+            sw = np.zeros(residual.shape)
             for k in range(K):        
                 y_ = (y == k).astype(float) 
                 prob = y_ - residual[:,k]
@@ -681,15 +665,16 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 numerator = residual[:,k]
                 numerator *= (K - 1) / K
                 denominator = prob * (1 - prob)
+                sw[:,k] = denominator
                 den_not_zero = denominator != 0
                 update[:,k][den_not_zero] = numerator[den_not_zero] / denominator[den_not_zero]
         else:  
             update = residual.flatten()
 
-        all_ze_staff = Parallel(n_jobs=5,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,history_sum.shape[1], sample_weight, loss) for eid in range(self.n_estimators))
-        # all_ze_staff = []
-        # for eid in range(self.n_estimators):
-        #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, history_sum.shape[1], sample_weight))
+        #all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,y,history_sum.shape[1], sw, loss) for eid in range(self.n_estimators))
+        all_ze_staff = []
+        for eid in range(self.n_estimators):
+            all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,y,history_sum.shape[1], sw, loss))
         for kfold_estimator, trains_, tests_ in all_ze_staff: 
             trains += trains_
             tests += tests_
@@ -757,11 +742,11 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         init_values = [[],[]]
         for ek in estimators:        
-            init_values[0].append(ek.nn_estimator_w)            
-            init_values[1].append(ek.nn_estimator_g)   
+            init_values[0] += ek.nn_estimator_w            
+            init_values[1] += ek.nn_estimator_g
 
-        init_values[0] = np.swapaxes(np.vstack(init_values[0]),0,1)
-        init_values[1] = np.swapaxes(np.vstack(init_values[1]),0,1)
+        init_values[0] = np.swapaxes(np.asarray(init_values[0]),0,1)
+        init_values[1] = np.swapaxes(np.asarray(init_values[1]),0,1)
 
         cur_lr = self.lin_estimator(weight)
         if self._loss.n_classes == 2:
@@ -771,7 +756,9 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         cur_lr.mimic_fit(I,y,init_values,n_classes = K)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
-        
+
+        #for t in tests:
+        #  print("KV on perceptron: ", self._loss(y[t],raw_predictions[t]))
 
         self.lr.append(cur_lr)
         return raw_predictions, hidden

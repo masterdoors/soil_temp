@@ -284,8 +284,7 @@ max_depth = int(args.max_depth)
 hs = int(args.hs)
 n_trees = int(args.n_trees)
 
-n_est = 10
-
+n_est = 1
 make_model = models[model_name]
 for depth in all_data[ds_name]:
     dat = all_data[ds_name][depth]
@@ -294,7 +293,7 @@ for depth in all_data[ds_name]:
     Y_train = dat["train"]["y"].flatten()
     Y_test = dat["test"]["y"].flatten()            
 
-    for _ in range(3):
+    for _ in range(1):
         if hs > 0:    
             model = make_model(max_depth,layers,hs,n_trees,n_est)
         else:
