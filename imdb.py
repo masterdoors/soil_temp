@@ -70,12 +70,12 @@ sentiment.drop(['review','sentiment_negative'],axis = 1,inplace=True)
 
 sentiment.rename(columns = {'sentiment_positive':'sentiment'}, inplace = True)
 
-sentiment = np.squeeze(sentiment)
+sentiment = np.squeeze(sentiment).to_numpy()
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(count_vec_x, sentiment, test_size = 0.20)
 
-model = CascadeBoostingClassifier(loss = "binomial", n_layers=100, n_estimators = 10, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 10,verbose=1, n_trees=5,batch_size = 1000)
+model = CascadeBoostingClassifier(loss = "binomial", n_layers=100, n_estimators = 10, max_depth=2, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 10,verbose=1, n_trees=10,batch_size = 1000)
 #model = GradientBoostingClassifier(loss = "log_loss", n_estimators=100,  max_depth=1)
 
 model.fit(
