@@ -652,7 +652,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             # denominator = hessian = prob * (1 - prob)
             denominator = prob * (1 - prob)
             sw = denominator
-            den_not_zero = denominator != 0
+            den_not_zero = np.abs(denominator) > 1e-150
             update[den_not_zero] = numerator[den_not_zero] / denominator[den_not_zero]
         elif isinstance(loss, HalfMultinomialLoss):  
             K = loss.n_classes
@@ -666,7 +666,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
                 numerator *= (K - 1) / K
                 denominator = prob * (1 - prob)
                 sw[:,k] = denominator
-                den_not_zero = denominator != 0
+                den_not_zero = np.abs(denominator) > 1e-150
                 update[:,k][den_not_zero] = numerator[den_not_zero] / denominator[den_not_zero]
         else:  
             update = residual.flatten()

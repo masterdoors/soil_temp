@@ -226,7 +226,11 @@ class KFoldWrapper(object):
                     if sample_weight is None:
                         U.append(ridge_regression(M_,r[train_idx,k], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1]))
                     else:
-                        U.append(ridge_regression(M_,r[train_idx,k], sample_weight = sample_weight[:,k][train_idx].flatten(),alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])) 
+                        sw_nz = sample_weight[:,k][train_idx].flatten() != 0.
+                        #if sw_nz.sum() != sw_nz.shape[0]:
+                        #    print(sw_nz.sum(),sw_nz.shape[0],k)
+                        #U.append(ridge_regression(M_[sw_nz],r[train_idx,k][sw_nz], sample_weight = sample_weight[:,k][train_idx].flatten()[sw_nz],alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])) 
+                        U.append(ridge_regression(M_,r[train_idx,k], sample_weight = sample_weight[:,k][train_idx].flatten(),alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1]))  
                 U = np.asarray(U)
             else:
                 if sample_weight is None:
@@ -248,7 +252,7 @@ class KFoldWrapper(object):
             # ltest = self.loss(y_[val_idx].flatten(),data_mvp(U, I, D, bias[val_idx]))  
 
             #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
-            # print("KV: ",lt,ltest)            
+            #print("KV: ",lt,ltest)            
             p1 = np.swapaxes(U.reshape(-1, I.shape[1]),0,1)
             p2 = np.concatenate([G for _ in range(n_classes)],axis = 1)
             self.nn_estimator_w.append(p1)
