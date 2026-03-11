@@ -134,7 +134,7 @@ class KFoldWrapper(object):
     def estimator_(self):
         return self.estimators_
 
-    def fit(self, X, y, r, bias, y_,sample_weight=None):
+    def fit(self, X, y, r, bias, y_,sample_weight=None,second_reflection=None, train_batch_ids=None):
         splitter = KFold(
             n_splits=self.n_splits,
             shuffle=True,
@@ -143,120 +143,113 @@ class KFoldWrapper(object):
 
         trains = []
         tests = []
-        for i, (train_idx, val_idx) in enumerate(splitter.split(X, y)):
-            #print(i)
-            estimator = copy.deepcopy(self.dummy_estimator_)
 
-            # Fit on training samples
-            #if sample_weight is None:
-                # Notice that a bunch of base estimators do not take
-                # `sample_weight` as a valid input.
+        if len(y.shape) > 1:
+            n_classes = y.shape[1]
+        else:
+            n_classes = 1
+        
+        val_ = np.asarray(list(set(range(X.shape[0])) - set(train_batch_ids)))
+
+        #print(i)
+        I = []
+        estimator = copy.deepcopy(self.dummy_estimator_)
+
+
+        for k in range(n_classes):
             if len(y.shape) == 2 and y.shape[1] == 1:
-                estimator.fit(X[train_idx], y[train_idx].flatten())
+                estimator.fit(X[train_batch_ids], y[train_batch_ids][:, k].flatten())
             else:                     
-                estimator.fit(X[train_idx], y[train_idx])
-            # else:
-            #     if len(y.shape) == 2 and y.shape[1] == 1:
-            #         estimator.fit(
-            #             X[train_idx], y[train_idx].flatten(), sample_weight[train_idx]
-            #         )
-            #     else:
-            #         estimator.fit(
-            #             X[train_idx], y[train_idx], sample_weight[train_idx]
-            #         ) 
+                estimator.fit(X[train_batch_ids], y[train_batch_ids][:, k])
+            if k < n_classes - 1:    
+                estimator.set_params(n_estimators=estimator.n_estimators + self.dummy_estimator_.n_estimators)
                 
-            indexes = []
-            trhxs = []            
-            for est in estimator:
-                sel = est.tree_.feature >= 0
+        indexes = []
+        trhxs = []    
+
+        #uniques = np.where(np.asarray([len(np.unique(X[train_batch_ids][:,i])) for i in range(X.shape[1])]) > 1)
+        avgs =  X[train_batch_ids].mean(axis=0)
+        for est in estimator:
+            sel = est.tree_.feature >= 0
+            if sel.sum() == 0:
+                #temporary solution, works only if tree depth = 1
+                feat = np.random.choice(np.arange(X.shape[1]),1)
+                trx = avgs[feat]
+                indexes.append(feat)
+                trhxs.append(trx)
+            else:    
                 indexes.append(est.tree_.feature[sel])
                 trhxs.append(est.tree_.threshold[sel])
 
-            estimator._indexes = np.hstack(indexes)
-            estimator._trhxs = np.hstack(trhxs)                
-            
-            self.estimators_.append(estimator) 
-            trains.append(train_idx)
-            tests.append(val_idx)
+        estimator._indexes = np.hstack(indexes)
+        estimator._trhxs = np.hstack(trhxs)                
+    
+        self.estimators_.append(estimator) 
 
-            if estimator.max_depth == 1:
-                I = getIndicatorsLt(estimator, X[train_idx])
-            else:    
-                I = getIndicators(estimator, X[train_idx], do_sample = False)
+        if estimator.max_depth == 1:
+            I.append(getIndicatorsLt(estimator, X[train_batch_ids]))
+        else:    
+            I.append(getIndicators(estimator, X[train_batch_ids], do_sample = False))
 
-            if len(y.shape) > 1:
-                n_classes = y.shape[1]
-            else:
-                n_classes = 1
+        I = np.hstack(I)
+        
+        trains.append(train_batch_ids)
+        tests.append(val_)
 
-            G = np.random.default_rng().standard_normal((I.shape[1], int(self.hidden_size / n_classes)))
+        G = np.random.default_rng().standard_normal((I.shape[1], self.hidden_size))
+        #G = np.ones(G.shape)
 
-            model = ConvexGatedReLU(G,c=n_classes)
+        model = ConvexGatedReLU(G,c=1) #=n_classes)
 
-            D = model.compute_activations(I)
+        D = model.compute_activations(I)
 
-            # best_res = np.asarray([1e+31])
-            # x0 = np.random.rand(model.parameters[0].flatten().shape[0])
-            # best_v = np.zeros(x0.shape)
+        if n_classes > 1:
+            M = []
+            r_ = []
+            sw_ = []
 
-            # myfunc = get_loss(best_res, best_v,I,r[train_idx],D, self.grad, data_mvp, self.loss, bias[train_idx])
+            for k in range(n_classes):
+                #
+                D_ = np.multiply(D, second_reflection[:,k])
+                M_ = np.transpose(np.einsum("ij, il->lji", I, D_).reshape(-1,I.shape[0]))
+                sw_idx_ = sample_weight[train_batch_ids,k].flatten() > 0.001
+                M.append(M_[sw_idx_])
+                r_.append(r[train_batch_ids][:,k][sw_idx_])
+                sw_.append(sample_weight[train_batch_ids,k].flatten()[sw_idx_])
 
-            # opt = nlopt.opt(nlopt.LD_TNEWTON, x0.shape[0])
-            # #opt = nlopt.opt(nlopt.LD_MMA, x0.shape[0])
-
-
-            # opt.set_min_objective(myfunc)
-
-            # opt.set_maxeval(1)
-            # opt.set_xtol_rel(0.01)
-            # try:
-            #     opt.optimize(x0)
-            # except Exception as e:
-            #     print(e)
-            #     pass
-            
-            # print("BR:", best_res)
-
+            M_ = np.vstack(M)      
+            r_ = np.hstack(r_)  
+            sw = np.hstack(sw_)
+        else:
             M_ = np.transpose(np.einsum("ij, il->lji", I , D).reshape(-1,I.shape[0]))
-            #step = int(self.hidden_size / n_classes)
-            if n_classes > 1:
-                U = []
 
-                for k in range(n_classes):
-                    if sample_weight is None:
-                        U.append(ridge_regression(M_,r[train_idx,k], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1]))
-                    else:
-                        sw_nz = sample_weight[:,k][train_idx].flatten() != 0.
-                        #if sw_nz.sum() != sw_nz.shape[0]:
-                        #    print(sw_nz.sum(),sw_nz.shape[0],k)
-                        #U.append(ridge_regression(M_[sw_nz],r[train_idx,k][sw_nz], sample_weight = sample_weight[:,k][train_idx].flatten()[sw_nz],alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])) 
-                        U.append(ridge_regression(M_,r[train_idx,k], sample_weight = sample_weight[:,k][train_idx].flatten(),alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1]))  
-                U = np.asarray(U)
-            else:
-                if sample_weight is None:
-                    U  = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])                
-                else:    
-                    U  = ridge_regression(M_,r[train_idx], alpha = 0.00001,solver='sparse_cg',sample_weight = sample_weight[train_idx].flatten()).reshape(D.shape[1], I.shape[1])                
+        if n_classes > 1:
+            U = ridge_regression(M_,r_, sample_weight = sw,alpha = 0.000001,solver='sparse_cg',verbose=1).reshape(D.shape[1], I.shape[1])
+        else:
+            if sample_weight is None:
+                U  = ridge_regression(M_,r[train_batch_ids], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])                
+            else:    
+                U  = ridge_regression(M_,r[train_batch_ids], alpha = 0.00001,solver='sparse_cg',sample_weight = sample_weight[train_batch_ids].flatten()).reshape(D.shape[1], I.shape[1])                
 
-            
-            #mkv = (M_ @ U.reshape(-1,1)).flatten()
-            #lt0 = self.loss(r[train_idx].flatten(),mkv) 
-            #lt = self.loss(y_[train_idx].flatten(),data_mvp(U, I, D, bias[train_idx]))  
-            #lt = self.loss(y_[train_idx].flatten(), ((I @ U.T) * D).sum(axis=1) + bias[train_idx].flatten())  
+        
+        # mkv = (M_ @ np.swapaxes(U,1,2)).T.reshape(-1,n_classes)
+        # lt0 = self.loss(y_[train_idx].flatten(),mkv) 
+        # lt = self.loss(y_[train_idx].flatten(),data_mvp(U, I, D, bias[train_idx]))  
+        # #lt2 = self.loss(y_[train_idx].flatten(), ((I @ U.reshape(-1,I.shape[1]).T) * D).sum(axis=1) + bias[train_idx].flatten())  
 
-            # if estimator.max_depth == 1:
-            #     I = getIndicatorsLt(estimator, X[val_idx])
-            # else:    
-            #     I = getIndicators(estimator, X[val_idx], do_sample = False)    
-            # D = model.compute_activations(I)                        
-            # ltest = self.loss(y_[val_idx].flatten(),data_mvp(U, I, D, bias[val_idx]))  
+        # if estimator.max_depth == 1:
+        #     I = getIndicatorsLt(estimator, X[val_idx])
+        # else:    
+        #     I = getIndicators(estimator, X[val_idx], do_sample = False)    
+        # D = model.compute_activations(I)                        
+        # ltest = self.loss(y_[val_idx].flatten(),data_mvp(U, I, D, bias[val_idx]))  
 
-            #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
-            #print("KV: ",lt,ltest)            
-            p1 = np.swapaxes(U.reshape(-1, I.shape[1]),0,1)
-            p2 = np.concatenate([G for _ in range(n_classes)],axis = 1)
-            self.nn_estimator_w.append(p1)
-            self.nn_estimator_g.append(p2)             
+        # #U = best_v.reshape(D.shape[1] * n_classes, I.shape[1]) 
+        # print("KV: ",lt0,lt,ltest)            
+        p1 = np.swapaxes(U.reshape(-1, I.shape[1]),0,1)
+        p2 = G
+        self.nn_estimator_w.append(p1)
+        self.nn_estimator_g.append(p2)             
         return trains, tests    
 
          

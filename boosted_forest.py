@@ -50,7 +50,25 @@ from sklearn._loss.loss import (
     PinballLoss,
 )
 
-def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,y,y_,hidden_size,sample_weight, loss):
+
+def int_to__array(n, num_bits=None):
+    if num_bits is None:
+        num_bits = max(n.bit_length(), 1)
+    
+    bits = [(n >> i) & 1 for i in range(num_bits-1, -1, -1)]
+    
+    arr = np.array(bits)
+    return 2 * arr - 1 
+
+def batch_generator_numpy(X, Y, batch_size):
+    indices = np.arange(X.shape[0])
+    while True:
+        np.random.shuffle(indices)
+        for i in range(0, len(indices), batch_size):
+            batch_indices = indices[i:i + batch_size]
+            yield batch_indices
+
+def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose,X_aug, residual,r,y,y_,hidden_size,sample_weight, loss, second_reflection, train_batch_ids):
     if eid %2 == 0:
         kfold_estimator = KFoldWrapper(
             estimator,
@@ -74,7 +92,7 @@ def fitter(eid,estimator,restimator,n_splits,C,n_estimators,random_state,verbose
             verbose
         )                       
         
-    trains_, tests_ = kfold_estimator.fit(X_aug, residual,y,r,y_,sample_weight)    
+    trains_, tests_ = kfold_estimator.fit(X_aug, residual,y,r,y_,sample_weight,second_reflection,train_batch_ids)    
     return kfold_estimator, trains_, tests_ 
 
 def _init_raw_predictions(X, estimator, loss, use_predict_proba):
@@ -475,6 +493,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
             y_val_pred_iter = self._staged_raw_predict(X_val, check_input=False)
 
         history_sum = np.zeros((X_.shape[0],self.hidden_size))
+
         # perform boosting iterations
         i = begin_at_stage
 
@@ -485,34 +504,36 @@ class BaseBoostedCascade(BaseGradientBoosting):
         else:
             K = self._loss.n_classes   
 
-        if history_sum.shape[1] % K != 0:
-            raise ValueError("Length of the hidden embedding should be proportional to class number")            
+        if K > 1:
+            rng = np.random.default_rng()
+            bits = 2**self.hidden_size
+            if bits > 100000:
+                bits = 100000
+            numbers = rng.choice(bits, size=K, replace=False) 
+            second_reflection = np.hstack([int_to__array(n,self.hidden_size).reshape(-1,1) for n in numbers]).astype(float)
+        else:    
+            second_reflection = np.ones((self.hidden_size, K))
+        # if history_sum.shape[1] % K != 0:
+        #     raise ValueError("Length of the hidden embedding should be proportional to class number")     
+        #        
+
+        datagen = batch_generator_numpy(X_, y, self.batch_size)
 
         for i in range(begin_at_stage, self.n_layers):
-            # subsampling
-            if do_oob:
-                sample_mask = _random_sample_mask(n_samples, n_inbag, random_state)
-                if i == 0:  # store the initial loss to compute the OOB score
-                    initial_loss = loss_(
-                        y[~sample_mask],
-                        raw_predictions[~sample_mask],
-                        sample_weight[~sample_mask],
-                    )
-
-            
-            history_sum_old = history_sum
             # fit next stage of trees
             raw_predictions, history_sum = self._fit_stage(
                 i,
                 X_,
                 y,
+                datagen,
                 raw_predictions,
                 history_sum,
                 sample_weight,
                 sample_mask,
                 random_state,
                 X_csc,
-                X_csr
+                X_csr,
+                second_reflection
             )
             
             if K == 1:    
@@ -560,6 +581,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         i,
         X,
         y,
+        datagen,
         raw_predictions,
         history_sum,
         sample_weight,
@@ -567,6 +589,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
         random_state,
         X_csc=None,
         X_csr=None,
+        second_reflection=None
     ):
         """Fit another stage of ``_n_classes`` trees to the boosting model."""
 
@@ -585,13 +608,14 @@ class BaseBoostedCascade(BaseGradientBoosting):
             min_samples_split=self.min_samples_split,
             min_samples_leaf=self.min_samples_leaf,
             min_weight_fraction_leaf=self.min_weight_fraction_leaf,
-            min_impurity_decrease=self.min_impurity_decrease,
+            min_impurity_decrease=0.0,
             max_features=self.max_features,
             max_leaf_nodes=self.max_leaf_nodes,
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
             n_estimators=self.n_trees,
+            warm_start = True,            
             n_jobs = -1
         )  
         
@@ -601,13 +625,14 @@ class BaseBoostedCascade(BaseGradientBoosting):
             min_samples_split=self.min_samples_split,
             min_samples_leaf=self.min_samples_leaf,
             min_weight_fraction_leaf=self.min_weight_fraction_leaf,
-            min_impurity_decrease=self.min_impurity_decrease,
+            min_impurity_decrease=0.0,
             max_features=self.max_features,
             max_leaf_nodes=self.max_leaf_nodes,
             ccp_alpha=self.ccp_alpha,
             oob_score = False,
             bootstrap=True,
             n_estimators=self.n_trees,
+            warm_start = True,
             n_jobs = -1
         )        
 
@@ -671,10 +696,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
         else:  
             update = residual.flatten()
 
-        #all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,y,history_sum.shape[1], sw, loss) for eid in range(self.n_estimators))
-        all_ze_staff = []
-        for eid in range(self.n_estimators):
-            all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,y,history_sum.shape[1], sw, loss))
+        all_ze_staff = Parallel(n_jobs=1,backend="loky")(delayed(fitter)(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,y,history_sum.shape[1], sw, loss,second_reflection, next(datagen)) for eid in range(self.n_estimators))
+        # all_ze_staff = []
+        # for eid in range(self.n_estimators):
+        #     all_ze_staff.append(fitter(eid,estimator,restimator,self.n_splits,self.C,self.n_estimators,self.random_state,self.verbose,X_aug, residual,r, update,y,history_sum.shape[1], sw, loss,second_reflection))
         for kfold_estimator, trains_, tests_ in all_ze_staff: 
             trains += trains_
             tests += tests_
@@ -683,7 +708,7 @@ class BaseBoostedCascade(BaseGradientBoosting):
 
         init_values = None
         weight = self.learning_rate 
-        raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight,init_values,weight)    
+        raw_predictions, history_sum = self.update_terminal_regions(self.estimators_[i],trains, tests,X_aug, y,history_sum,sample_weight,init_values,weight,second_reflection)    
     
         return raw_predictions, history_sum  
     
@@ -730,35 +755,41 @@ class BaseBoostedCascade(BaseGradientBoosting):
             Is.append(I)
         return np.hstack(Is)       
 
-    def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight,init_values,weight):
+    def update_terminal_regions(self,estimators, trains,tests,X, y, history_sum, sample_weight,init_values,weight,second_reflection):
         I = []
-        for ek in estimators:        
-            for e in ek.estimators_:
-                if self.max_depth == 1:
-                    I.append(self.getIndicatorsLt(e, X))
-                else:    
-                    I.append(self.getIndicators(e, X, do_sample = False))
+        if self._loss.n_classes > 2:
+            K = self._loss.n_classes
+        else:
+            K = 1   
 
+        for ek in estimators:        
+            I_ = []     
+            for i,e in enumerate(ek.estimators_):
+                #k = (i + 1) % K
+                k = 0
+                if self.max_depth == 1:
+                    I_.append(self.getIndicatorsLt(e, X))
+                else:    
+                    I_.append(self.getIndicators(e, X, do_sample = False))
+                if k == 0:        
+                    I.append(np.hstack(I_))   
+                    I_ = []
 
         init_values = [[],[]]
         for ek in estimators:        
             init_values[0] += ek.nn_estimator_w            
             init_values[1] += ek.nn_estimator_g
 
-        init_values[0] = np.swapaxes(np.asarray(init_values[0]),0,1)
+        init_values[0] = np.swapaxes(np.asarray(init_values[0]),0,1) 
         init_values[1] = np.swapaxes(np.asarray(init_values[1]),0,1)
 
         cur_lr = self.lin_estimator(weight)
-        if self._loss.n_classes == 2:
-            K = 1
-        else:
-            K = self._loss.n_classes   
 
-        cur_lr.mimic_fit(I,y,init_values,n_classes = K)
+        cur_lr.mimic_fit(I,y,init_values,n_classes = K,second_reflection = second_reflection)
         raw_predictions, hidden = cur_lr.decision_function(I,tests,history_sum)
 
-        #for t in tests:
-        #  print("KV on perceptron: ", self._loss(y[t],raw_predictions[t]))
+        # for t in tests:
+        #   print("KV on perceptron: ", self._loss(y[t],raw_predictions[t]))
 
         self.lr.append(cur_lr)
         return raw_predictions, hidden

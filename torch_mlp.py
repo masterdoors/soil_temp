@@ -26,7 +26,14 @@ class MyMaskedLayer(nn.Module):
 
     def forward(self, x, mask):
         #return (torch.einsum('ijk,kjn->ijn',x, self.weight) + self.bias)[mask].reshape(x.shape[0],-1,self.weight.shape[2])
-        return (torch.einsum('ijk,kjn->ijn',x, self.weight))[mask].reshape(x.shape[0],-1,self.weight.shape[2])
+        mask_lengths = np.unique(mask.sum(axis=1))
+        M = torch.einsum('ijk,kjn->ijn',x, self.weight)
+        res = []
+        for l in  mask_lengths:
+            msk = mask.sum(axis=1) == l
+            msk_ = mask[msk]
+            res.append([M[msk][msk_].reshape(x[msk].shape[0],-1,self.weight.shape[2]),msk])
+        return res
     
 #X[ijk]
 #sampleXestimatorXfeatures
@@ -37,22 +44,29 @@ class MyMaskedULayer(nn.Module):
 
     def forward(self, x, mask):
         with torch.no_grad():
-            return torch.sign(F.relu(torch.einsum('ijk,kjn->ijn',x, self.weight)[mask].reshape(x.shape[0],-1,self.weight.shape[2])))    
+            mask_lengths = np.unique(mask.sum(axis=1))
+            M = torch.einsum('ijk,kjn->ijn',x, self.weight)
+            res = []
+            for l in  mask_lengths:
+                msk = mask.sum(axis=1) == l    
+                msk_ = mask[msk]
+                res.append([torch.sign(F.relu(M[msk][msk_].reshape(x[msk].shape[0],-1,self.weight.shape[2]))),msk])
+            return res    
 
 # -
 class MaskedPerceptron(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, channels, init_values = None, weight = 1.):    
+    def __init__(self, input_size, hidden_size, output_size, channels, init_values = None, weight = 1., second_reflection = None):    
       super(MaskedPerceptron, self).__init__()
       self.fc1 = MyMaskedLayer(input_size, hidden_size,channels,dtype=torch.float64)
       self.gate = MyMaskedULayer(input_size, hidden_size,channels,dtype=torch.float64)  
       self.fc2 = nn.Linear(hidden_size, output_size,dtype=torch.float64,bias=False)
-      second_weights = torch.zeros(self.fc2.weight.shape,dtype=torch.float64)
-      step = int(hidden_size / output_size) 
-      offset = 0
+      second_weights = torch.from_numpy(second_reflection.T)#torch.zeros(self.fc2.weight.shape,dtype=torch.float64)
+    #   step = int(hidden_size / output_size) 
+    #   offset = 0
 
-      for c in range(output_size):
-        second_weights[c,offset:offset + step] = 1.
-        offset += step
+    #   for c in range(output_size):
+    #     second_weights[c,offset:offset + step] = 1.
+    #     offset += step
       
       self.fc2.weight  = torch.nn.Parameter(second_weights)
       if init_values is not None:
@@ -62,27 +76,18 @@ class MaskedPerceptron(nn.Module):
       #print("SW: ",self.weight)  
 
     def forward(self, x, mask = None, bias = None, avg_pass = False):
-        
-        h = self.fc1(x, mask)
-        g = self.gate(x, mask)
-        #samplesXestimatorsXinput_size
-        h2 = torch.multiply(g, h)#self.hidden_activation(h)
-        
-        
         with torch.no_grad():
-            h3_mean = self.weight * h2.mean(axis=1) + bias
-
-        if bias is not None:
-            h3 = torch.swapaxes(torch.swapaxes(h2, 0, 1) + bias, 0, 1)    
-        else:
-            h3 = h2    
-
-        if avg_pass:
-            with torch.no_grad():
-                out = self.fc2(h3_mean)
-        else:    
-            out = self.fc2(h3)
-            #out = self.drop(out)
+            h = self.fc1(x, mask)
+            g = self.gate(x, mask)
+            #samplesXestimatorsXinput_size
+            h2 = torch.zeros(bias.shape,dtype=torch.float64)
+            for i in range(len(h)):
+                h_,mask_ = h[i]
+                g_,_ = g[i]
+                h2[mask_] = torch.multiply(g_, h_).mean(axis=1)
+        
+            h3_mean = self.weight * h2 + bias
+            out = self.fc2(h3_mean)
         
         return out, h3_mean
 
@@ -153,11 +158,11 @@ class MLPRB:
         self.weight = weight
         
     
-    def mimic_fit(self,X,y,init_values,n_classes = 1):
+    def mimic_fit(self,X,y,init_values,n_classes = 1,second_reflection = None):
         if len(y.shape) == 1:
             y = y.reshape(-1,1)        
         X = np.swapaxes(np.asarray(X),0,1)
-        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,n_classes,X.shape[1], init_values=init_values, weight = self.weight)
+        self.model = MaskedPerceptron(X.shape[2],self.hidden_size,n_classes,X.shape[1], init_values=init_values, weight = self.weight, second_reflection = second_reflection)
         self.model.to(device=self.device)
         self.model.device = self.device            
 
@@ -283,12 +288,12 @@ class MLPRB:
         do_sort = True
         if indexes is None:
             indexes = []
-            repeats = self.n_estimators * self.n_splits
+            repeats = self.n_estimators #* self.n_splits
             for _ in range(repeats):
                 indexes.append(np.arange(0,X.shape[0]))
             do_sort = False    
         else:
-            repeats = int(len(indexes) / self.n_splits)       
+            repeats = int(len(indexes))# / self.n_splits)       
 
         output = None
         hidden = None

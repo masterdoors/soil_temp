@@ -11,8 +11,8 @@ newsgroups_train = fetch_20newsgroups(subset='train',
 vectorizer = TfidfVectorizer()
 vectors_train = vectorizer.fit_transform(newsgroups_train.data)
 
-#model = GradientBoostingClassifier(loss = "log_loss", n_estimators=100,  max_depth=1)
-model = CascadeBoostingClassifier(loss = "multinomial", n_layers=100, n_estimators = 10, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 80,verbose=1, n_trees=20,batch_size = 1000)
+#model = GradientBoostingClassifier(loss = "log_loss", n_estimators=100,  max_depth=1, verbose = 1)
+model = CascadeBoostingClassifier(loss = "multinomial", n_layers=100, n_estimators = 30, max_depth=1, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 5,verbose=1, n_trees=7,batch_size = 3000,max_features=0.5)
 
 model.fit(vectors_train,newsgroups_train.target)
 
@@ -27,3 +27,15 @@ pred_train = model.predict(vectors_train)
 
 print(metrics.f1_score(pred_train, newsgroups_train.target, average='macro'))
 print(metrics.f1_score(pred, newsgroups_test.target, average='macro'))
+
+#Boosted cascade
+#0.7695786722266641
+#0.5899076433283406
+
+#H = 8, T = 6
+#0.7913410022428231
+#0.5935455549731399
+
+#GB
+#0.7159331246771841
+#0.5962612800821956

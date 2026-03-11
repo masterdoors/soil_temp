@@ -7,6 +7,7 @@ deep-forest/
 *$py.class
 kdd98*
 cup98*
+cifar-*
 lifetime-value/
 
 # C extensions
