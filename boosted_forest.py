@@ -715,8 +715,17 @@ class BaseBoostedCascade(BaseGradientBoosting):
     def getIndicatorsLt(self,estimator, X):
         W = X[:,estimator._indexes]    
         A = (W > estimator._trhxs[None,:]).astype(np.double)
-        sel = np.asarray([[i, A.shape[1] + i] for i in range(A.shape[1])]).flatten()
-        return np.hstack([A, 1 - A])[:,sel]     
+        A1 = A[:,estimator.chain_mask[0]]
+
+        sel = np.asarray([[i, A1.shape[1] + i] for i in range(A1.shape[1])]).flatten()
+        res = np.hstack([A1, 1 - A1])[:,sel]     
+        if len(estimator.chain_mask) > 1:
+            A2 = A[:,estimator.chain_mask[1]]
+
+            sel = np.asarray([[i, A2.shape[1] + i] for i in range(A2.shape[1])]).flatten()
+            res = np.concatenate([np.asarray(np.tile(res,(1,2))).reshape(-1,1,res.shape[1] * 2),np.asarray(np.hstack([A2, 1 - A2])[:,sel]).reshape(-1,1,res.shape[1] * 2)],axis=1).prod(axis=1)  
+            #res = np.concatenate([np.asarray(res).reshape(-1,1,res.shape[1]),np.asarray(A2).reshape(-1,1,res.shape[1])],axis=1).prod(axis=1)          
+        return res
     
     def getIndicators(self, estimator, X, sampled = True, do_sample = True):
         Is = []
@@ -767,10 +776,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
             for i,e in enumerate(ek.estimators_):
                 #k = (i + 1) % K
                 k = 0
-                if self.max_depth == 1:
-                    I_.append(self.getIndicatorsLt(e, X))
-                else:    
-                    I_.append(self.getIndicators(e, X, do_sample = False))
+                #if self.max_depth == 1:
+                I_.append(self.getIndicatorsLt(e, X))
+                #else:    
+                #    I_.append(self.getIndicators(e, X, do_sample = False))
                 if k == 0:        
                     I.append(np.hstack(I_))   
                     I_ = []
