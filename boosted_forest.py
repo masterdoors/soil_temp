@@ -834,10 +834,10 @@ class BaseBoostedCascade(BaseGradientBoosting):
             I = []
             for estimator in self.estimators_[i]:
                 for e in estimator.estimators_:
-                    if self.max_depth == 1:
-                        I.append(self.getIndicatorsLt(e, X_aug)) 
-                    else:
-                        I.append(self.getIndicators(e, X_aug, do_sample = False)) 
+                    #if self.max_depth == 1:
+                    I.append(self.getIndicatorsLt(e, X_aug)) 
+                    #else:
+                    #    I.append(self.getIndicators(e, X_aug, do_sample = False)) 
 
             out, hidden = self.lr[i].decision_function(I,None,hidden) 
 

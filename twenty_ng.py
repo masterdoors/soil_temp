@@ -14,7 +14,7 @@ vectors_train = vectorizer.fit_transform(newsgroups_train.data)
 
 #model = GradientBoostingClassifier(loss = "log_loss", n_estimators=500,  max_depth=2, verbose = 1, max_features = 1.0)
 #model = xgb.XGBClassifier(max_depth = 2, n_estimators = 500)
-model = CascadeBoostingClassifier(loss = "multinomial", n_layers=100, n_estimators = 10, max_depth=2, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = 6,verbose=1, n_trees=6,batch_size = 3000,max_features=0.2)
+model = CascadeBoostingClassifier(loss = "multinomial", n_layers=10, n_estimators = 30, max_depth=2, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.2,hidden_size = 12,verbose=1, n_trees=10,batch_size = 3000,max_features=0.2)
 
 model.fit(vectors_train,newsgroups_train.target)
 

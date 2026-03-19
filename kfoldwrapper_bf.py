@@ -306,12 +306,12 @@ class KFoldWrapper(object):
 
         start_time = time.time()                
         if n_classes > 1:
-            U = ridge_regression(M_,r_, sample_weight = sw,alpha = 0.000001,solver='sparse_cg',verbose=1).reshape(D.shape[1], I.shape[1])
+            U = ridge_regression(M_,r_, sample_weight = sw,alpha = 0.000001,solver='lsqr').reshape(D.shape[1], I.shape[1])
         else:
             if sample_weight is None:
-                U  = ridge_regression(M_,r[train_batch_ids], alpha = 0.00001,solver='sparse_cg').reshape(D.shape[1], I.shape[1])                
+                U  = ridge_regression(M_,r[train_batch_ids], alpha = 0.00001,solver='lsqr').reshape(D.shape[1], I.shape[1])                
             else:    
-                U  = ridge_regression(M_,r[train_batch_ids], alpha = 0.00001,solver='sparse_cg',sample_weight = sample_weight[train_batch_ids].flatten()).reshape(D.shape[1], I.shape[1])                
+                U  = ridge_regression(M_,r[train_batch_ids], alpha = 0.00001,solver='lsqr',sample_weight = sample_weight[train_batch_ids].flatten()).reshape(D.shape[1], I.shape[1])                
 
         print("Reg time: ", time.time() - start_time)
         # mkv = (M_ @ np.swapaxes(U,1,2)).T.reshape(-1,n_classes)

@@ -31,6 +31,8 @@ import xgboost as xgb
 from boosted_forest import CascadeBoostingRegressor
 from deepforest import CascadeForestRegressor
 from catboost import CatBoostRegressor
+from residual import ResNetCls
+from  sklearn.ensemble import RandomForestClassifier
 
 def load20ng():
     newsgroups_train = fetch_20newsgroups(subset='train',
@@ -204,6 +206,11 @@ def make_modelCascade(max_depth,layers,n_trees,n_estimators):
 def make_modelBoosted(max_depth,layers,hs,n_trees,n_estimators):
     return CascadeBoostingRegressor(n_layers=layers, n_estimators = n_estimators, max_depth=max_depth, n_iter_no_change = None, validation_fraction = 0.1, learning_rate = 0.1,hidden_size = hs,verbose=1, n_trees=n_trees,batch_size = 1000)
 
+def make_modelRF(max_depth, layers, max_features):
+    return RandomForestClassifier(n_estimators=max_depth, max_depth=max_depth, max_features=max_features)
+
+def make_modelResNet(layers):
+    return ResNetCls(0.001,layers)    
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, help="Model (XGB, BOOSTED, CASCADE,CAT,RF,RES)")
@@ -218,17 +225,37 @@ parser.add_argument("--train_speed", type=float)
 
 args = parser.parse_args()
 model_ = args.model
-dataset_ = args.dataset
+dataset = args.dataset
 
 if model_ == "XGB":
     model_name = "XGB"
+    model = make_modelXGB()
 elif model_ == "CAT Boost":    
     model_name = "CAT"
+    model = make_modelCAT()
 elif model_ == "BOOSTED":
     model_name = "Boosted Forest"    
+    model = make_modelBoosted()
 elif model_ == "RF":    
     model_name = "Random Forest"        
+    model = make_modelRF()
 elif model_ == "RES":    
     model_name = "Residual Network"        
+    model = make_modelResNet()
 else:
     model_name = "Cascade Forest"    
+    model = make_modelCascade() 
+
+
+if dataset == "20NG":
+    x_train, Y_train, x_validate, Y_validate = load20ng()
+elif dataset == "CIFAR10":
+    x_train, Y_train, x_validate, Y_validate = loadCifar10()    
+elif dataset == "CIFAR100":    
+    x_train, Y_train, x_validate, Y_validate = loadCifar100()    
+elif dataset == "BNP":        
+    x_train, Y_train, x_validate, Y_validate = loadBNP()    
+elif dataset == "IMDB":            
+    x_train, Y_train, x_validate, Y_validate = loadIMDB()    
+elif dataset == "MNIST":                
+    x_train, Y_train, x_validate, Y_validate = loadMNIST()
